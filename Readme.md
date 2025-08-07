@@ -1,7 +1,7 @@
 # Личный проект «Readme»
 
 * Студент: [Григорий Лисица](https://up.htmlacademy.ru/nodejs-2-individual/2/user/1841149).
-* Наставник: `Неизвестно`.
+* Наставник: [Владислав Поклонский](https://htmlacademy.ru/profile/id2210683).
 
 ---
 
