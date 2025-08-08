@@ -1,0 +1,43 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/api-gateaway-e2e"
+    },
+    {
+      "path": "./apps/api-gateaway"
+    },
+    {
+      "path": "./apps/post-e2e"
+    },
+    {
+      "path": "./apps/post"
+    },
+    {
+      "path": "./apps/feed-e2e"
+    },
+    {
+      "path": "./apps/feed"
+    },
+    {
+      "path": "./apps/user-e2e"
+    },
+    {
+      "path": "./apps/user"
+    },
+    {
+      "path": "./apps/notification-e2e"
+    },
+    {
+      "path": "./apps/notification"
+    },
+    {
+      "path": "./apps/file-storage-e2e"
+    },
+    {
+      "path": "./apps/file-storage"
+    }
+  ]
+}
