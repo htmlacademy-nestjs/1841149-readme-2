@@ -5,12 +5,22 @@
     "types": [
       "node"
     ],
-    "rootDir": "src",
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "target": "es2021"
   },
+  "references": [
+    {
+      "path": "../../libs/shared/core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/shared/app/types/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/shared/helpers/tsconfig.lib.json"
+    }
+  ],
   "include": [
     "src/**/*.ts"
   ],
