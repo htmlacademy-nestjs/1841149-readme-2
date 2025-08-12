@@ -1,12 +1,7 @@
 import {
-  LinkPost,
-  PhotoPost,
   Post,
   PostState,
-  PostType,
-  QuotePost,
-  TextPost,
-  VideoPost
+  PostType, PostUnion,
 } from "@project/libs/shared/app/types";
 import {HttpException, HttpStatus} from "@nestjs/common";
 
@@ -30,7 +25,7 @@ export class RepostPostEntity implements Post {
   public announce?: string;
   public text?: string;
 
-  constructor(post: PhotoPost | LinkPost | QuotePost | VideoPost | TextPost) {
+  constructor(post: PostUnion) {
     this.populate(post)
   }
 
@@ -75,7 +70,7 @@ export class RepostPostEntity implements Post {
     }
   }
 
-  public populate(data: PhotoPost | LinkPost | QuotePost | VideoPost | TextPost): void {
+  public populate(data: PostUnion): void {
     this.tags = data.tags || [];
     this.type = data.type;
     this.status = data.status;

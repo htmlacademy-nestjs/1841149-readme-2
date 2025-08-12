@@ -1,8 +1,6 @@
 import {Controller, Get, Query} from "@nestjs/common";
 import {FeedUserService} from "./feed-user.service";
 import { SortType } from "@project/libs/shared/app/types";
-import { fillDto } from "@project/libs/shared/helpers";
-import {FeedPostRdo} from "./rdo/feed-post.rdo";
 
 @Controller('feed')
 export class FeedUserController {
@@ -25,8 +23,6 @@ export class FeedUserController {
       userId: '123'
     };
 
-    const feed = await this.feedUserService.getAll(feedOptions);
-
-    return fillDto(FeedPostRdo, feed);
+    return await this.feedUserService.getAll(feedOptions);
   }
 }

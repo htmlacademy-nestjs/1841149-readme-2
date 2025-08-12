@@ -1,11 +1,10 @@
-import {Body, Controller, Get, HttpStatus, NotFoundException, Param, Post} from '@nestjs/common';
+import {Body, Controller, Get, HttpStatus, Param, Post} from '@nestjs/common';
 import { AuthenticationService } from "./authentication.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { fillDto } from "@project/libs/shared/helpers";
 import { UserRdo } from "./rdo/user.rdo";
 import { LoginUserDto } from "./dto/login-user.dto";
 import { DetailUserRdo } from "./rdo/detail-user.rdo";
-import { AUTH_USER_NOT_FOUND } from "./authentication.constant";
 import {ApiResponse, ApiTags} from "@nestjs/swagger";
 
 @ApiTags('authentication')
@@ -49,10 +48,6 @@ export class AuthenticationController {
   @Get(':id')
   public async show(@Param('id') id: string) {
     const existUser = await this.authService.getUser(id);
-
-    if (!existUser) {
-      throw new NotFoundException(AUTH_USER_NOT_FOUND);
-    }
 
     return fillDto(DetailUserRdo, existUser.toObject());
   }

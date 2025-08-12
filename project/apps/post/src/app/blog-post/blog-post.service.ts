@@ -1,12 +1,15 @@
 import {Injectable, NotFoundException} from "@nestjs/common";
 import {BlogPostRepository} from "./blog-post.repository";
-import {CreateQuotePostDto} from "./dto/create-quote-post.dto";
-import {CreateVideoPostDto} from "./dto/create-video-post.dto";
-import {CreateTextPostDto} from "./dto/create-text-post.dto";
-import {CreateLinkPostDto} from "./dto/create-link-post.dto";
-import {CreatePhotoPostDto} from "./dto/create-photo-post.dto";
 import {BlogPostEntity} from "./blog-post.entity";
 import {UpdatePostDto} from "./dto/update-post.dto";
+import {CreatePostUnionDto} from "./dto/create-post-union.dto";
+import {PostType} from "@project/libs/shared/app/types";
+import {fillDto} from "@project/libs/shared/helpers";
+import {PhotoPostRdo} from "./rdo/photo-post.rdo";
+import {LinkPostRdo} from "./rdo/link-post.rdo";
+import {QuotePostRdo} from "./rdo/quote-post.rdo";
+import {VideoPostRdo} from "./rdo/video-post.rdo";
+import {TextPostRdo} from "./rdo/text-post.rdo";
 
 @Injectable()
 export class BlogPostService {
@@ -16,7 +19,7 @@ export class BlogPostService {
     return await this.blogPostRepository.getAllPosts();
   }
 
-  public async create(dto: CreateQuotePostDto | CreateVideoPostDto | CreateTextPostDto | CreateLinkPostDto | CreatePhotoPostDto) {
+  public async create(dto: CreatePostUnionDto) {
     const postEntity = new BlogPostEntity(dto)
 
     return this.blogPostRepository.save(postEntity);
@@ -92,5 +95,24 @@ export class BlogPostService {
 
   public async delete(id: string) {
     await this.blogPostRepository.deleteById(id);
+  }
+
+  public fillPostToCorrectRdo(post: any) {
+    const postObject = post.toObject();
+
+    switch (post.type) {
+      case PostType.Photo:
+        return fillDto(PhotoPostRdo, postObject);
+      case PostType.Link:
+        return fillDto(LinkPostRdo, postObject);
+      case PostType.Quote:
+        return fillDto(QuotePostRdo, postObject);
+      case PostType.Video:
+        return fillDto(VideoPostRdo, postObject);
+      case PostType.Text:
+        return fillDto(TextPostRdo, postObject);
+      default:
+        throw new Error(`Unsupported post type: ${post.type}`);
+    }
   }
 }

@@ -13,3 +13,5 @@ export * from './lib/sort-type.enum';
 export * from './lib/feed-options.interface';
 export * from './lib/comment.interface';
 export * from './lib/post-like.interface';
+export * from './lib/file.interface';
+export * from './lib/post-union.type';
