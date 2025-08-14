@@ -10,8 +10,9 @@ import {LoginUserDto} from "./dto/login-user.dto";
 @Injectable()
 export class AuthenticationService {
   constructor(
-    private readonly blogUserRepository: BlogUserRepository
-  ) {}
+    private readonly blogUserRepository: BlogUserRepository,
+  ) {
+  }
 
   public async register(dto: CreateUserDto) {
     const { email, firstName, lastName, password, avatarUrl } = dto;

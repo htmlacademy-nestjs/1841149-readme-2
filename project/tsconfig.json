@@ -29,6 +29,9 @@
     },
     {
       "path": "./libs/shared/core"
+    },
+    {
+      "path": "./libs/shared/config/user-config"
     }
   ]
 }

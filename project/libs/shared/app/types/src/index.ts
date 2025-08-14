@@ -15,3 +15,4 @@ export * from './lib/comment.interface';
 export * from './lib/post-like.interface';
 export * from './lib/file.interface';
 export * from './lib/post-union.type';
+export * from './lib/app-mode.enum';

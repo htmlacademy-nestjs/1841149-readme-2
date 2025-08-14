@@ -2,9 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "rootDir": "src",
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
     "experimentalDecorators": true,
@@ -13,14 +11,9 @@
   },
   "references": [
     {
-      "path": "../../libs/shared/helpers/tsconfig.lib.json"
-    },
-    {
       "path": "../../libs/shared/app/types/tsconfig.lib.json"
     }
   ],
-  "include": [
-    "src/**/*.ts"
-  ],
+  "include": ["src/**/*.ts"],
   "exclude": []
 }
