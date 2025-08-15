@@ -1,7 +1,7 @@
 import {Body, Controller, Get, HttpStatus, Param, Post} from "@nestjs/common";
 import {FileStorageService} from "./file-storage.service";
 import {UploadFileDto} from "./dto/upload-file.dto";
-import {fillDto} from "@project/libs/shared/helpers";
+import {fillDto} from "@project/helpers";
 import {FileRdo} from "./rdo/file.rdo";
 import {ApiResponse} from "@nestjs/swagger";
 

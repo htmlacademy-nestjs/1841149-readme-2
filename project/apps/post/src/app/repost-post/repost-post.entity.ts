@@ -2,19 +2,19 @@ import {
   Post,
   PostState,
   PostType, PostUnion,
-} from "@project/libs/shared/app/types";
+} from "@project/types";
 import {HttpException, HttpStatus} from "@nestjs/common";
 
 export class RepostPostEntity implements Post {
-  public id: string;
-  public tags: string[];
-  public type: PostType;
-  public status: PostState;
-  public publishAt: string;
-  public updatedAt: string;
-  public repost: boolean;
-  public repostAuthor: string;
-  public author: string;
+  public id!: string;
+  public tags!: string[];
+  public type!: PostType;
+  public status!: PostState;
+  public publishAt!: string;
+  public updatedAt!: string;
+  public repost!: boolean;
+  public repostAuthor!: string;
+  public author!: string;
   public photo?: string;
   public link?: string;
   public description?: string;

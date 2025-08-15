@@ -1,4 +1,4 @@
-import {BaseMemoryRepository} from "@project/libs/shared/core";
+import {BaseMemoryRepository} from "@project/core";
 import {LikePostEntity} from "./like-post.entity";
 
 export class LikePostRepository extends BaseMemoryRepository<LikePostEntity> {

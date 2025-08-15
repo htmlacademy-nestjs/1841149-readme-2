@@ -1,5 +1,5 @@
 import {BasePostRdo} from "./base-post.rdo";
-import {PostType} from "@project/libs/shared/app/types";
+import {PostType} from "@project/types";
 import {ApiProperty} from "@nestjs/swagger";
 import {Expose} from "class-transformer";
 
@@ -9,19 +9,19 @@ export class VideoPostRdo extends BasePostRdo {
     description: 'Post type',
     example: 'text'
   })
-  type: PostType.Video;
+  type!: PostType.Video;
 
   @Expose()
   @ApiProperty({
     description: 'Post title',
     example: 'Title'
   })
-  title: string;
+  title!: string;
 
   @Expose()
   @ApiProperty({
     description: 'Post link to video',
     example: 'youtube.com/video'
   })
-  videoLink: string;
+  videoLink!: string;
 }

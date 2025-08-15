@@ -2,20 +2,19 @@ import {
   Post,
   PostState,
   PostType, PostUnion,
-} from "@project/libs/shared/app/types";
+} from "@project/types";
 import {HttpException, HttpStatus} from "@nestjs/common";
-import {PostUnionRdo} from "./rdo/post-union.rdo";
 
 export class BlogPostEntity implements Post {
-  public id: string;
-  public tags: string[];
-  public type: PostType;
-  public status: PostState;
-  public publishAt: string;
-  public updatedAt: string;
-  public repost: boolean;
-  public repostAuthor: string;
-  public author: string;
+  public id!: string;
+  public tags!: string[];
+  public type!: PostType;
+  public status!: PostState;
+  public publishAt!: string;
+  public updatedAt!: string;
+  public repost!: boolean;
+  public repostAuthor!: string;
+  public author!: string;
   public photo?: string;
   public link?: string;
   public description?: string;
@@ -71,7 +70,7 @@ export class BlogPostEntity implements Post {
     }
   }
 
-  public populate(data: PostUnionRdo): void {
+  public populate(data: PostUnion): void {
     this.tags = data.tags || [];
     this.type = data.type;
     this.status = data.status;

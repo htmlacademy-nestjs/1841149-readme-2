@@ -1,5 +1,5 @@
 import {Injectable} from "@nestjs/common";
-import {FeedOptions, Post} from "@project/libs/shared/app/types";
+import {FeedOptions, Post} from "@project/types";
 
 @Injectable()
 export class FeedUserService {

@@ -1,20 +1,24 @@
-import { AuthUser, User } from "@project/libs/shared/app/types";
+import { AuthUser, User } from "@project/types";
 import {compare, genSalt, hash} from "bcrypt";
 import {SALT_ROUNDS} from "./blog-user.constant";
 
 export class BlogUserEntity implements AuthUser, User {
-  public id: string;
-  public passwordHash: string;
-  public email: string;
-  public firstName: string;
-  public lastName: string;
-  public avatarUrl: string;
-  public registrationDate: string;
-  public postCount: number;
-  public subscriberCount: number;
+  public id!: string;
+  public passwordHash!: string;
+  public email!: string;
+  public firstName!: string;
+  public lastName!: string;
+  public avatarUrl!: string;
+  public registrationDate!: string;
+  public postCount!: number;
+  public subscriberCount!: number;
 
   constructor(user: AuthUser) {
     this.populate(user)
+  }
+
+  static fromObject(data: AuthUser): BlogUserEntity {
+    return new BlogUserEntity(data);
   }
 
   public toObject() {
@@ -39,6 +43,7 @@ export class BlogUserEntity implements AuthUser, User {
     this.registrationDate = data.registrationDate;
     this.postCount = data.postCount;
     this.subscriberCount = data.subscriberCount;
+    this.passwordHash = data.passwordHash;
   }
 
   public async setPassword(password: string): Promise<BlogUserEntity> {

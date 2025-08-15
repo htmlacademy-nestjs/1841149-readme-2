@@ -7,33 +7,33 @@ export class UserRdo {
     description: 'The uniq user ID',
     example: '13'
   })
-  public id: string;
+  public id!: string;
 
   @Expose()
   @ApiProperty({
     description: 'User name',
     example: 'John'
   })
-  public firstName: string;
+  public firstName!: string;
 
   @Expose()
   @ApiProperty({
     description: 'User last name',
     example: 'John'
   })
-  public lastName: string;
+  public lastName!: string;
 
   @Expose()
   @ApiProperty({
     description: 'User email',
     example: 'test@test.com'
   })
-  public email: string;
+  public email!: string;
 
   @Expose()
   @ApiProperty({
     description: 'User avatr url',
     example: 'john.png'
   })
-  public avatarUrl: string;
+  public avatarUrl!: string;
 }

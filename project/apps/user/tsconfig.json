@@ -7,10 +7,13 @@
       "path": "../../libs/shared/core"
     },
     {
-      "path": "../../libs/shared/app/types"
+      "path": "../../libs/shared/types"
     },
     {
       "path": "../../libs/shared/helpers"
+    },
+    {
+      "path": "../../libs/shared/config/user/config-user"
     },
     {
       "path": "./tsconfig.app.json"

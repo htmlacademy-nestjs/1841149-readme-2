@@ -5,5 +5,5 @@ export class CreateCommentDto {
     description: 'Comment text',
     example: 'I want to buy this thing'
   })
-  text: string;
+  text!: string;
 }

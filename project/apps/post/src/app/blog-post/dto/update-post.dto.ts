@@ -1,4 +1,4 @@
-import {PostType} from "@project/libs/shared/app/types";
+import {PostType} from "@project/types";
 import {ApiProperty} from "@nestjs/swagger";
 
 export class UpdatePostDto {
@@ -6,7 +6,7 @@ export class UpdatePostDto {
     description: 'Post id',
     example: '11'
   })
-  id: string;
+  id!: string;
 
   @ApiProperty({
     description: 'Post tags array',

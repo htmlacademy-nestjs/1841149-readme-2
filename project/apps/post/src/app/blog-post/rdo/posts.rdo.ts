@@ -3,5 +3,5 @@ import {BasePostRdo} from "./base-post.rdo";
 
 export class PostsRdo {
   @Expose()
-  entities: BasePostRdo[]
+  entities!: BasePostRdo[]
 }

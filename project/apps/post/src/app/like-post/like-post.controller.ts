@@ -1,6 +1,6 @@
 import {Controller, Delete, Get, HttpStatus, Param} from "@nestjs/common";
 import {LikePostService} from "./like-post.service";
-import {fillDto} from "@project/libs/shared/helpers";
+import {fillDto} from "@project/helpers";
 import {LikePostRdo} from "./rdo/like-post.rdo";
 import {ApiResponse} from "@nestjs/swagger";
 

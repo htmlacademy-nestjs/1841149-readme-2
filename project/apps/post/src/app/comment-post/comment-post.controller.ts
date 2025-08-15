@@ -1,7 +1,7 @@
 import {Body, Controller, Delete, Get, HttpStatus, Param, Post} from "@nestjs/common";
 import {CommentPostService} from "./comment-post.service";
 import {CreateCommentDto} from "./dto/create-comment.dto";
-import {fillDto} from "@project/libs/shared/helpers";
+import {fillDto} from "@project/helpers";
 import {CommentPostRdo} from "./rdo/comment-post.rdo";
 import {ApiResponse} from "@nestjs/swagger";
 

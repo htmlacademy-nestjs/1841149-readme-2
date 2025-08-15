@@ -1,5 +1,5 @@
 import {Injectable, NotFoundException} from "@nestjs/common";
-import {File} from "@project/libs/shared/app/types";
+import {File} from "@project/types";
 import {FileStorageRepository} from "./file-storage.repository";
 import {FileStorageEntity} from "./file-storage.entity";
 

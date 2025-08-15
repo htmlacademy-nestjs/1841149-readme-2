@@ -1,6 +1,6 @@
 import {Controller, Get, Query} from "@nestjs/common";
 import {FeedUserService} from "./feed-user.service";
-import { SortType } from "@project/libs/shared/app/types";
+import { SortType } from "@project/types";
 
 @Controller('feed')
 export class FeedUserController {
