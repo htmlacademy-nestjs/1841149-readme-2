@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "strictPropertyInitialization": false,
     "composite": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
@@ -17,17 +16,6 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "baseUrl": ".",
-    "customConditions": ["development"],
-    "paths": {
-      "@project/libs/shared/app/types": ["libs/shared/app/types/src/index.ts"],
-      "@project/libs/shared/config/user-config": [
-        "libs/shared/config/user-config/src/index.ts"
-      ],
-      "@project/libs/shared/core": ["libs/shared/core/src/index.ts"],
-      "@project/libs/shared/helpers": ["libs/shared/helpers/src/index.ts"]
-    }
-  },
-  "exclude": ["node_modules"],
-  "include": ["**/*.ts"]
+    "customConditions": ["development"]
+  }
 }

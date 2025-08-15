@@ -1,5 +1,5 @@
 import {CreatePostDto} from "./create-post.dto";
-import {PostType} from "@project/libs/shared/app/types";
+import {PostType} from "@project/types";
 import {ApiProperty} from "@nestjs/swagger";
 
 export class CreatePhotoPostDto extends CreatePostDto {
@@ -7,11 +7,11 @@ export class CreatePhotoPostDto extends CreatePostDto {
     description: 'Post type',
     example: 'link'
   })
-  type: PostType.Photo;
+  type!: PostType.Photo;
 
   @ApiProperty({
     description: 'Link to photo',
     example: '/test.jpg'
   })
-  photo: string;
+  photo!: string;
 }

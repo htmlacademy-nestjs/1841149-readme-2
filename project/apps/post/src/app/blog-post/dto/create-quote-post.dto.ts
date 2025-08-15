@@ -1,5 +1,5 @@
 import {CreatePostDto} from "./create-post.dto";
-import {PostType} from "@project/libs/shared/app/types";
+import {PostType} from "@project/types";
 import {ApiProperty} from "@nestjs/swagger";
 
 export class CreateQuotePostDto extends CreatePostDto {
@@ -7,17 +7,17 @@ export class CreateQuotePostDto extends CreatePostDto {
     description: 'Post type',
     example: 'quote'
   })
-  type: PostType.Quote;
+  type!: PostType.Quote;
 
   @ApiProperty({
     description: 'Post quote text',
     example: 'text of quote'
   })
-  quote: string;
+  quote!: string;
 
   @ApiProperty({
     description: 'Post quote author',
     example: 'Arnold'
   })
-  quoteAuthor: string;
+  quoteAuthor!: string;
 }

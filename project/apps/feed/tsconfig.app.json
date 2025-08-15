@@ -9,11 +9,11 @@
     "emitDecoratorMetadata": true,
     "target": "es2021"
   },
+  "include": ["src/**/*.ts"],
+  "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"],
   "references": [
     {
-      "path": "../../libs/shared/app/types/tsconfig.lib.json"
+      "path": "../../libs/shared/types/tsconfig.lib.json"
     }
-  ],
-  "include": ["src/**/*.ts"],
-  "exclude": []
+  ]
 }

@@ -5,7 +5,7 @@ import {CreateTextPostDto} from "./dto/create-text-post.dto";
 import {CreateLinkPostDto} from "./dto/create-link-post.dto";
 import {CreatePhotoPostDto} from "./dto/create-photo-post.dto";
 import {BlogPostService} from "./blog-post.service";
-import {fillDto} from "@project/libs/shared/helpers";
+import {fillDto} from "@project/helpers";
 import {UpdatePostDto} from "./dto/update-post.dto";
 import {BasePostRdo} from "./rdo/base-post.rdo";
 import {ApiResponse} from "@nestjs/swagger";

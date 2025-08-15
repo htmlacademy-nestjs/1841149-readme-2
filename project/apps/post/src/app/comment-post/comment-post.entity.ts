@@ -1,11 +1,11 @@
-import {CommentPost} from "@project/libs/shared/app/types";
+import {CommentPost} from "@project/types";
 
 export class CommentPostEntity implements CommentPost {
-  public id: string;
-  public text: string;
-  public createdAt: string;
-  public author: string;
-  public postId: string;
+  public id!: string;
+  public text!: string;
+  public createdAt!: string;
+  public author!: string;
+  public postId!: string;
 
   constructor(post: CommentPost) {
     this.populate(post);

@@ -1,9 +1,9 @@
-import {File} from "@project/libs/shared/app/types";
+import {File} from "@project/types";
 
 export class FileStorageEntity implements File {
   public id?: string;
-  public name: string;
-  public path: string;
+  public name!: string;
+  public path!: string;
   public createdAt?: string;
   public updatedAt?: string;
 

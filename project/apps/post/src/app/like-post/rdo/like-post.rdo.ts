@@ -7,19 +7,19 @@ export class LikePostRdo {
     description: 'The uniq comment ID',
     example: '13'
   })
-  id: string;
+  id!: string;
 
   @Expose()
   @ApiProperty({
     description: 'The uniq post ID',
     example: '13'
   })
-  postId: string;
+  postId!: string;
 
   @Expose()
   @ApiProperty({
     description: 'The uniq user ID',
     example: '13'
   })
-  userId: string;
+  userId!: string;
 }

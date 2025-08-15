@@ -1,9 +1,9 @@
-import {PostLike} from "@project/libs/shared/app/types";
+import {PostLike} from "@project/types";
 
 export class LikePostEntity implements PostLike {
-  public id: string;
-  public userId: string;
-  public postId: string;
+  public id!: string;
+  public userId!: string;
+  public postId!: string;
 
   constructor(like: PostLike) {
     this.populate(like);

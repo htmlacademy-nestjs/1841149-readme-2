@@ -1,5 +1,5 @@
 import {CreatePostDto} from "./create-post.dto";
-import {PostType} from "@project/libs/shared/app/types";
+import {PostType} from "@project/types";
 import {ApiProperty} from "@nestjs/swagger";
 
 export class CreateTextPostDto extends CreatePostDto {
@@ -7,23 +7,23 @@ export class CreateTextPostDto extends CreatePostDto {
     description: 'Post type',
     example: 'text'
   })
-  type: PostType.Text;
+  type!: PostType.Text;
 
   @ApiProperty({
     description: 'Post title',
     example: 'Title'
   })
-  title: string;
+  title!: string;
 
   @ApiProperty({
     description: 'Post announcement',
     example: 'Short description'
   })
-  announce: string;
+  announce!: string;
 
   @ApiProperty({
     description: 'Post text',
     example: 'I have a cat'
   })
-  text: string;
+  text!: string;
 }

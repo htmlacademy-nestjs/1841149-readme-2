@@ -1,9 +1,6 @@
 import { MongooseModuleAsyncOptions } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
-
-function getMongoConnectionString({username, password, host, port, databaseName, authDatabase}: Record<string, any>): string {
-  return `mongodb://${username}:${password}@${host}:${port}/${databaseName}?authSource=${authDatabase}`;
-}
+import {getMongoConnectionString} from "@project/helpers";
 
 export function getMongooseOptions(): MongooseModuleAsyncOptions {
   return {

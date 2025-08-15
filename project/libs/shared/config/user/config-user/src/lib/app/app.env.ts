@@ -6,7 +6,7 @@ import {AppMode} from "./types/app-mode.enum";
 export class AppConfiguration {
   @IsString({ message: EnvAppValidationMessage.EnvironmentRequired })
   @IsEnum(AppMode, {message: EnvAppValidationMessage.EnvironmentType})
-  public environment: AppMode;
+  public environment!: AppMode;
 
   @IsNumber({}, { message: EnvAppValidationMessage.PortRequired})
   @IsOptional()
