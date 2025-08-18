@@ -1,5 +1,6 @@
 export interface PostLike {
-  id?: string;
-  userId: string;
+  id: string;
+  authorId: string;
   postId: string;
+  createdAt: string;
 }

@@ -11,6 +11,7 @@
     "@nestjs/mongoose": "^11.0.3",
     "@nestjs/platform-express": "^11.0.0",
     "@nestjs/swagger": "^11.2.0",
+    "@prisma/client": "^6.14.0",
     "@types/bcrypt": "^6.0.0",
     "axios": "^1.6.0",
     "bcrypt": "^6.0.0",
@@ -42,6 +43,7 @@
     "jsonc-eslint-parser": "^2.1.0",
     "nx": "21.3.11",
     "prettier": "^2.6.2",
+    "prisma": "^6.14.0",
     "tslib": "^2.3.0",
     "typescript": "~5.8.2",
     "typescript-eslint": "^8.29.0",
@@ -52,6 +54,7 @@
     "libs/shared/types",
     "libs/shared/helpers",
     "libs/shared/core",
-    "libs/shared/config/user/config-user"
+    "libs/shared/config/user/config-user",
+    "libs/shared/post/models"
   ]
 }

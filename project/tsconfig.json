@@ -32,6 +32,9 @@
     },
     {
       "path": "./libs/shared/config/user/config-user"
+    },
+    {
+      "path": "./libs/shared/post/models"
     }
   ]
 }
