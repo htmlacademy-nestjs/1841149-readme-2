@@ -6,9 +6,12 @@ export interface Post {
   tags?: string[];
   type: PostType;
   status: PostState;
-  publishAt: string;
-  updatedAt: string;
   repost: boolean;
-  repostAuthor: string;
-  author: string;
+  repostAuthor?: string;
+  repostCreatedAt?: string;
+  originalAuthorId?: string;
+  originalPostId?: string;
+  authorId: string;
+  createdAt: string;
+  updatedAt: string;
 }
