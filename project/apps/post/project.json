@@ -80,7 +80,7 @@
         "cwd": "."
       }
     },
-    "db:seed": {
+    "db:fill": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx ts-node ./libs/shared/post/models/prisma/seed.ts",
