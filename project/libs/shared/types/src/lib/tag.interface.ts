@@ -1,5 +1,6 @@
 export interface Tag {
   id?: string;
   title: string;
-  createdAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

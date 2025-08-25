@@ -5,7 +5,7 @@ import {fillDto} from "@project/helpers";
 import {CommentPostRdo} from "./rdo/comment-post.rdo";
 import {ApiResponse} from "@nestjs/swagger";
 
-@Controller('comment')
+@Controller('posts/:postId/comments')
 export class CommentPostController {
   constructor(
     private readonly commentPostService: CommentPostService,
@@ -15,11 +15,11 @@ export class CommentPostController {
     status: HttpStatus.OK,
     description: 'List of comments to post',
   })
-  @Get(':id')
-  public async index(@Param('id') id: string) {
-    const comments = await this.commentPostService.getComments(id);
+  @Get('/')
+  public async index(@Param('postId') postId: string) {
+    const comments = await this.commentPostService.getComments(postId);
 
-    return fillDto(CommentPostRdo, { entities: comments });
+    return fillDto(CommentPostRdo, comments.map(comment => comment.toObject()));
   }
 
   @ApiResponse({
@@ -27,9 +27,9 @@ export class CommentPostController {
     status: HttpStatus.CREATED,
     description: 'Successfully created a comment to post',
   })
-  @Post(':id')
-  public async createComment(@Param('id') id: string, @Body() dto: CreateCommentDto) {
-    const newComment = await this.commentPostService.create(id, dto);
+  @Post('/')
+  public async createComment(@Param('postId') postId: string, @Body() dto: CreateCommentDto) {
+    const newComment = await this.commentPostService.create(postId, dto);
 
     return fillDto(CommentPostRdo, newComment.toObject());
   }
@@ -40,6 +40,7 @@ export class CommentPostController {
   })
   @Delete(':id')
   public async deleteComment(@Param('id') id: string) {
+    console.log('deleting comment', id);
     await this.commentPostService.deleteComment(id)
   }
 }

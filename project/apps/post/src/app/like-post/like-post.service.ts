@@ -9,7 +9,7 @@ export class LikePostService {
   ) {}
 
   public async create(postId: string) {
-    const existLike = await this.likePostRepository.findByPostId(postId);
+    const existLike = (await this.likePostRepository.findByPostId(postId)).at(0);
 
     if (existLike) {
       throw new ConflictException(`Like for post with id: ${postId} already exist`);
@@ -23,12 +23,14 @@ export class LikePostService {
     })
 
     // TODO Логика обновления количества лайков
+    await this.likePostRepository.save(newLike);
 
-    return this.likePostRepository.save(newLike);
+
+    return newLike;
   }
 
   public async delete(postId: string) {
-    const existLike = await this.likePostRepository.findByPostId(postId);
+    const existLike = (await this.likePostRepository.findByPostId(postId)).at(0);
 
     if (!existLike) {
       throw new NotFoundException(`Like for post with id: ${postId} does not exist`);
@@ -36,6 +38,26 @@ export class LikePostService {
 
     // TODO Логика обновления количества лайков
 
-    await this.likePostRepository.deleteById(existLike.id);
+    return await this.likePostRepository.deleteById(existLike.id!);
+  }
+
+  public async deleteAllByPostId(postId: string) {
+    const existLike = (await this.likePostRepository.findByPostId(postId)).at(0);
+
+    if (!existLike) {
+      throw new NotFoundException(`Like for post with id: ${postId} does not exist`);
+    }
+
+    return await this.likePostRepository.deleteByPostId(postId);
+  }
+
+  public async findByPostId(postId: string): Promise<LikePostEntity[]> {
+    const existLike = (await this.likePostRepository.findByPostId(postId)).at(0);
+
+    if (!existLike) {
+      throw new NotFoundException(`Likes for post with id: ${postId} does not exist`);
+    }
+
+    return await this.likePostRepository.findByPostId(postId);
   }
 }

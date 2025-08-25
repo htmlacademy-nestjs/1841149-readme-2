@@ -1,5 +1,14 @@
 import {PostType} from "@project/types";
 import {ApiProperty} from "@nestjs/swagger";
+import {ArrayMaxSize, IsArray, IsEnum, IsOptional, IsString, ValidateNested} from "class-validator";
+import {CreatePostMessages} from "./create-post.messages";
+import {PostState} from "@project/types";
+import {Type} from "class-transformer";
+import {UpdateVideoPostDto} from "./update-video-post.dto";
+import {UpdateLinkPostDto} from "./update-link-post.dto";
+import {UpdateTextPostDto} from "./update-text-post.dto";
+import {UpdateQuotePostDto} from "./update-quote-post.dto";
+import {UpdatePhotoPostDto} from "./update-photo-post.dto";
 
 export class UpdatePostDto {
   @ApiProperty({
@@ -12,71 +21,48 @@ export class UpdatePostDto {
     description: 'Post tags array',
     example: '["photo", "celebrity"]'
   })
+  @IsOptional()
+  @IsArray({ message: CreatePostMessages.tags.invalidFormat })
+  @IsString({ each: true, message: CreatePostMessages.tags.invalidTagFormat })
+  @ArrayMaxSize(10, { message: CreatePostMessages.tags.maxLength })
   tags?: string[];
 
   @ApiProperty({
-    description: 'Post publish date',
-    example: '2025-08-11T07:01:32.001Z'
-  })
-  publishAt?: string;
-
-  @ApiProperty({
-    description: 'Link',
-    example: 'google.com'
-  })
-  link?: string;
-
-  @ApiProperty({
-    description: 'Description to post',
-    example: 'test description'
-  })
-  description?: string;
-
-  @ApiProperty({
     description: 'Post type',
-    example: 'link'
+    example: '["photo", "celebrity"]'
   })
-  type?: PostType;
+  @IsEnum(PostType, { message: CreatePostMessages.type.value })
+  type!: PostType
 
   @ApiProperty({
-    description: 'Link to photo',
-    example: '/test.jpg'
+    description: 'Post status',
+    example: 'draft'
   })
-  photo?: string;
+  @IsEnum(PostState, { message: CreatePostMessages.status.value })
+  status!: PostState;
 
-  @ApiProperty({
-    description: 'Post quote text',
-    example: 'text of quote'
-  })
-  quote?: string;
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => UpdateVideoPostDto)
+  videoPost?: UpdateVideoPostDto;
 
-  @ApiProperty({
-    description: 'Post quote author',
-    example: 'Arnold'
-  })
-  quoteAuthor?: string;
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => UpdateLinkPostDto)
+  linkPost?: UpdateLinkPostDto;
 
-  @ApiProperty({
-    description: 'Post title',
-    example: 'Title'
-  })
-  title?: string;
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => UpdateTextPostDto)
+  textPost?: UpdateTextPostDto;
 
-  @ApiProperty({
-    description: 'Post announcement',
-    example: 'Short description'
-  })
-  announce?: string;
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => UpdateQuotePostDto)
+  quotePost?: UpdateQuotePostDto;
 
-  @ApiProperty({
-    description: 'Post text',
-    example: 'I have a cat'
-  })
-  text?: string;
-
-  @ApiProperty({
-    description: 'Post link to video',
-    example: 'youtube.com/video'
-  })
-  videoLink?: string;
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => UpdatePhotoPostDto)
+  photoPost?: UpdatePhotoPostDto;
 }

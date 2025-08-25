@@ -1,10 +1,49 @@
-import {BaseMemoryRepository} from "@project/core";
+import {BasePostgresRepository} from "@project/core";
 import {LikePostEntity} from "./like-post.entity";
+import { PostLike } from "@project/types";
+import {PrismaClientService} from "@project/models";
 
-export class LikePostRepository extends BaseMemoryRepository<LikePostEntity> {
-  public async findByPostId(postId: string) {
-    const entities = Array.from(this.entities.values());
+export class LikePostRepository extends BasePostgresRepository<LikePostEntity, PostLike> {
+  constructor(
+    protected override readonly client: PrismaClientService,
+  ) {
+    super(client, LikePostEntity.fromObject);
+  }
 
-    return entities.find((entity) => entity.postId === postId);
+  public override async save(entity: LikePostEntity): Promise<LikePostEntity> {
+    const record = await this.client.like.create({
+      data: {
+        ...entity.toObject(),
+      }
+    })
+
+    entity.id = record.id;
+    return entity;
+  }
+
+  public override async deleteById(id: string): Promise<void> {
+    await this.client.like.delete({
+      where: {
+        id
+      }
+    })
+  }
+
+  public async deleteByPostId(postId: string): Promise<void> {
+    await this.client.like.deleteMany({
+      where: {
+        postId
+      }
+    })
+  }
+
+  public async findByPostId(postId: string): Promise<LikePostEntity[]> {
+    const documents = await this.client.like.findMany({
+      where: {
+        postId
+      }
+    })
+
+    return documents.map((document) => this.createEntityFromDocument(document));
   }
 }

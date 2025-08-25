@@ -1,9 +1,9 @@
-import {SortType} from "./sort-type.enum";
+import {SortDirection} from "./sort-direction.enum";
 
 export interface FeedOptions {
   page: number;
   limit: number;
   sort: string;
-  sortType: SortType;
+  sortType: SortDirection;
   userId: string;
 }

@@ -15,32 +15,33 @@ datasource db {
 }
 
 enum PostStatus {
-  PUBLISHED
-  DRAFT
+  published
+  draft
 }
 
 enum PostType {
-  VIDEO
-  TEXT
-  QUOTE
-  PHOTO
-  LINK
+  video
+  text
+  quote
+  photo
+  link
 }
 
 model Post {
   id               String     @id @default(uuid())
-  createdAt        DateTime   @default(now()) @map("created_at")
-  updatedAt        DateTime   @updatedAt @map("updated_at")
   authorId         String     @map("author_id")
   tags             Tag[]
-  status           PostStatus @default(PUBLISHED)
+  status           PostStatus @default(published)
   repost           Boolean    @default(false)
   type             PostType
   likes            Like[]
+  createdAt        DateTime   @default(now()) @map("created_at")
+  updatedAt        DateTime   @updatedAt @map("updated_at")
+  comments         Comment[]
+
   originalAuthorId String?    @map("original_author_id")
   originalPostId   String?    @map("original_post_id")
   repostCreatedAt  DateTime?  @map("repost_created_at")
-  comments         Comment[]
   videoPost        VideoPost?
   textPost         TextPost?
   quotePost        QuotePost?
@@ -105,6 +106,7 @@ model Tag {
   title     String   @unique
   posts     Post[]
   createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([title])
   @@map("tags")
@@ -114,10 +116,10 @@ model Comment {
   id        String   @id @default(uuid())
   text      String
   authorId  String   @map("author_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String   @map("post_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([postId])
   @@map("comments")
@@ -125,12 +127,13 @@ model Comment {
 
 model Like {
   id        String   @id @default(uuid())
-  authorId  String   @map("author_id")
+  userId    String   @map("user_id")
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String   @map("post_id")
   createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@unique([authorId, postId])
-  @@index([authorId])
+  @@unique([userId, postId])
+  @@index([userId])
   @@map("likes")
 }

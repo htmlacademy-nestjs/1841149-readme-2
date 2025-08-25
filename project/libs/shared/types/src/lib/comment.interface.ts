@@ -1,8 +1,8 @@
 export interface CommentPost {
-  id: string;
+  id?: string;
   text: string;
   authorId: string;
-  postId: string;
-  createdAt: string;
-  updatedAt: string;
+  postId?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

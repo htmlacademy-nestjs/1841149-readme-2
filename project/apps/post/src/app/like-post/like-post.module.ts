@@ -6,5 +6,6 @@ import {LikePostRepository} from "./like-post.repository";
 @Module({
   controllers: [LikePostController],
   providers: [LikePostService, LikePostRepository],
+  exports: [LikePostService],
 })
 export class LikePostModule {}

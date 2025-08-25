@@ -4,6 +4,9 @@
   "include": [],
   "references": [
     {
+      "path": "../post/models"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ]

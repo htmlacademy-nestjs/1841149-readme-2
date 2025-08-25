@@ -1,11 +1,13 @@
 import {Injectable} from "@nestjs/common";
 import {CommentPostEntity} from "./comment-post.entity";
 import {CommentPostRepository} from "./comment-post.repository";
+import {BlogPostService} from "../blog-post/blog-post.service";
 
 @Injectable()
 export class CommentPostService {
   constructor(
-    private readonly commentPostRepository: CommentPostRepository
+    private readonly commentPostRepository: CommentPostRepository,
+    private readonly blogPostService: BlogPostService,
   ) {}
 
   public async getComments(postId: string) {
@@ -13,20 +15,12 @@ export class CommentPostService {
   }
 
   public async create(postId: string, dto: any) {
-    const commentEntity = new CommentPostEntity({...dto, postId});
-
-    // TODO обновления счетчика количества комментариев
-
-    return this.commentPostRepository.save(commentEntity);
+    const existsPost = await this.blogPostService.getPost(postId);
+    const newComment = CommentPostEntity.fromDto(dto, existsPost.id!);
+    return this.commentPostRepository.save(newComment);
   }
 
   public async deleteComment(commentId: string) {
-    // TODO обновления счетчика количества комментариев
-
     await this.commentPostRepository.deleteById(commentId);
-  }
-
-  public async deleteCommentsByPostId(postId: string) {
-    // TODO
   }
 }
