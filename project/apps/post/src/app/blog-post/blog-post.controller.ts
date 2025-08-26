@@ -37,7 +37,8 @@ export class BlogPostController {
   })
   @Get(':id')
   public async show(@Param('id') id: string) {
-    return await this.blogPostService.show(id);
+    const post = await this.blogPostService.show(id);
+    return fillDto(BasePostRdo, post.toObject());
   }
 
   @ApiResponse({

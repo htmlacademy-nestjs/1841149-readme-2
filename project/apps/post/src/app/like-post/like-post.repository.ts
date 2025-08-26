@@ -2,7 +2,9 @@ import {BasePostgresRepository} from "@project/core";
 import {LikePostEntity} from "./like-post.entity";
 import { PostLike } from "@project/types";
 import {PrismaClientService} from "@project/models";
+import {Injectable} from "@nestjs/common";
 
+@Injectable()
 export class LikePostRepository extends BasePostgresRepository<LikePostEntity, PostLike> {
   constructor(
     protected override readonly client: PrismaClientService,

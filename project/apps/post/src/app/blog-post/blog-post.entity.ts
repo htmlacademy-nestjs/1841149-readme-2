@@ -7,6 +7,8 @@ import {HttpException, HttpStatus} from "@nestjs/common";
 import {TagPostEntity} from "../tag-post/tag-post.entity";
 import { Entity } from "@project/core"
 import {CreatePostDto} from "./dto/create-post.dto";
+import {LikePostEntity} from "../like-post/like-post.entity";
+import {CommentPostEntity} from "../comment-post/comment-post.entity";
 
 export class BlogPostEntity implements Post, Entity<string, PostUnion> {
   public id?: string;
@@ -28,6 +30,10 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
   public quoteAuthor?: string;
   public photo?: string;
   public link?: string;
+  public likes!: LikePostEntity[];
+  public likeCount!: number;
+  public comments!: CommentPostEntity[];
+  public commentCount!: number;
   public description?: string;
 
 
@@ -41,6 +47,10 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       repost: this.repost,
+      likes: this.likes.map((like) => like.toObject()),
+      likeCount: this.getLikeCount(),
+      comments: this.comments.map((comment) => comment.toObject()),
+      commentCount: this.getCommentCount(),
       originalAuthorId: this.originalAuthorId,
       originalPostId: this.originalPostId,
       repostCreatedAt: this.repostCreatedAt,
@@ -99,6 +109,8 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
     this.id = data.id;
     this.authorId = data.authorId;
     this.tags = data.tags?.map((tag) => TagPostEntity.fromObject(tag)) ?? [];
+    this.likes = data.likes?.map((like) => LikePostEntity.fromObject(like)) ?? [];
+    this.comments = data.comments?.map((comment) => CommentPostEntity.fromObject(comment)) ?? [];
     this.type = data.type;
     this.status = data.status;
     this.createdAt = data.createdAt;
@@ -193,4 +205,11 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
     return entity;
   }
 
+  public getLikeCount(): number {
+    return this.likes?.length ?? 0;
+  }
+
+  public getCommentCount(): number {
+    return this.comments?.length ?? 0;
+  }
 }

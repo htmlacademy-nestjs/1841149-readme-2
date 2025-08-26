@@ -4,7 +4,7 @@ import {BlogPostEntity} from "./blog-post.entity";
 import {PrismaClientService} from "@project/models";
 import { PostUnion, PostType } from "@project/types"
 import {BlogPostQuery} from "./query/blog-post.query";
-import {PaginationResult} from "../../../../../.nx/cache/971126399865429676/libs/shared/types/dist";
+import {PaginationResult} from "@project/types";
 import {Prisma} from "@prisma/client";
 
 @Injectable()
@@ -182,6 +182,7 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
       include: {
         tags: true,
         videoPost: true,
+        likes: true,
       }
     });
 
@@ -206,6 +207,11 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
         tags: {
           connect: objectEntity.tags?.map(({id}) => ({ id }))
         },
+      },
+      include: {
+        tags: true,
+        videoPost: true,
+        likes: true,
       }
     })
 
@@ -248,6 +254,7 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
         include: {
           tags: true,
           comments: true,
+          likes: true,
         },
       }),
       this.getPostCount(where),

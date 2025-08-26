@@ -19,3 +19,5 @@ export * from './lib/tag.interface';
 export * from './lib/pagination.interface';
 export * from './lib/sort-direction.enum'
 export * from './lib/author.interface';
+export * from './lib/token-payload.interface';
+export * from './lib/token.interface';

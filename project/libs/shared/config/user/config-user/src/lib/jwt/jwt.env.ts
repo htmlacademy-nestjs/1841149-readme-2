@@ -1,0 +1,14 @@
+import {IsString, validateOrReject} from "class-validator";
+import {EnvValidationMessage} from "./jwt.messages";
+
+export class JWTConfiguration {
+  @IsString({ message: EnvValidationMessage.AccessTokenSecretRequired })
+  public accessTokenSecret!: string;
+
+  @IsString({ message: EnvValidationMessage.AccessTokenExpiresInRequired })
+  public accessTokenExpiresIn!: string;
+
+  public async validate(): Promise<void> {
+    await validateOrReject(this);
+  }
+}
