@@ -1,11 +1,11 @@
-import {ApiProperty} from "@nestjs/swagger";
-import {IsOptional, IsString, MaxLength, MinLength} from "class-validator";
-import {CreateTextPostMessages} from "./create-text-post.messages";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { CreateTextPostMessages } from './create-text-post.messages';
 
 export class UpdateTextPostDto {
   @ApiProperty({
     description: 'Post title',
-    example: 'Title'
+    example: 'Title',
   })
   @IsOptional()
   @IsString({ message: CreateTextPostMessages.title.invalidFormat })
@@ -15,7 +15,7 @@ export class UpdateTextPostDto {
 
   @ApiProperty({
     description: 'Post announcement',
-    example: 'Short description'
+    example: 'Short description',
   })
   @IsOptional()
   @IsString({ message: CreateTextPostMessages.announce.invalidFormat })
@@ -25,7 +25,7 @@ export class UpdateTextPostDto {
 
   @ApiProperty({
     description: 'Post text',
-    example: 'I have a cat'
+    example: 'I have a cat',
   })
   @IsOptional()
   @IsString({ message: CreateTextPostMessages.text.invalidFormat })

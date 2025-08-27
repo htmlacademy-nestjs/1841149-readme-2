@@ -1,21 +1,23 @@
-import {Injectable, NotFoundException} from "@nestjs/common";
-import {BlogPostRepository} from "./blog-post.repository";
-import {BlogPostEntity} from "./blog-post.entity";
-import {CreatePostUnionDto} from "./dto/create-post-union.dto";
-import {TagPostService} from "../tag-post/tag-post.service";
-import {UpdatePostDto} from "./dto/update-post.dto";
-import {BlogPostQuery} from "./query/blog-post.query";
-import {PaginationResult} from "../../../../../.nx/cache/971126399865429676/libs/shared/types/dist";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { BlogPostRepository } from './blog-post.repository';
+import { BlogPostEntity } from './blog-post.entity';
+import { CreatePostUnionDto } from './dto/create-post-union.dto';
+import { TagPostService } from '../tag-post/tag-post.service';
+import { UpdatePostDto } from './dto/update-post.dto';
+import { BlogPostQuery } from './query/blog-post.query';
+import { PaginationResult } from '../../../../../.nx/cache/971126399865429676/libs/shared/types/dist';
 
 @Injectable()
 export class BlogPostService {
   constructor(
     private readonly blogPostRepository: BlogPostRepository,
-    private readonly tagPostService: TagPostService,
+    private readonly tagPostService: TagPostService
   ) {}
 
-  public async getAllPosts(query: BlogPostQuery): Promise<PaginationResult<BlogPostEntity>> {
-    return this.blogPostRepository.find(query)
+  public async getAllPosts(
+    query: BlogPostQuery
+  ): Promise<PaginationResult<BlogPostEntity>> {
+    return this.blogPostRepository.find(query);
   }
 
   public async getPost(id: string): Promise<BlogPostEntity> {
@@ -23,10 +25,12 @@ export class BlogPostService {
   }
 
   public async create(dto: CreatePostUnionDto) {
-    const tags = await this.tagPostService.getTagsByNamesOrCreate(dto.tags ?? []);
+    const tags = await this.tagPostService.getTagsByNamesOrCreate(
+      dto.tags ?? []
+    );
 
-    const newPost = BlogPostEntity.fromDTO(dto, tags)
-    await this.blogPostRepository.save(newPost)
+    const newPost = BlogPostEntity.fromDTO(dto, tags);
+    await this.blogPostRepository.save(newPost);
 
     return newPost;
   }

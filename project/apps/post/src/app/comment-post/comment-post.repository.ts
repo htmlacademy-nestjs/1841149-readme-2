@@ -1,18 +1,21 @@
-import {Injectable, NotFoundException} from "@nestjs/common";
-import {CommentPostEntity} from "./comment-post.entity";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CommentPostEntity } from './comment-post.entity';
 import { BasePostgresRepository } from '@project/core';
-import {CommentPost} from "@project/types";
-import {PrismaClientService} from "@project/models";
+import { CommentPost } from '@project/types';
+import { PrismaClientService } from '@project/models';
 
 @Injectable()
-export class CommentPostRepository extends BasePostgresRepository<CommentPostEntity, CommentPost> {
-  constructor(
-    protected override readonly client: PrismaClientService
-  ) {
+export class CommentPostRepository extends BasePostgresRepository<
+  CommentPostEntity,
+  CommentPost
+> {
+  constructor(protected override readonly client: PrismaClientService) {
     super(client, CommentPostEntity.fromObject);
   }
 
-  public override async save(entity: CommentPostEntity): Promise<CommentPostEntity> {
+  public override async save(
+    entity: CommentPostEntity
+  ): Promise<CommentPostEntity> {
     const record = await this.client.comment.create({
       data: {
         text: entity.text,
@@ -33,29 +36,29 @@ export class CommentPostRepository extends BasePostgresRepository<CommentPostEnt
       take: 50,
     });
 
-    if (! record) {
+    if (!record) {
       throw new NotFoundException(`Comment with id ${id} not found.`);
     }
 
-    return this.createEntityFromDocument(record)
+    return this.createEntityFromDocument(record);
   }
 
   public async findByPostId(postId: string): Promise<CommentPostEntity[]> {
     const records = await this.client.comment.findMany({
       where: {
-        postId
+        postId,
       },
       take: 50,
     });
 
-    return records.map(record => this.createEntityFromDocument(record))
+    return records.map((record) => this.createEntityFromDocument(record));
   }
 
   public override async deleteById(id: string): Promise<void> {
     await this.client.comment.delete({
       where: {
         id,
-      }
-    })
+      },
+    });
   }
 }

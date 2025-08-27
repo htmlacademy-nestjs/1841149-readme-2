@@ -1,6 +1,6 @@
-import {Controller, Get, Query} from "@nestjs/common";
-import {FeedUserService} from "./feed-user.service";
-import { SortType } from "@project/types";
+import { Controller, Get, Query } from '@nestjs/common';
+import { FeedUserService } from './feed-user.service';
+import { SortType } from '@project/types';
 
 @Controller('feed')
 export class FeedUserController {
@@ -11,7 +11,7 @@ export class FeedUserController {
     @Query('page') page = '1',
     @Query('limit') limit = '25',
     @Query('sort') sort = 'publishedAt',
-    @Query('sortType') sortType = SortType.DESC,
+    @Query('sortType') sortType = SortType.DESC
   ) {
     // TODO получить id пользователя
 
@@ -20,7 +20,7 @@ export class FeedUserController {
       limit: parseInt(limit),
       sort,
       sortType: sortType,
-      userId: '123'
+      userId: '123',
     };
 
     return await this.feedUserService.getAll(feedOptions);

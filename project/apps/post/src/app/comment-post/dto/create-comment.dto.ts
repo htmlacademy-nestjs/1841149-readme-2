@@ -1,10 +1,10 @@
-import {ApiProperty} from "@nestjs/swagger";
-import {IsMongoId, IsString} from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsMongoId, IsString } from 'class-validator';
 
 export class CreateCommentDto {
   @ApiProperty({
     description: 'User id',
-    example: '123'
+    example: '123',
   })
   @IsString()
   @IsMongoId()
@@ -12,7 +12,7 @@ export class CreateCommentDto {
 
   @ApiProperty({
     description: 'Comment text',
-    example: 'I want to buy this thing'
+    example: 'I want to buy this thing',
   })
   text!: string;
 }

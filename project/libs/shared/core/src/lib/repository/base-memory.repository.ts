@@ -1,20 +1,22 @@
 import { randomUUID } from 'node:crypto';
-import {Entity, EntityIdType} from "./entity.interface";
+import { Entity, EntityIdType } from './entity.interface';
 import { Repository } from './repository.interface';
 
-export abstract class BaseMemoryRepository<T extends Entity<EntityIdType>> implements Repository<T> {
+export abstract class BaseMemoryRepository<T extends Entity<EntityIdType>>
+  implements Repository<T>
+{
   protected entities: Map<T['id'], T> = new Map();
 
   public async findById(id: string): Promise<T | null> {
     return this.entities.get(id) || null;
   }
 
-  public async save(entity:T): Promise<T> {
+  public async save(entity: T): Promise<T> {
     if (!entity.id) {
-      entity.id = randomUUID()
+      entity.id = randomUUID();
     }
 
-    this.entities.set(entity.id, entity)
+    this.entities.set(entity.id, entity);
 
     return entity;
   }
@@ -26,13 +28,13 @@ export abstract class BaseMemoryRepository<T extends Entity<EntityIdType>> imple
 
     this.entities.set(id, {
       ...entity,
-      id
-    })
+      id,
+    });
 
     return entity;
   }
 
   public async deleteById(id: T['id']): Promise<void> {
-    this.entities.delete(id)
+    this.entities.delete(id);
   }
 }

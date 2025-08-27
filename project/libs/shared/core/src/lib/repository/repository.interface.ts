@@ -1,4 +1,4 @@
-import {DefaultToObjectType, Entity, EntityIdType} from './entity.interface';
+import { DefaultToObjectType, Entity, EntityIdType } from './entity.interface';
 
 export interface Repository<
   T extends Entity<EntityIdType, toObjectType>,

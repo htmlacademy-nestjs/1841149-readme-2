@@ -1,25 +1,32 @@
-import {PostType} from "@project/types";
-import {ApiProperty} from "@nestjs/swagger";
-import {ArrayMaxSize, IsArray, IsEnum, IsOptional, IsString, ValidateNested} from "class-validator";
-import {CreatePostMessages} from "./create-post.messages";
-import {PostState} from "@project/types";
-import {Type} from "class-transformer";
-import {UpdateVideoPostDto} from "./update-video-post.dto";
-import {UpdateLinkPostDto} from "./update-link-post.dto";
-import {UpdateTextPostDto} from "./update-text-post.dto";
-import {UpdateQuotePostDto} from "./update-quote-post.dto";
-import {UpdatePhotoPostDto} from "./update-photo-post.dto";
+import { PostType } from '@project/types';
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  ArrayMaxSize,
+  IsArray,
+  IsEnum,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { CreatePostMessages } from './create-post.messages';
+import { PostState } from '@project/types';
+import { Type } from 'class-transformer';
+import { UpdateVideoPostDto } from './update-video-post.dto';
+import { UpdateLinkPostDto } from './update-link-post.dto';
+import { UpdateTextPostDto } from './update-text-post.dto';
+import { UpdateQuotePostDto } from './update-quote-post.dto';
+import { UpdatePhotoPostDto } from './update-photo-post.dto';
 
 export class UpdatePostDto {
   @ApiProperty({
     description: 'Post id',
-    example: '11'
+    example: '11',
   })
   id!: string;
 
   @ApiProperty({
     description: 'Post tags array',
-    example: '["photo", "celebrity"]'
+    example: '["photo", "celebrity"]',
   })
   @IsOptional()
   @IsArray({ message: CreatePostMessages.tags.invalidFormat })
@@ -29,14 +36,14 @@ export class UpdatePostDto {
 
   @ApiProperty({
     description: 'Post type',
-    example: '["photo", "celebrity"]'
+    example: '["photo", "celebrity"]',
   })
   @IsEnum(PostType, { message: CreatePostMessages.type.value })
-  type!: PostType
+  type!: PostType;
 
   @ApiProperty({
     description: 'Post status',
-    example: 'draft'
+    example: 'draft',
   })
   @IsEnum(PostState, { message: CreatePostMessages.status.value })
   status!: PostState;

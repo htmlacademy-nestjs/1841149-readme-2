@@ -1,12 +1,12 @@
-import {CreatePostDto} from "./create-post.dto";
-import {ApiProperty} from "@nestjs/swagger";
-import {IsString, MaxLength, MinLength} from "class-validator";
-import {CreateQuotePostMessages} from "./create-quote-post.messages";
+import { CreatePostDto } from './create-post.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString, MaxLength, MinLength } from 'class-validator';
+import { CreateQuotePostMessages } from './create-quote-post.messages';
 
 export class CreateQuotePostDto extends CreatePostDto {
   @ApiProperty({
     description: 'Post quote text',
-    example: 'text of quote'
+    example: 'text of quote',
   })
   @IsString({ message: CreateQuotePostMessages.quote.invalidFormat })
   @MinLength(20, { message: CreateQuotePostMessages.quote.minLength })
@@ -15,7 +15,7 @@ export class CreateQuotePostDto extends CreatePostDto {
 
   @ApiProperty({
     description: 'Post quote author',
-    example: 'Arnold'
+    example: 'Arnold',
   })
   @IsString({ message: CreateQuotePostMessages.quoteAuthor.invalidFormat })
   @MinLength(3, { message: CreateQuotePostMessages.quoteAuthor.minLength })

@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
 import { plainToClass } from 'class-transformer';
-import { JWTConfiguration } from "./jwt/jwt.env";
+import { JWTConfiguration } from './jwt/jwt.env';
 
 async function getJWTConfig(): Promise<JWTConfiguration> {
   const config = plainToClass(JWTConfiguration, {

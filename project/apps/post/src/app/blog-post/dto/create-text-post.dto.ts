@@ -1,12 +1,12 @@
-import {CreatePostDto} from "./create-post.dto";
-import {ApiProperty} from "@nestjs/swagger";
-import {IsString, MaxLength, MinLength} from "class-validator";
-import {CreateTextPostMessages} from "./create-text-post.messages";
+import { CreatePostDto } from './create-post.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString, MaxLength, MinLength } from 'class-validator';
+import { CreateTextPostMessages } from './create-text-post.messages';
 
 export class CreateTextPostDto extends CreatePostDto {
   @ApiProperty({
     description: 'Post title',
-    example: 'Title'
+    example: 'Title',
   })
   @IsString({ message: CreateTextPostMessages.title.invalidFormat })
   @MinLength(20, { message: CreateTextPostMessages.title.minLength })
@@ -15,7 +15,7 @@ export class CreateTextPostDto extends CreatePostDto {
 
   @ApiProperty({
     description: 'Post announcement',
-    example: 'Short description'
+    example: 'Short description',
   })
   @IsString({ message: CreateTextPostMessages.announce.invalidFormat })
   @MinLength(20, { message: CreateTextPostMessages.announce.minLength })
@@ -24,7 +24,7 @@ export class CreateTextPostDto extends CreatePostDto {
 
   @ApiProperty({
     description: 'Post text',
-    example: 'I have a cat'
+    example: 'I have a cat',
   })
   @IsString({ message: CreateTextPostMessages.text.invalidFormat })
   @MinLength(20, { message: CreateTextPostMessages.text.minLength })

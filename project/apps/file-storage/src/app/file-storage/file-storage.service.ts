@@ -1,27 +1,89 @@
-import {Injectable, NotFoundException} from "@nestjs/common";
-import {File} from "@project/types";
-import {FileStorageRepository} from "./file-storage.repository";
-import {FileStorageEntity} from "./file-storage.entity";
+import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { StoredFile } from '@project/types';
+import { FileStorageConfig } from '@project/file-storage-config';
+import { join } from 'node:path';
+import { ensureDir, writeFile } from 'fs-extra';
+import dayjs from 'dayjs';
+import { randomUUID } from 'node:crypto';
+import { extension } from 'mime-types';
+import { FileRepository } from './file.repository';
+import { FileEntity } from './file.entity';
+import type { ConfigType } from '@nestjs/config';
 
 @Injectable()
 export class FileStorageService {
+  private readonly logger = new Logger(FileStorageService.name);
+  private readonly DATE_FORMAT = 'YYYY MM';
+
   constructor(
-    private readonly fileStorageRepository: FileStorageRepository
+    @Inject(FileStorageConfig.KEY)
+    private readonly config: ConfigType<typeof FileStorageConfig>,
+    private readonly fileRepository: FileRepository
   ) {}
 
-  public async uploadFile(file: File) {
-    const newFile = new FileStorageEntity(file);
-
-    return this.fileStorageRepository.save(newFile);
+  private getUploadDirectoryPath(): string {
+    return this.config.uploadDirectory;
   }
 
-  public async getFile(id: string) {
-    const file = await this.fileStorageRepository.findById(id);
+  private getDestinationDirectoryFilePath(filename: string): string {
+    return join(
+      this.getUploadDirectoryPath(),
+      this.getSubUploadDirectoryPath(),
+      filename
+    );
+  }
 
-    if (!file) {
-      throw new NotFoundException(`Could not find file with id: ${id}`);
+  private getSubUploadDirectoryPath(): string {
+    const [year, month] = dayjs().format(this.DATE_FORMAT).split(' ');
+    return join(year, month);
+  }
+
+  public async uploadFile(file: Express.Multer.File): Promise<StoredFile> {
+    try {
+      const uploadDirectoryPath = this.getUploadDirectoryPath();
+      const subDirectory = this.getSubUploadDirectoryPath();
+      const fileExtension = extension(file.mimetype);
+      const filename = `${randomUUID()}.${fileExtension}`;
+
+      const path = this.getDestinationDirectoryFilePath(filename);
+
+      await ensureDir(join(uploadDirectoryPath, subDirectory));
+      await writeFile(path, file.buffer);
+
+      return {
+        fileExtension,
+        filename,
+        path,
+        subDirectory,
+      };
+    } catch (error) {
+      this.logger.error(`Error while saving file: ${error.message}`);
+      throw new Error(`Can't save file`);
+    }
+  }
+
+  public async saveFile(file: Express.Multer.File): Promise<FileEntity> {
+    const storedFile = await this.uploadFile(file);
+    console.log(file);
+    const fileEntity = FileEntity.fromObject({
+      hashName: storedFile.filename,
+      mimetype: file.mimetype,
+      originalName: file.originalname,
+      path: storedFile.path,
+      size: file.size,
+      subDirectory: storedFile.subDirectory,
+    });
+
+    return this.fileRepository.save(fileEntity);
+  }
+
+  public async getFile(fileId: string): Promise<FileEntity> {
+    const existFile = await this.fileRepository.findById(fileId);
+
+    if (!existFile) {
+      throw new NotFoundException(`File with ${fileId} not found.`);
     }
 
-    return file;
+    return existFile;
   }
 }

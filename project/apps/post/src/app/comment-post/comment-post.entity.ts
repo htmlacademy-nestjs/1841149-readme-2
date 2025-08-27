@@ -1,8 +1,10 @@
-import {CommentPost} from "@project/types";
-import {Entity} from "@project/core";
-import {CreateCommentDto} from "./dto/create-comment.dto";
+import { CommentPost } from '@project/types';
+import { Entity } from '@project/core';
+import { CreateCommentDto } from './dto/create-comment.dto';
 
-export class CommentPostEntity implements CommentPost, Entity<string, CommentPost> {
+export class CommentPostEntity
+  implements CommentPost, Entity<string, CommentPost>
+{
   public id?: string;
   public text!: string;
   public createdAt!: Date;
@@ -17,7 +19,7 @@ export class CommentPostEntity implements CommentPost, Entity<string, CommentPos
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       authorId: this.authorId,
-      postId: this.postId
+      postId: this.postId,
     };
   }
 
@@ -32,17 +34,15 @@ export class CommentPostEntity implements CommentPost, Entity<string, CommentPos
   }
 
   static fromObject(data: CommentPost): CommentPostEntity {
-    return new CommentPostEntity()
-      .populate(data);
+    return new CommentPostEntity().populate(data);
   }
 
   static fromDto(dto: CreateCommentDto, postId: string): CommentPostEntity {
-    return new CommentPostEntity()
-      .populate({
-        ...dto,
-        postId,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      });
+    return new CommentPostEntity().populate({
+      ...dto,
+      postId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
   }
 }

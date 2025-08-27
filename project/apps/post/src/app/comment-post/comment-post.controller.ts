@@ -1,15 +1,21 @@
-import {Body, Controller, Delete, Get, HttpStatus, Param, Post} from "@nestjs/common";
-import {CommentPostService} from "./comment-post.service";
-import {CreateCommentDto} from "./dto/create-comment.dto";
-import {fillDto} from "@project/helpers";
-import {CommentPostRdo} from "./rdo/comment-post.rdo";
-import {ApiResponse} from "@nestjs/swagger";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+} from '@nestjs/common';
+import { CommentPostService } from './comment-post.service';
+import { CreateCommentDto } from './dto/create-comment.dto';
+import { fillDto } from '@project/helpers';
+import { CommentPostRdo } from './rdo/comment-post.rdo';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('posts/:postId/comments')
 export class CommentPostController {
-  constructor(
-    private readonly commentPostService: CommentPostService,
-  ) {}
+  constructor(private readonly commentPostService: CommentPostService) {}
 
   @ApiResponse({
     status: HttpStatus.OK,
@@ -19,7 +25,10 @@ export class CommentPostController {
   public async index(@Param('postId') postId: string) {
     const comments = await this.commentPostService.getComments(postId);
 
-    return fillDto(CommentPostRdo, comments.map(comment => comment.toObject()));
+    return fillDto(
+      CommentPostRdo,
+      comments.map((comment) => comment.toObject())
+    );
   }
 
   @ApiResponse({
@@ -28,7 +37,10 @@ export class CommentPostController {
     description: 'Successfully created a comment to post',
   })
   @Post('/')
-  public async createComment(@Param('postId') postId: string, @Body() dto: CreateCommentDto) {
+  public async createComment(
+    @Param('postId') postId: string,
+    @Body() dto: CreateCommentDto
+  ) {
     const newComment = await this.commentPostService.create(postId, dto);
 
     return fillDto(CommentPostRdo, newComment.toObject());
@@ -41,6 +53,6 @@ export class CommentPostController {
   @Delete(':id')
   public async deleteComment(@Param('id') id: string) {
     console.log('deleting comment', id);
-    await this.commentPostService.deleteComment(id)
+    await this.commentPostService.deleteComment(id);
   }
 }

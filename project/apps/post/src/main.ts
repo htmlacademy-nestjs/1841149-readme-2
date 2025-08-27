@@ -1,7 +1,7 @@
-import {Logger, ValidationPipe} from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const GLOBAL_PREFIX = 'api';
@@ -21,8 +21,12 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   await app.listen(port);
-  Logger.log(`🚀 Application is running on: http://localhost:${port}/${GLOBAL_PREFIX}`);
-  Logger.log(`📚 Swagger UI is available at: http://localhost:${port}/${GLOBAL_PREFIX}/spec`);
+  Logger.log(
+    `🚀 Application is running on: http://localhost:${port}/${GLOBAL_PREFIX}`
+  );
+  Logger.log(
+    `📚 Swagger UI is available at: http://localhost:${port}/${GLOBAL_PREFIX}/spec`
+  );
 }
 
 bootstrap();

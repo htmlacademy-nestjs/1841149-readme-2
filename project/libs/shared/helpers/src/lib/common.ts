@@ -3,19 +3,19 @@ import { ClassTransformOptions, plainToInstance } from 'class-transformer';
 export function fillDto<T, V>(
   DtoClass: new () => T,
   plainObject: V,
-  options?: ClassTransformOptions,
+  options?: ClassTransformOptions
 ): T;
 
 export function fillDto<T, V>(
   DtoClass: new () => T,
   plainObject: V,
-  options?: ClassTransformOptions,
+  options?: ClassTransformOptions
 ): T[];
 
 export function fillDto<T, V>(
   DtoClass: new () => T,
   plainObject: V,
-  options?: ClassTransformOptions,
+  options?: ClassTransformOptions
 ): T | T[] {
   return plainToInstance(DtoClass, plainObject, {
     excludeExtraneousValues: true,
@@ -23,6 +23,13 @@ export function fillDto<T, V>(
   });
 }
 
-export function getMongoConnectionString({username, password, host, port, databaseName, authDatabase}: Record<string, any>): string {
+export function getMongoConnectionString({
+  username,
+  password,
+  host,
+  port,
+  databaseName,
+  authDatabase,
+}: Record<string, any>): string {
   return `mongodb://${username}:${password}@${host}:${port}/${databaseName}?authSource=${authDatabase}`;
 }

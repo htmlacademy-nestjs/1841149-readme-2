@@ -1,14 +1,12 @@
-import {Controller, Delete, Get, HttpStatus, Param, Post} from "@nestjs/common";
-import {LikePostService} from "./like-post.service";
-import {fillDto} from "@project/helpers";
-import {LikePostRdo} from "./rdo/like-post.rdo";
-import {ApiResponse} from "@nestjs/swagger";
+import { Controller, Delete, HttpStatus, Param, Post } from '@nestjs/common';
+import { LikePostService } from './like-post.service';
+import { fillDto } from '@project/helpers';
+import { LikePostRdo } from './rdo/like-post.rdo';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('posts/:postId/likes')
 export class LikePostController {
-  constructor(
-    private readonly likePostService: LikePostService,
-  ) {}
+  constructor(private readonly likePostService: LikePostService) {}
 
   @ApiResponse({
     type: LikePostRdo,
@@ -27,7 +25,10 @@ export class LikePostController {
     description: 'Successfully delete like from post',
   })
   @Delete(':id')
-  public async deleteLike(@Param('postId') postId: string, @Param('id') id: string) {
-    await this.likePostService.delete(postId, id)
+  public async deleteLike(
+    @Param('postId') postId: string,
+    @Param('id') id: string
+  ) {
+    await this.likePostService.delete(postId, id);
   }
 }

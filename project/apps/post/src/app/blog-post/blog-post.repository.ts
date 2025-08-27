@@ -1,17 +1,18 @@
-import {Injectable, NotFoundException} from "@nestjs/common";
-import {BasePostgresRepository} from "@project/core";
-import {BlogPostEntity} from "./blog-post.entity";
-import {PrismaClientService} from "@project/models";
-import { PostUnion, PostType } from "@project/types"
-import {BlogPostQuery} from "./query/blog-post.query";
-import {PaginationResult} from "@project/types";
-import {Prisma} from "@prisma/client";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { BasePostgresRepository } from '@project/core';
+import { BlogPostEntity } from './blog-post.entity';
+import { PrismaClientService } from '@project/models';
+import { PostUnion, PostType } from '@project/types';
+import { BlogPostQuery } from './query/blog-post.query';
+import { PaginationResult } from '@project/types';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
-export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, PostUnion> {
-  constructor(
-    protected override readonly client: PrismaClientService,
-  ) {
+export class BlogPostRepository extends BasePostgresRepository<
+  BlogPostEntity,
+  PostUnion
+> {
+  constructor(protected override readonly client: PrismaClientService) {
     super(client, BlogPostEntity.fromObject);
   }
 
@@ -25,10 +26,10 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
         repost: objectEntity.repost,
         authorId: entity.authorId,
         tags: {
-          connect: objectEntity.tags?.map(({id}) => ({ id }))
+          connect: objectEntity.tags?.map(({ id }) => ({ id })),
         },
       },
-    })
+    });
 
     entity.id = record.id;
 
@@ -48,7 +49,7 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
             postId,
             title: postData.title,
             videoLink: postData.videoLink,
-          }
+          },
         });
         break;
 
@@ -59,7 +60,7 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
             title: postData.title,
             announce: postData.announce,
             text: postData.text,
-          }
+          },
         });
         break;
 
@@ -69,7 +70,7 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
             postId,
             quote: postData.quote,
             quoteAuthor: postData.quoteAuthor,
-          }
+          },
         });
         break;
 
@@ -78,7 +79,7 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
           data: {
             postId,
             photoLink: postData.photo,
-          }
+          },
         });
         break;
 
@@ -88,7 +89,7 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
             postId,
             link: postData.link,
             description: postData.description,
-          }
+          },
         });
         break;
     }
@@ -108,7 +109,7 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
             postId,
             title: postData.title,
             videoLink: postData.videoLink,
-          }
+          },
         });
         break;
 
@@ -122,7 +123,7 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
             title: postData.title,
             announce: postData.announce,
             text: postData.text,
-          }
+          },
         });
         break;
 
@@ -135,7 +136,7 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
             postId,
             quote: postData.quote,
             quoteAuthor: postData.quoteAuthor,
-          }
+          },
         });
         break;
 
@@ -147,7 +148,7 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
           data: {
             postId,
             photoLink: postData.photo,
-          }
+          },
         });
         break;
 
@@ -160,7 +161,7 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
             postId,
             link: postData.link,
             description: postData.description,
-          }
+          },
         });
         break;
     }
@@ -170,8 +171,8 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
     await this.client.post.delete({
       where: {
         id,
-      }
-    })
+      },
+    });
   }
 
   public override async findById(id: string): Promise<BlogPostEntity> {
@@ -183,7 +184,7 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
         tags: true,
         videoPost: true,
         likes: true,
-      }
+      },
     });
 
     if (!document) {
@@ -193,7 +194,10 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
     return this.createEntityFromDocument(document);
   }
 
-  public async updateById(id: string, entity: BlogPostEntity): Promise<BlogPostEntity> {
+  public async updateById(
+    id: string,
+    entity: BlogPostEntity
+  ): Promise<BlogPostEntity> {
     const objectEntity = entity.toObject();
     const updatedPost = await this.client.post.update({
       where: {
@@ -205,15 +209,15 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
         repost: objectEntity.repost,
         authorId: entity.authorId,
         tags: {
-          connect: objectEntity.tags?.map(({id}) => ({ id }))
+          connect: objectEntity.tags?.map(({ id }) => ({ id })),
         },
       },
       include: {
         tags: true,
         videoPost: true,
         likes: true,
-      }
-    })
+      },
+    });
 
     await this.updateTypeSpecificRecord(id, objectEntity);
 
@@ -228,21 +232,26 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
     return Math.ceil(totalCount / limit);
   }
 
-  public async find(query: BlogPostQuery): Promise<PaginationResult<BlogPostEntity>> {
-    const skip = query?.page && query?.limit ? (query.page - 1) * query.limit : undefined;
+  public async find(
+    query: BlogPostQuery
+  ): Promise<PaginationResult<BlogPostEntity>> {
+    const skip =
+      query?.page && query?.limit ? (query.page - 1) * query.limit : undefined;
     const take = query?.limit;
     const where: Prisma.PostWhereInput = {};
     const orderBy: Prisma.PostOrderByWithRelationInput = {};
 
     if (query['tags[]'] !== undefined) {
-      const tags = Array.isArray(query['tags[]']) ? query['tags[]'] : [query['tags[]']];
+      const tags = Array.isArray(query['tags[]'])
+        ? query['tags[]']
+        : [query['tags[]']];
       where.tags = {
         some: {
           id: {
-            in: tags
-          }
-        }
-      }
+            in: tags,
+          },
+        },
+      };
     }
 
     if (query?.sortDirection) {
@@ -250,7 +259,11 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
     }
 
     const [records, postCount] = await Promise.all([
-      this.client.post.findMany({ where, orderBy, skip, take,
+      this.client.post.findMany({
+        where,
+        orderBy,
+        skip,
+        take,
         include: {
           tags: true,
           comments: true,
@@ -266,6 +279,6 @@ export class BlogPostRepository extends BasePostgresRepository<BlogPostEntity, P
       totalPages: this.calculatePostsPage(postCount, take),
       itemsPerPage: take,
       totalItems: postCount,
-    }
+    };
   }
 }

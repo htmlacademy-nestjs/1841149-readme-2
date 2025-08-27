@@ -1,11 +1,11 @@
-import {ApiProperty} from "@nestjs/swagger";
-import {IsOptional, IsString, MaxLength, MinLength} from "class-validator";
-import {CreateQuotePostMessages} from "./create-quote-post.messages";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { CreateQuotePostMessages } from './create-quote-post.messages';
 
 export class UpdateQuotePostDto {
   @ApiProperty({
     description: 'Post quote text',
-    example: 'text of quote'
+    example: 'text of quote',
   })
   @IsOptional()
   @IsString({ message: CreateQuotePostMessages.quote.invalidFormat })
@@ -15,7 +15,7 @@ export class UpdateQuotePostDto {
 
   @ApiProperty({
     description: 'Post quote author',
-    example: 'Arnold'
+    example: 'Arnold',
   })
   @IsOptional()
   @IsString({ message: CreateQuotePostMessages.quoteAuthor.invalidFormat })

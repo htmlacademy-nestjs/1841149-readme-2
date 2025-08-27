@@ -1,20 +1,19 @@
 import {
   ConflictException,
-  HttpException, HttpStatus,
+  HttpException,
+  HttpStatus,
   Injectable,
   Logger,
   NotFoundException,
-  UnauthorizedException
+  UnauthorizedException,
 } from '@nestjs/common';
-import {BlogUserRepository} from "../blog-user/blog-user.repository";
-import {CreateUserDto} from "./dto/create-user.dto";
-import {
-  AUTH_MESSAGES,
-} from "./authentication.constant";
-import {BlogUserEntity} from "../blog-user/blog-user.entity";
-import {LoginUserDto} from "./dto/login-user.dto";
-import {JwtService} from "@nestjs/jwt";
-import {User, Token, TokenPayload} from "@project/types"
+import { BlogUserRepository } from '../blog-user/blog-user.repository';
+import { CreateUserDto } from './dto/create-user.dto';
+import { AUTH_MESSAGES } from './authentication.constant';
+import { BlogUserEntity } from '../blog-user/blog-user.entity';
+import { LoginUserDto } from './dto/login-user.dto';
+import { JwtService } from '@nestjs/jwt';
+import { User, Token, TokenPayload } from '@project/types';
 
 @Injectable()
 export class AuthenticationService {
@@ -22,9 +21,8 @@ export class AuthenticationService {
 
   constructor(
     private readonly blogUserRepository: BlogUserRepository,
-    private readonly jwtService: JwtService,
-  ) {
-  }
+    private readonly jwtService: JwtService
+  ) {}
 
   public async register(dto: CreateUserDto) {
     const { email, firstName, lastName, password, avatarUrl } = dto;
@@ -39,7 +37,7 @@ export class AuthenticationService {
       registrationDate: new Date().toISOString(),
       postCount: 0,
       subscriberCount: 0,
-    }
+    };
 
     const existUser = await this.blogUserRepository.findByEmail(email);
 
@@ -60,7 +58,7 @@ export class AuthenticationService {
       throw new NotFoundException(AUTH_MESSAGES.AUTH_USER_NOT_FOUND);
     }
 
-    if (!await existUser.comparePassword(password)) {
+    if (!(await existUser.comparePassword(password))) {
       throw new UnauthorizedException(AUTH_MESSAGES.AUTH_USER_PASSWORD_WRONG);
     }
 
@@ -90,7 +88,10 @@ export class AuthenticationService {
       return { accessToken };
     } catch (error) {
       this.logger.error('[Token generation error]: ' + error.message);
-      throw new HttpException('Ошибка при создании токена.', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'Ошибка при создании токена.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
     }
   }
 }

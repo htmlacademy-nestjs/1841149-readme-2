@@ -28,7 +28,7 @@ export class TagPostEntity implements Tag, Entity<string, Tag> {
       title: this.title,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
-    }
+    };
   }
 
   static fromObject(data: Tag): TagPostEntity {

@@ -1,11 +1,18 @@
-import {ApiProperty} from "@nestjs/swagger";
-import {IsNotEmpty, IsOptional, IsString, IsUrl, MaxLength, MinLength} from "class-validator";
-import {CreateVideoPostMessages} from "./create-video-post.messages";
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUrl,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
+import { CreateVideoPostMessages } from './create-video-post.messages';
 
 export class UpdateVideoPostDto {
   @ApiProperty({
     description: 'Post title',
-    example: 'Title'
+    example: 'Title',
   })
   @IsOptional()
   @IsString({ message: CreateVideoPostMessages.title.invalidFormat })
@@ -16,7 +23,7 @@ export class UpdateVideoPostDto {
 
   @ApiProperty({
     description: 'Post link to video',
-    example: 'youtube.com/video'
+    example: 'youtube.com/video',
   })
   @IsOptional()
   @IsUrl({}, { message: CreateVideoPostMessages.videoLink.invalidFormat })

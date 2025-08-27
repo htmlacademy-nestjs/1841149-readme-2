@@ -17,7 +17,8 @@ export * from './lib/post-union.type';
 export * from './lib/app-mode.enum';
 export * from './lib/tag.interface';
 export * from './lib/pagination.interface';
-export * from './lib/sort-direction.enum'
+export * from './lib/sort-direction.enum';
 export * from './lib/author.interface';
 export * from './lib/token-payload.interface';
 export * from './lib/token.interface';
+export * from './lib/stored-file.interface';

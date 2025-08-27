@@ -1,14 +1,15 @@
-import {BasePostgresRepository} from "@project/core";
-import {LikePostEntity} from "./like-post.entity";
-import { PostLike } from "@project/types";
-import {PrismaClientService} from "@project/models";
-import {Injectable} from "@nestjs/common";
+import { BasePostgresRepository } from '@project/core';
+import { LikePostEntity } from './like-post.entity';
+import { PostLike } from '@project/types';
+import { PrismaClientService } from '@project/models';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class LikePostRepository extends BasePostgresRepository<LikePostEntity, PostLike> {
-  constructor(
-    protected override readonly client: PrismaClientService,
-  ) {
+export class LikePostRepository extends BasePostgresRepository<
+  LikePostEntity,
+  PostLike
+> {
+  constructor(protected override readonly client: PrismaClientService) {
     super(client, LikePostEntity.fromObject);
   }
 
@@ -16,8 +17,8 @@ export class LikePostRepository extends BasePostgresRepository<LikePostEntity, P
     const record = await this.client.like.create({
       data: {
         ...entity.toObject(),
-      }
-    })
+      },
+    });
 
     entity.id = record.id;
     return entity;
@@ -26,25 +27,25 @@ export class LikePostRepository extends BasePostgresRepository<LikePostEntity, P
   public override async deleteById(id: string): Promise<void> {
     await this.client.like.delete({
       where: {
-        id
-      }
-    })
+        id,
+      },
+    });
   }
 
   public async deleteByPostId(postId: string): Promise<void> {
     await this.client.like.deleteMany({
       where: {
-        postId
-      }
-    })
+        postId,
+      },
+    });
   }
 
   public async findByPostId(postId: string): Promise<LikePostEntity[]> {
     const documents = await this.client.like.findMany({
       where: {
-        postId
-      }
-    })
+        postId,
+      },
+    });
 
     return documents.map((document) => this.createEntityFromDocument(document));
   }

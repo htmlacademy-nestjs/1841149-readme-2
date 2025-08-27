@@ -1,6 +1,6 @@
-import { AuthUser, User } from "@project/types";
-import {compare, genSalt, hash} from "bcrypt";
-import {SALT_ROUNDS} from "./blog-user.constant";
+import { AuthUser, User } from '@project/types';
+import { compare, genSalt, hash } from 'bcrypt';
+import { SALT_ROUNDS } from './blog-user.constant';
 
 export class BlogUserEntity implements AuthUser, User {
   public id!: string;
@@ -14,7 +14,7 @@ export class BlogUserEntity implements AuthUser, User {
   public subscriberCount!: number;
 
   constructor(user: AuthUser) {
-    this.populate(user)
+    this.populate(user);
   }
 
   static fromObject(data: AuthUser): BlogUserEntity {

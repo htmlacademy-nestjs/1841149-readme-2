@@ -7,15 +7,17 @@ import { Repository } from './repository.interface';
 export abstract class BaseMongoRepository<
   EntityType extends Entity<EntityIdType>,
   DocumentType extends Document
-> implements Repository<EntityType> {
-
+> implements Repository<EntityType>
+{
   constructor(
     protected readonly model: Model<DocumentType>,
-    private readonly createEntity: (document: DocumentType) => EntityType,
+    private readonly createEntity: (document: DocumentType) => EntityType
   ) {}
 
-  protected createEntityFromDocument(document: DocumentType): EntityType | null {
-    if (! document) {
+  protected createEntityFromDocument(
+    document: DocumentType
+  ): EntityType | null {
+    if (!document) {
       return null;
     }
 
@@ -23,7 +25,7 @@ export abstract class BaseMongoRepository<
   }
 
   public async findById(id: EntityType['id']): Promise<EntityType | null> {
-    const document= await this.model.findById(id).exec();
+    const document = await this.model.findById(id).exec();
     return this.createEntityFromDocument(document as DocumentType);
   }
 
@@ -35,12 +37,15 @@ export abstract class BaseMongoRepository<
     return entity;
   }
 
-  public async update(id: EntityType['id'], entity: EntityType): Promise<EntityType> {
-    const updatedDocument = await this.model.findByIdAndUpdate(
-      id,
-      entity.toObject(),
-      { new: true, runValidators: true }
-    )
+  public async update(
+    id: EntityType['id'],
+    entity: EntityType
+  ): Promise<EntityType> {
+    const updatedDocument = await this.model
+      .findByIdAndUpdate(id, entity.toObject(), {
+        new: true,
+        runValidators: true,
+      })
       .exec();
 
     if (!updatedDocument) {

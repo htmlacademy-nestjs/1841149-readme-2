@@ -1,4 +1,4 @@
-import {PostLike} from "@project/types";
+import { PostLike } from '@project/types';
 import { Entity } from '@project/core';
 
 export class LikePostEntity implements PostLike, Entity<string, PostLike> {

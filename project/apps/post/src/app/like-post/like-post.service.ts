@@ -1,13 +1,17 @@
-import {ConflictException, Injectable, NotFoundException} from "@nestjs/common";
-import {LikePostRepository} from "./like-post.repository";
-import {LikePostEntity} from "./like-post.entity";
-import {BlogPostService} from "../blog-post/blog-post.service";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { LikePostRepository } from './like-post.repository';
+import { LikePostEntity } from './like-post.entity';
+import { BlogPostService } from '../blog-post/blog-post.service';
 
 @Injectable()
 export class LikePostService {
   constructor(
     private readonly likePostRepository: LikePostRepository,
-    private readonly blogPostService: BlogPostService,
+    private readonly blogPostService: BlogPostService
   ) {}
 
   public async create(postId: string) {
@@ -17,10 +21,14 @@ export class LikePostService {
       throw new NotFoundException(`Post with id ${postId} not found`);
     }
 
-    const existLike = (await this.likePostRepository.findByPostId(postId)).at(0);
+    const existLike = (await this.likePostRepository.findByPostId(postId)).at(
+      0
+    );
 
     if (existLike) {
-      throw new ConflictException(`Like for post with id: ${postId} already exist`);
+      throw new ConflictException(
+        `Like for post with id: ${postId} already exist`
+      );
     }
 
     // TODO Брать id пользователя из токена
@@ -28,11 +36,10 @@ export class LikePostService {
     const newLike = new LikePostEntity({
       postId,
       userId: '1',
-    })
+    });
 
     // TODO Логика обновления количества лайков
     await this.likePostRepository.save(newLike);
-
 
     return newLike;
   }
@@ -44,10 +51,14 @@ export class LikePostService {
       throw new NotFoundException(`Post with id ${postId} not found`);
     }
 
-    const existLike = (await this.likePostRepository.findByPostId(postId)).at(0);
+    const existLike = (await this.likePostRepository.findByPostId(postId)).at(
+      0
+    );
 
     if (!existLike) {
-      throw new NotFoundException(`Like for post with id: ${postId} does not exist`);
+      throw new NotFoundException(
+        `Like for post with id: ${postId} does not exist`
+      );
     }
 
     // TODO Логика обновления количества лайков

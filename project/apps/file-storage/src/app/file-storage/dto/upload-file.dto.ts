@@ -1,4 +1,4 @@
 export class UploadFileDto {
-  name: string;
-  path: string;
+  name!: string;
+  path!: string;
 }

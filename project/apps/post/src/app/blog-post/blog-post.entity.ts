@@ -1,14 +1,10 @@
-import {
-  Post,
-  PostState,
-  PostType, PostUnion,
-} from "@project/types";
-import {HttpException, HttpStatus} from "@nestjs/common";
-import {TagPostEntity} from "../tag-post/tag-post.entity";
-import { Entity } from "@project/core"
-import {CreatePostDto} from "./dto/create-post.dto";
-import {LikePostEntity} from "../like-post/like-post.entity";
-import {CommentPostEntity} from "../comment-post/comment-post.entity";
+import { Post, PostState, PostType, PostUnion } from '@project/types';
+import { HttpException, HttpStatus } from '@nestjs/common';
+import { TagPostEntity } from '../tag-post/tag-post.entity';
+import { Entity } from '@project/core';
+import { CreatePostDto } from './dto/create-post.dto';
+import { LikePostEntity } from '../like-post/like-post.entity';
+import { CommentPostEntity } from '../comment-post/comment-post.entity';
 
 export class BlogPostEntity implements Post, Entity<string, PostUnion> {
   public id?: string;
@@ -35,7 +31,6 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
   public comments!: CommentPostEntity[];
   public commentCount!: number;
   public description?: string;
-
 
   public toObject(): PostUnion {
     const basePost = {
@@ -95,7 +90,7 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
           title: this.title!,
           announce: this.announce!,
           text: this.text!,
-        }
+        };
 
       default:
         throw new HttpException(
@@ -109,8 +104,11 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
     this.id = data.id;
     this.authorId = data.authorId;
     this.tags = data.tags?.map((tag) => TagPostEntity.fromObject(tag)) ?? [];
-    this.likes = data.likes?.map((like) => LikePostEntity.fromObject(like)) ?? [];
-    this.comments = data.comments?.map((comment) => CommentPostEntity.fromObject(comment)) ?? [];
+    this.likes =
+      data.likes?.map((like) => LikePostEntity.fromObject(like)) ?? [];
+    this.comments =
+      data.comments?.map((comment) => CommentPostEntity.fromObject(comment)) ??
+      [];
     this.type = data.type;
     this.status = data.status;
     this.createdAt = data.createdAt;
@@ -156,31 +154,43 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
     switch (this.type) {
       case PostType.PHOTO:
         if (!this.photo) {
-          throw new HttpException("Photo link is required", HttpStatus.BAD_REQUEST);
+          throw new HttpException(
+            'Photo link is required',
+            HttpStatus.BAD_REQUEST
+          );
         }
         break;
 
       case PostType.LINK:
         if (!this.link) {
-          throw new HttpException("Link is required", HttpStatus.BAD_REQUEST);
+          throw new HttpException('Link is required', HttpStatus.BAD_REQUEST);
         }
         break;
 
       case PostType.QUOTE:
         if (!this.quote || !this.quoteAuthor) {
-          throw new HttpException("Quote and quote author are required", HttpStatus.BAD_REQUEST);
+          throw new HttpException(
+            'Quote and quote author are required',
+            HttpStatus.BAD_REQUEST
+          );
         }
         break;
 
       case PostType.VIDEO:
         if (!this.title || !this.videoLink) {
-          throw new HttpException("Title and video link are required", HttpStatus.BAD_REQUEST);
+          throw new HttpException(
+            'Title and video link are required',
+            HttpStatus.BAD_REQUEST
+          );
         }
         break;
 
       case PostType.TEXT:
         if (!this.title || !this.announce || !this.text) {
-          throw new HttpException("Title, announce, and text are required", HttpStatus.BAD_REQUEST);
+          throw new HttpException(
+            'Title, announce, and text are required',
+            HttpStatus.BAD_REQUEST
+          );
         }
         break;
     }

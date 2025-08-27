@@ -1,19 +1,27 @@
-import {PostState} from "@project/types";
-import {ApiProperty} from "@nestjs/swagger";
-import {PostType} from "@project/types";
-import {ArrayMaxSize, IsArray, IsBoolean, IsEnum, IsOptional, IsString, ValidateNested} from "class-validator";
-import {CreatePostMessages} from "./create-post.messages";
-import {Type} from "class-transformer";
-import {CreateVideoPostDto} from "./create-video-post.dto";
-import {CreateLinkPostDto} from "./create-link-post.dto";
-import {CreateTextPostDto} from "./create-text-post.dto";
-import {CreateQuotePostDto} from "./create-quote-post.dto";
-import {CreatePhotoPostDto} from "./create-photo-post.dto";
+import { PostState } from '@project/types';
+import { ApiProperty } from '@nestjs/swagger';
+import { PostType } from '@project/types';
+import {
+  ArrayMaxSize,
+  IsArray,
+  IsBoolean,
+  IsEnum,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { CreatePostMessages } from './create-post.messages';
+import { Type } from 'class-transformer';
+import { CreateVideoPostDto } from './create-video-post.dto';
+import { CreateLinkPostDto } from './create-link-post.dto';
+import { CreateTextPostDto } from './create-text-post.dto';
+import { CreateQuotePostDto } from './create-quote-post.dto';
+import { CreatePhotoPostDto } from './create-photo-post.dto';
 
 export class CreatePostDto {
   @ApiProperty({
     description: 'Post tags array',
-    example: '["photo", "celebrity"]'
+    example: '["photo", "celebrity"]',
   })
   @IsOptional()
   @IsArray({ message: CreatePostMessages.tags.invalidFormat })
@@ -23,14 +31,14 @@ export class CreatePostDto {
 
   @ApiProperty({
     description: 'Post type',
-    example: '["photo", "celebrity"]'
+    example: '["photo", "celebrity"]',
   })
   @IsEnum(PostType, { message: CreatePostMessages.type.value })
-  type!: PostType
+  type!: PostType;
 
   @ApiProperty({
     description: 'Post status',
-    example: 'draft'
+    example: 'draft',
   })
   @IsEnum(PostState, { message: CreatePostMessages.status.value })
   status!: PostState;

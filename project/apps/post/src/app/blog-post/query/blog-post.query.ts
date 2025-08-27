@@ -1,6 +1,10 @@
-import {Transform} from "class-transformer";
-import {DEFAULT_PAGE_COUNT, DEFAULT_POST_COUNT_LIMIT, DEFAULT_SORT_DIRECTION} from "../blog-post.constants";
-import {IsIn, IsNumber, IsOptional, IsUUID} from "class-validator";
+import { Transform } from 'class-transformer';
+import {
+  DEFAULT_PAGE_COUNT,
+  DEFAULT_POST_COUNT_LIMIT,
+  DEFAULT_SORT_DIRECTION,
+} from '../blog-post.constants';
+import { IsIn, IsNumber, IsOptional, IsUUID } from 'class-validator';
 import { SortDirection } from '@project/types';
 
 export class BlogPostQuery {

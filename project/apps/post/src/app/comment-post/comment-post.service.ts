@@ -1,13 +1,13 @@
-import {Injectable} from "@nestjs/common";
-import {CommentPostEntity} from "./comment-post.entity";
-import {CommentPostRepository} from "./comment-post.repository";
-import {BlogPostService} from "../blog-post/blog-post.service";
+import { Injectable } from '@nestjs/common';
+import { CommentPostEntity } from './comment-post.entity';
+import { CommentPostRepository } from './comment-post.repository';
+import { BlogPostService } from '../blog-post/blog-post.service';
 
 @Injectable()
 export class CommentPostService {
   constructor(
     private readonly commentPostRepository: CommentPostRepository,
-    private readonly blogPostService: BlogPostService,
+    private readonly blogPostService: BlogPostService
   ) {}
 
   public async getComments(postId: string) {
