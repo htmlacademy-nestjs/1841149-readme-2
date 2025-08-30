@@ -32,12 +32,18 @@ export class LikePostRepository extends BasePostgresRepository<
     });
   }
 
-  public async deleteByPostId(postId: string): Promise<void> {
-    await this.client.like.deleteMany({
+  public async findByUserAndPostIds(
+    postId: string,
+    userId: string
+  ): Promise<LikePostEntity | null> {
+    const document = await this.client.like.findFirst({
       where: {
         postId,
+        userId,
       },
     });
+
+    return document ? this.createEntityFromDocument(document) : null;
   }
 
   public async findByPostId(postId: string): Promise<LikePostEntity[]> {

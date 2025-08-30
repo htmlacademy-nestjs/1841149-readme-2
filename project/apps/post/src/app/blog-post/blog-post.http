@@ -1,7 +1,17 @@
 ###
 
 # Get posts
-GET http://localhost:3000/api/posts
+GET http://localhost:3000/api/posts?sortBy=commentCount
+
+###
+
+# Get posts by type
+GET http://localhost:3000/api/posts/type/photo
+
+###
+
+# Search posts by title
+GET http://localhost:3000/api/posts/search?title=app2
 
 ###
 
@@ -16,23 +26,26 @@ Content-Type: application/json
   "status": "published",
   "repost": false,
   "authorId": "123",
-  "type": "video",
-  "videoPost": {
-    "title": "How to Build NestJS App",
-    "videoLink": "https://youtube.com/watch?v=abc123"
-  }
+  "type": "photo",
+  "photo": "https://app.diagrams.net/"
 }
 
 ###
 
+# Create repost of post
+GET http://localhost:3000/api/posts/11b95821-6bd8-4c80-946f-b50e34659e75/repost HTTP/1.1
+Content-Type: application/json
+
+###
+
 # Detail post info
-GET http://localhost:3000/api/posts/11b95821-6bd8-4c80-946f-b50e34659e75 HTTP/1.1
+GET http://localhost:3000/api/posts/a5b5eeb7-458a-4da4-b41b-cd977a575fe8 HTTP/1.1
 Content-Type: application/json
 
 ###
 
 # Update post
-PATCH http://localhost:3000/api/posts/11b95821-6bd8-4c80-946f-b50e34659e75 HTTP/1.1
+PATCH http://localhost:3000/api/posts/a5b5eeb7-458a-4da4-b41b-cd977a575fe8 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -51,7 +64,7 @@ Content-Type: application/json
 ###
 
 # Delete post
-DELETE http://localhost:3000/api/posts/b5ed0201-9f42-4603-9e74-026df8a907f1 HTTP/1.1
+DELETE http://localhost:3000/api/posts/a5b5eeb7-458a-4da4-b41b-cd977a575fe8 HTTP/1.1
 Content-Type: application/json
 
 ###

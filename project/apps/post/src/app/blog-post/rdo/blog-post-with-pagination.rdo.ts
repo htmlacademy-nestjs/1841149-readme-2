@@ -1,8 +1,9 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 import { BasePostRdo } from './base-post.rdo';
 
 export class BlogPostWithPaginationRdo {
   @Expose()
+  @Type(() => BasePostRdo)
   public entities!: BasePostRdo[];
 
   @Expose()

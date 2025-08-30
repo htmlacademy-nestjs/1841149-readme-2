@@ -6,17 +6,19 @@ import {
   IsArray,
   IsBoolean,
   IsEnum,
+  IsNotEmpty,
   IsOptional,
   IsString,
-  ValidateNested,
+  IsUrl,
+  MaxLength,
+  MinLength,
 } from 'class-validator';
 import { CreatePostMessages } from './create-post.messages';
-import { Type } from 'class-transformer';
-import { CreateVideoPostDto } from './create-video-post.dto';
-import { CreateLinkPostDto } from './create-link-post.dto';
-import { CreateTextPostDto } from './create-text-post.dto';
-import { CreateQuotePostDto } from './create-quote-post.dto';
-import { CreatePhotoPostDto } from './create-photo-post.dto';
+import { CreateVideoPostMessages } from './create-video-post.messages';
+import { CreateLinkPostMessages } from './create-link-post.messages';
+import { CreateTextPostMessages } from './create-text-post.messages';
+import { CreateQuotePostMessages } from './create-quote-post.messages';
+import { CreatePhotoPostMessages } from './create-photo-post.messages';
 
 export class CreatePostDto {
   @ApiProperty({
@@ -31,44 +33,107 @@ export class CreatePostDto {
 
   @ApiProperty({
     description: 'Post type',
-    example: '["photo", "celebrity"]',
+    example: 'video',
   })
   @IsEnum(PostType, { message: CreatePostMessages.type.value })
   type!: PostType;
 
   @ApiProperty({
     description: 'Post status',
-    example: 'draft',
+    example: 'draft or published',
   })
   @IsEnum(PostState, { message: CreatePostMessages.status.value })
   status!: PostState;
 
   @IsOptional()
   @IsBoolean()
+  @ApiProperty({
+    description: 'Repost flag',
+    example: 'false',
+  })
   repost?: boolean;
 
+  @ApiProperty({
+    description: 'Post title',
+    example: 'Title',
+  })
   @IsOptional()
-  @ValidateNested()
-  @Type(() => CreateVideoPostDto)
-  videoPost?: CreateVideoPostDto;
+  @IsString({ message: CreateVideoPostMessages.title.invalidFormat })
+  @IsNotEmpty()
+  @MinLength(10, { message: CreateVideoPostMessages.title.minLength })
+  @MaxLength(50, { message: CreateVideoPostMessages.title.maxLength })
+  title?: string;
 
+  @ApiProperty({
+    description: 'Post link to video',
+    example: 'youtube.com/video',
+  })
   @IsOptional()
-  @ValidateNested()
-  @Type(() => CreateLinkPostDto)
-  linkPost?: CreateLinkPostDto;
+  @IsUrl({}, { message: CreateVideoPostMessages.videoLink.invalidFormat })
+  videoLink?: string;
 
+  @ApiProperty({
+    description: 'Link',
+    example: 'google.com',
+  })
   @IsOptional()
-  @ValidateNested()
-  @Type(() => CreateTextPostDto)
-  textPost?: CreateTextPostDto;
+  @IsUrl({}, { message: CreateLinkPostMessages.link.invalidFormat })
+  link?: string;
 
+  @ApiProperty({
+    description: 'Description to post',
+    example: 'test description',
+  })
   @IsOptional()
-  @ValidateNested()
-  @Type(() => CreateQuotePostDto)
-  quotePost?: CreateQuotePostDto;
+  @IsString({ message: CreateLinkPostMessages.description.invalidFormat })
+  @MaxLength(300, { message: CreateLinkPostMessages.description.maxLength })
+  description?: string;
 
+  @ApiProperty({
+    description: 'Post announcement',
+    example: 'Short description',
+  })
   @IsOptional()
-  @ValidateNested()
-  @Type(() => CreatePhotoPostDto)
-  photoPost?: CreatePhotoPostDto;
+  @IsString({ message: CreateTextPostMessages.announce.invalidFormat })
+  @MinLength(20, { message: CreateTextPostMessages.announce.minLength })
+  @MaxLength(50, { message: CreateTextPostMessages.announce.maxLength })
+  announce?: string;
+
+  @ApiProperty({
+    description: 'Post text',
+    example: 'I have a cat',
+  })
+  @IsOptional()
+  @IsString({ message: CreateTextPostMessages.text.invalidFormat })
+  @MinLength(20, { message: CreateTextPostMessages.text.minLength })
+  @MaxLength(50, { message: CreateTextPostMessages.text.maxLength })
+  text?: string;
+
+  @ApiProperty({
+    description: 'Post quote text',
+    example: 'text of quote',
+  })
+  @IsOptional()
+  @IsString({ message: CreateQuotePostMessages.quote.invalidFormat })
+  @MinLength(20, { message: CreateQuotePostMessages.quote.minLength })
+  @MaxLength(300, { message: CreateQuotePostMessages.quote.maxLength })
+  quote?: string;
+
+  @ApiProperty({
+    description: 'Post quote author',
+    example: 'Arnold',
+  })
+  @IsOptional()
+  @IsString({ message: CreateQuotePostMessages.quoteAuthor.invalidFormat })
+  @MinLength(3, { message: CreateQuotePostMessages.quoteAuthor.minLength })
+  @MaxLength(50, { message: CreateQuotePostMessages.quoteAuthor.maxLength })
+  quoteAuthor?: string;
+
+  @ApiProperty({
+    description: 'Link to photo',
+    example: '/test.jpg',
+  })
+  @IsOptional()
+  @IsUrl({}, { message: CreatePhotoPostMessages.photo.invalidFormat })
+  photo?: string;
 }

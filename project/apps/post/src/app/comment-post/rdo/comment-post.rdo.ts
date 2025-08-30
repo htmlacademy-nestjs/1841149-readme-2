@@ -12,9 +12,9 @@ export class CommentPostRdo {
   @Expose()
   @ApiProperty({
     description: 'Comment author',
-    example: '{ id: "123" }',
+    example: '123',
   })
-  author!: string;
+  authorId!: string;
 
   @Expose()
   @ApiProperty({

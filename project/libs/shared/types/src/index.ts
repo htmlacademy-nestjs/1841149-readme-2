@@ -22,3 +22,5 @@ export * from './lib/author.interface';
 export * from './lib/token-payload.interface';
 export * from './lib/token.interface';
 export * from './lib/stored-file.interface';
+export * from './lib/sort-type.enum';
+export * from './lib/flat-post.interface';

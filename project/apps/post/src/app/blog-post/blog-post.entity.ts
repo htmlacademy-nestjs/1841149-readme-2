@@ -1,4 +1,4 @@
-import { Post, PostState, PostType, PostUnion } from '@project/types';
+import { Post, PostState, PostType, PostUnion, FlatPost } from '@project/types';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { TagPostEntity } from '../tag-post/tag-post.entity';
 import { Entity } from '@project/core';
@@ -6,7 +6,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { LikePostEntity } from '../like-post/like-post.entity';
 import { CommentPostEntity } from '../comment-post/comment-post.entity';
 
-export class BlogPostEntity implements Post, Entity<string, PostUnion> {
+export class BlogPostEntity implements Post, Entity<string, FlatPost> {
   public id?: string;
   public authorId!: string;
   public tags!: TagPostEntity[];
@@ -32,7 +32,7 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
   public commentCount!: number;
   public description?: string;
 
-  public toObject(): PostUnion {
+  public toObject(): FlatPost {
     const basePost = {
       id: this.id,
       authorId: this.authorId,
@@ -42,9 +42,9 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       repost: this.repost,
-      likes: this.likes.map((like) => like.toObject()),
+      likes: this.likes?.map((like) => like.toObject()) ?? [],
       likeCount: this.getLikeCount(),
-      comments: this.comments.map((comment) => comment.toObject()),
+      comments: this.comments?.map((comment) => comment.toObject()) ?? [],
       commentCount: this.getCommentCount(),
       originalAuthorId: this.originalAuthorId,
       originalPostId: this.originalPostId,
@@ -55,14 +55,12 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
       case PostType.PHOTO:
         return {
           ...basePost,
-          type: PostType.PHOTO,
           photo: this.photo!,
         };
 
       case PostType.LINK:
         return {
           ...basePost,
-          type: PostType.LINK,
           link: this.link!,
           description: this.description,
         };
@@ -70,7 +68,6 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
       case PostType.QUOTE:
         return {
           ...basePost,
-          type: PostType.QUOTE,
           quote: this.quote!,
           quoteAuthor: this.quoteAuthor!,
         };
@@ -78,7 +75,6 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
       case PostType.VIDEO:
         return {
           ...basePost,
-          type: PostType.VIDEO,
           title: this.title!,
           videoLink: this.videoLink!,
         };
@@ -86,7 +82,6 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
       case PostType.TEXT:
         return {
           ...basePost,
-          type: PostType.TEXT,
           title: this.title!,
           announce: this.announce!,
           text: this.text!,
@@ -122,28 +117,28 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
 
     switch (data.type) {
       case PostType.PHOTO:
-        this.photo = data.photo;
+        this.photo = data.photoPost.photoLink;
         break;
 
       case PostType.LINK:
-        this.link = data.link;
-        this.description = data.description;
+        this.link = data.linkPost.link;
+        this.description = data.linkPost.description;
         break;
 
       case PostType.QUOTE:
-        this.quote = data.quote;
-        this.quoteAuthor = data.quoteAuthor;
+        this.quote = data.quotePost.quote;
+        this.quoteAuthor = data.quotePost.quoteAuthor;
         break;
 
       case PostType.VIDEO:
-        this.title = data.title;
-        this.videoLink = data.videoLink;
+        this.title = data.videoPost.title;
+        this.videoLink = data.videoPost.videoLink;
         break;
 
       case PostType.TEXT:
-        this.title = data.title;
-        this.announce = data.announce;
-        this.text = data.text;
+        this.title = data.textPost.title;
+        this.announce = data.textPost.announce;
+        this.text = data.textPost.text;
         break;
     }
 
@@ -203,14 +198,22 @@ export class BlogPostEntity implements Post, Entity<string, PostUnion> {
   static fromDTO(dto: CreatePostDto, tags: TagPostEntity[]): BlogPostEntity {
     const entity = new BlogPostEntity();
 
+    // TODO Заменить на айди из токена
     entity.authorId = '123';
     entity.tags = tags;
     entity.type = dto.type;
     entity.status = dto.status ?? PostState.Publised;
     entity.repost = dto.repost ?? false;
 
-    entity.title = dto.videoPost?.title;
-    entity.videoLink = dto.videoPost?.videoLink;
+    entity.title = dto.title ?? undefined;
+    entity.videoLink = dto.videoLink ?? undefined;
+    entity.photo = dto.photo ?? undefined;
+    entity.link = dto.link ?? undefined;
+    entity.description = dto.description ?? undefined;
+    entity.quote = dto.quote ?? undefined;
+    entity.quoteAuthor = dto.quoteAuthor ?? undefined;
+    entity.text = dto.text ?? undefined;
+    entity.announce = dto.announce ?? undefined;
 
     return entity;
   }

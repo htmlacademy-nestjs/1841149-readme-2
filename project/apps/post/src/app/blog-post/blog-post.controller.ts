@@ -9,11 +9,6 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { CreateQuotePostDto } from './dto/create-quote-post.dto';
-import { CreateVideoPostDto } from './dto/create-video-post.dto';
-import { CreateTextPostDto } from './dto/create-text-post.dto';
-import { CreateLinkPostDto } from './dto/create-link-post.dto';
-import { CreatePhotoPostDto } from './dto/create-photo-post.dto';
 import { BlogPostService } from './blog-post.service';
 import { fillDto } from '@project/helpers';
 import { BasePostRdo } from './rdo/base-post.rdo';
@@ -21,13 +16,20 @@ import { ApiResponse } from '@nestjs/swagger';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { BlogPostQuery } from './query/blog-post.query';
 import { BlogPostWithPaginationRdo } from './rdo/blog-post-with-pagination.rdo';
-
-// TODO разграничить разные типа постов
+import { BlogPostTypeQuery } from './query/blog-post-type.query';
+import { PostType } from '@project/types';
+import { BlogPostSearchQuery } from './query/blog-post-search.query';
+import { CreatePostDto } from './dto/create-post.dto';
 
 @Controller('posts')
 export class BlogPostController {
   constructor(private readonly blogPostService: BlogPostService) {}
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'List of comments to post',
+    type: BlogPostWithPaginationRdo,
+  })
   @Get('/')
   public async index(@Query() query: BlogPostQuery) {
     const postsWithPagination = await this.blogPostService.getAllPosts(query);
@@ -39,14 +41,45 @@ export class BlogPostController {
   }
 
   @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'List of comments to post',
+    type: BlogPostWithPaginationRdo,
+  })
+  @Get('/search')
+  public async search(@Query() query: BlogPostSearchQuery) {
+    const postsWithPagination = await this.blogPostService.searchByTitle(query);
+    const result = {
+      ...postsWithPagination,
+      entities: postsWithPagination.entities.map((post) => post.toObject()),
+    };
+
+    return fillDto(BlogPostWithPaginationRdo, result);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'List of comments to post',
+    type: BlogPostWithPaginationRdo,
+  })
+  @Get('/type/:type')
+  @ApiResponse({
     type: BasePostRdo,
     status: HttpStatus.OK,
     description: 'Detail post information',
   })
-  @Get(':id')
-  public async show(@Param('id') id: string) {
-    const post = await this.blogPostService.show(id);
-    return fillDto(BasePostRdo, post.toObject());
+  public async categorize(
+    @Query() query: BlogPostTypeQuery,
+    @Param('type') type: PostType
+  ) {
+    const postsWithPagination = await this.blogPostService.getPostByType(
+      query,
+      type
+    );
+    const result = {
+      ...postsWithPagination,
+      entities: postsWithPagination.entities.map((post) => post.toObject()),
+    };
+    return fillDto(BlogPostWithPaginationRdo, result);
   }
 
   @ApiResponse({
@@ -57,12 +90,7 @@ export class BlogPostController {
   @Post('')
   public async create(
     @Body()
-    dto:
-      | CreateQuotePostDto
-      | CreateVideoPostDto
-      | CreateTextPostDto
-      | CreateLinkPostDto
-      | CreatePhotoPostDto
+    dto: CreatePostDto
   ) {
     const newPost = await this.blogPostService.create(dto);
     return fillDto(BasePostRdo, newPost.toObject());
@@ -93,10 +121,26 @@ export class BlogPostController {
   public async delete(@Param('id') id: string) {
     await this.blogPostService.delete(id);
   }
-  //
-  //
-  // @Get('search')
-  // public async search(@Query('search') search: string) {
-  //   //   TODO
-  // }
+
+  @ApiResponse({
+    type: BasePostRdo,
+    status: HttpStatus.OK,
+    description: 'Repost post',
+  })
+  @Get(':id/repost')
+  public async repost(@Param('id') id: string) {
+    const post = await this.blogPostService.repost(id, '444');
+    return fillDto(BasePostRdo, post.toObject());
+  }
+
+  @ApiResponse({
+    type: BasePostRdo,
+    status: HttpStatus.OK,
+    description: 'Detail post information',
+  })
+  @Get(':id')
+  public async show(@Param('id') id: string) {
+    const post = await this.blogPostService.show(id);
+    return fillDto(BasePostRdo, post.toObject());
+  }
 }

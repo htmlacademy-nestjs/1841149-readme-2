@@ -1,9 +1,8 @@
-import { CreatePostDto } from './create-post.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, MaxLength, MinLength } from 'class-validator';
 import { CreateQuotePostMessages } from './create-quote-post.messages';
 
-export class CreateQuotePostDto extends CreatePostDto {
+export class CreateQuotePostDto {
   @ApiProperty({
     description: 'Post quote text',
     example: 'text of quote',

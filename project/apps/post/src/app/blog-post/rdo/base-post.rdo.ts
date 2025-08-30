@@ -1,13 +1,9 @@
 import { PostState } from '@project/types';
-import { Expose, Transform, Type } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { VideoPostRdo } from './video-post.rdo';
-import { TextPostRdo } from './text-post.rdo';
-import { QuotePostRdo } from './quote-post.rdo';
-import { PhotoPostRdo } from './photo-post.rdo';
-import { LinkPostRdo } from './link-post.rdo';
 import { PostType } from '@prisma/client';
 import { TagPostEntity } from '../../tag-post/tag-post.entity';
+import { IsOptional } from 'class-validator';
 
 export class BasePostRdo {
   @Expose()
@@ -75,22 +71,65 @@ export class BasePostRdo {
   public commentCount!: number;
 
   @Expose()
-  @Type(() => VideoPostRdo)
-  videoPost?: VideoPostRdo;
+  @ApiProperty({
+    description: 'Post title',
+    example: 'Title',
+  })
+  public title?: string;
 
   @Expose()
-  @Type(() => TextPostRdo)
-  textPost?: TextPostRdo;
+  @ApiProperty({
+    description: 'Post link to video',
+    example: 'youtube.com/video',
+  })
+  public videoLink?: string;
 
   @Expose()
-  @Type(() => QuotePostRdo)
-  quotePost?: QuotePostRdo;
+  @ApiProperty({
+    description: 'Post announcement',
+    example: 'Short description',
+  })
+  public announce?: string;
 
   @Expose()
-  @Type(() => PhotoPostRdo)
-  photoPost?: PhotoPostRdo;
+  @ApiProperty({
+    description: 'Post text',
+    example: 'I have a cat',
+  })
+  public text?: string;
 
   @Expose()
-  @Type(() => LinkPostRdo)
-  linkPost?: LinkPostRdo;
+  @ApiProperty({
+    description: 'Post quote text',
+    example: 'text of quote',
+  })
+  public quote?: string;
+
+  @Expose()
+  @ApiProperty({
+    description: 'Post quote author',
+    example: 'Arnold',
+  })
+  public quoteAuthor?: string;
+
+  @Expose()
+  @ApiProperty({
+    description: 'Link to photo',
+    example: '/test.jpg',
+  })
+  public photo?: string;
+
+  @Expose()
+  @ApiProperty({
+    description: 'Link',
+    example: 'google.com',
+  })
+  public link?: string;
+
+  @Expose()
+  @ApiProperty({
+    description: 'Description to post',
+    example: 'test description',
+  })
+  public description?: string;
 }

@@ -1,4 +1,3 @@
-import { CreatePostDto } from './create-post.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
@@ -9,7 +8,7 @@ import {
 } from 'class-validator';
 import { CreateVideoPostMessages } from './create-video-post.messages';
 
-export class CreateVideoPostDto extends CreatePostDto {
+export class CreateVideoPostDto {
   @ApiProperty({
     description: 'Post title',
     example: 'Title',

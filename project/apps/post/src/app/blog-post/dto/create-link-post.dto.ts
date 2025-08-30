@@ -1,9 +1,8 @@
-import { CreatePostDto } from './create-post.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString, IsUrl, MaxLength } from 'class-validator';
 import { CreateLinkPostMessages } from './create-link-post.messages';
 
-export class CreateLinkPostDto extends CreatePostDto {
+export class CreateLinkPostDto {
   @ApiProperty({
     description: 'Link',
     example: 'google.com',

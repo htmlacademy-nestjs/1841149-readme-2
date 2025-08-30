@@ -1,5 +1,8 @@
-import { SortDirection } from '@project/types';
+import { SortDirection, SortType } from '@project/types';
 
-export const DEFAULT_POST_COUNT_LIMIT = 10;
-export const DEFAULT_SORT_DIRECTION = SortDirection.Desc;
-export const DEFAULT_PAGE_COUNT = 1;
+export const BlogPostConstants = {
+  DEFAULT_POST_COUNT_LIMIT: 25,
+  DEFAULT_SORT_DIRECTION: SortDirection.Desc,
+  DEFAULT_PAGE_COUNT: 1,
+  DEFAULT_SORT_TYPE: SortType.LIKE,
+};

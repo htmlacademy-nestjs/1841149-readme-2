@@ -1,9 +1,8 @@
-import { CreatePostDto } from './create-post.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, MaxLength, MinLength } from 'class-validator';
 import { CreateTextPostMessages } from './create-text-post.messages';
 
-export class CreateTextPostDto extends CreatePostDto {
+export class CreateTextPostDto {
   @ApiProperty({
     description: 'Post title',
     example: 'Title',

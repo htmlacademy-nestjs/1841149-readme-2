@@ -38,21 +38,21 @@ export class LikePostService {
       userId: '1',
     });
 
-    // TODO Логика обновления количества лайков
     await this.likePostRepository.save(newLike);
 
     return newLike;
   }
 
-  public async delete(postId: string, id: string) {
+  public async delete(postId: string, userId: string) {
     const existPost = await this.blogPostService.getPost(postId);
 
     if (!existPost) {
       throw new NotFoundException(`Post with id ${postId} not found`);
     }
 
-    const existLike = (await this.likePostRepository.findByPostId(postId)).at(
-      0
+    const existLike = await this.likePostRepository.findByUserAndPostIds(
+      postId,
+      userId
     );
 
     if (!existLike) {
@@ -60,8 +60,6 @@ export class LikePostService {
         `Like for post with id: ${postId} does not exist`
       );
     }
-
-    // TODO Логика обновления количества лайков
 
     return await this.likePostRepository.deleteById(existLike.id!);
   }
