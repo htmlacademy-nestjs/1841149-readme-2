@@ -27,7 +27,7 @@ export class BlogPostController {
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'List of comments to post',
+    description: 'List of posts',
     type: BlogPostWithPaginationRdo,
   })
   @Get('/')
@@ -42,7 +42,7 @@ export class BlogPostController {
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'List of comments to post',
+    description: 'List of searched post by title',
     type: BlogPostWithPaginationRdo,
   })
   @Get('/search')
@@ -58,15 +58,10 @@ export class BlogPostController {
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'List of comments to post',
+    description: 'List of posts by chose type',
     type: BlogPostWithPaginationRdo,
   })
   @Get('/type/:type')
-  @ApiResponse({
-    type: BasePostRdo,
-    status: HttpStatus.OK,
-    description: 'Detail post information',
-  })
   public async categorize(
     @Query() query: BlogPostTypeQuery,
     @Param('type') type: PostType
@@ -87,6 +82,10 @@ export class BlogPostController {
     status: HttpStatus.CREATED,
     description: 'Successfully created post',
   })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized.',
+  })
   @Post('')
   public async create(
     @Body()
@@ -100,6 +99,14 @@ export class BlogPostController {
     type: BasePostRdo,
     status: HttpStatus.OK,
     description: 'Successfully update post',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized.',
+  })
+  @ApiResponse({
+    status: HttpStatus.CONFLICT,
+    description: 'You are trying to update not your post.',
   })
   @Patch(':postId')
   public async update(
@@ -117,6 +124,14 @@ export class BlogPostController {
     status: HttpStatus.NO_CONTENT,
     description: 'Successfully delete post',
   })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized.',
+  })
+  @ApiResponse({
+    status: HttpStatus.CONFLICT,
+    description: 'You are trying to delete not your post.',
+  })
   @Delete(':id')
   public async delete(@Param('id') id: string) {
     await this.blogPostService.delete(id);
@@ -124,8 +139,12 @@ export class BlogPostController {
 
   @ApiResponse({
     type: BasePostRdo,
-    status: HttpStatus.OK,
+    status: HttpStatus.CREATED,
     description: 'Repost post',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized.',
   })
   @Get(':id/repost')
   public async repost(@Param('id') id: string) {
@@ -137,6 +156,10 @@ export class BlogPostController {
     type: BasePostRdo,
     status: HttpStatus.OK,
     description: 'Detail post information',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized.',
   })
   @Get(':id')
   public async show(@Param('id') id: string) {

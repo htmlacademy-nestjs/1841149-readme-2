@@ -203,7 +203,7 @@ export class BlogPostRepository extends BasePostgresRepository<
       throw new NotFoundException(`Post with id ${id} not found.`);
     }
 
-    return this.createEntityFromDocument(document);
+    return this.createEntityFromDocument(document as unknown as BlogPostEntity);
   }
 
   public async searchByTitle(
@@ -254,7 +254,9 @@ export class BlogPostRepository extends BasePostgresRepository<
     const postCount = posts.length;
 
     return {
-      entities: posts.map((record) => this.createEntityFromDocument(record)),
+      entities: posts.map((record) =>
+        this.createEntityFromDocument(record as unknown as BlogPostEntity)
+      ),
       currentPage: query?.page,
       totalPages: this.calculatePostsPage(postCount, take),
       itemsPerPage: take,
@@ -282,14 +284,21 @@ export class BlogPostRepository extends BasePostgresRepository<
       },
       include: {
         tags: true,
-        videoPost: true,
+        comments: true,
         likes: true,
+        videoPost: true,
+        textPost: true,
+        linkPost: true,
+        photoPost: true,
+        quotePost: true,
       },
     });
 
     await this.updateTypeSpecificRecord(id, objectEntity);
 
-    return this.createEntityFromDocument(updatedPost);
+    return this.createEntityFromDocument(
+      updatedPost as unknown as BlogPostEntity
+    );
   }
 
   private async getPostCount(where: Prisma.PostWhereInput): Promise<number> {
@@ -372,7 +381,9 @@ export class BlogPostRepository extends BasePostgresRepository<
     ]);
 
     return {
-      entities: records.map((record) => this.createEntityFromDocument(record)),
+      entities: records.map((record) =>
+        this.createEntityFromDocument(record as unknown as BlogPostEntity)
+      ),
       currentPage: query?.page,
       totalPages: this.calculatePostsPage(postCount, take),
       itemsPerPage: take,
@@ -413,7 +424,9 @@ export class BlogPostRepository extends BasePostgresRepository<
     ]);
 
     return {
-      entities: records.map((record) => this.createEntityFromDocument(record)),
+      entities: records.map((record) =>
+        this.createEntityFromDocument(record as unknown as BlogPostEntity)
+      ),
       currentPage: query?.page,
       totalPages: this.calculatePostsPage(postCount, take),
       itemsPerPage: take,
@@ -532,6 +545,6 @@ export class BlogPostRepository extends BasePostgresRepository<
       });
     }
 
-    return this.createEntityFromDocument(newPost);
+    return this.createEntityFromDocument(newPost as unknown as BlogPostEntity);
   }
 }

@@ -5,6 +5,7 @@ import { VideoPost } from './video.post';
 import { TextPost } from './text.post';
 import { Post } from './post.interface';
 import { PostType } from './post-type.enum';
+import { FlatPost } from './flat-post.interface';
 
 type PostWithVideoContent = Post & { type: PostType.VIDEO } & {
   videoPost: VideoPost;
@@ -27,4 +28,5 @@ export type PostUnion =
   | PostWithTextContent
   | PostWithQuoteContent
   | PostWithPhotoContent
-  | PostWithLinkContent;
+  | PostWithLinkContent
+  | FlatPost;
