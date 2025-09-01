@@ -35,6 +35,9 @@
     },
     {
       "path": "./libs/shared/post/models"
+    },
+    {
+      "path": "./libs/shared/config/file-storage/file-storage-config"
     }
   ]
 }

@@ -1,17 +1,23 @@
-import {PostType} from "./post-type.enum";
-import {PostState} from "./post-state.enum";
+import type { PostType } from './post-type.enum';
+import { PostState } from './post-state.enum';
+import { Tag } from './tag.interface';
+import { PostLike } from './post-like.interface';
+import { CommentPost } from './comment.interface';
 
 export interface Post {
   id?: string;
-  tags?: string[];
-  type: PostType;
+  authorId: string;
+  tags?: Tag[];
+  type: keyof PostType;
   status: PostState;
   repost: boolean;
-  repostAuthor?: string;
-  repostCreatedAt?: string;
+  likes: PostLike[];
+  likeCount: number;
+  comments: CommentPost[];
+  commentCount: number;
   originalAuthorId?: string;
   originalPostId?: string;
-  authorId: string;
-  createdAt: string;
-  updatedAt: string;
+  repostCreatedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }

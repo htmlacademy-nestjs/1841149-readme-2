@@ -1,23 +1,21 @@
-import {CreatePostDto} from "./create-post.dto";
-import {PostType} from "@project/types";
-import {ApiProperty} from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional, IsString, IsUrl, MaxLength } from 'class-validator';
+import { CreateLinkPostMessages } from './create-link-post.messages';
 
-export class CreateLinkPostDto extends CreatePostDto {
-  @ApiProperty({
-    description: 'Post type',
-    example: 'link'
-  })
-  type!: PostType.Link;
-
+export class CreateLinkPostDto {
   @ApiProperty({
     description: 'Link',
-    example: 'google.com'
+    example: 'google.com',
   })
+  @IsUrl({}, { message: CreateLinkPostMessages.link.invalidFormat })
   link!: string;
 
   @ApiProperty({
     description: 'Description to post',
-    example: 'test description'
+    example: 'test description',
   })
-  description!: string;
+  @IsOptional()
+  @IsString({ message: CreateLinkPostMessages.description.invalidFormat })
+  @MaxLength(300, { message: CreateLinkPostMessages.description.maxLength })
+  description?: string;
 }

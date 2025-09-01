@@ -13,6 +13,9 @@
       "path": "../../libs/shared/helpers"
     },
     {
+      "path": "../../libs/shared/config/file-storage/file-storage-config"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ]

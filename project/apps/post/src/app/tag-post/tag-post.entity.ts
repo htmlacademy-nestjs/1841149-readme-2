@@ -1,10 +1,11 @@
 import { Tag } from '@project/types';
 import { Entity } from '@project/core';
 
-export class TagPostEntity implements Tag, Entity<string> {
+export class TagPostEntity implements Tag, Entity<string, Tag> {
   public id?: string;
   public title!: string;
-  public createdAt?: string;
+  public createdAt?: Date;
+  public updatedAt?: Date;
 
   constructor(data: Tag) {
     if (!data.title) {
@@ -15,16 +16,22 @@ export class TagPostEntity implements Tag, Entity<string> {
   }
 
   public populate(data: Tag): void {
-    this.id = data.id ?? '';
+    this.id = data.id ?? undefined;
     this.title = data.title;
     this.createdAt = data.createdAt ?? undefined;
+    this.updatedAt = data.updatedAt ?? undefined;
   }
 
-  public toObject(): Record<string, unknown> {
+  public toObject(): Tag {
     return {
       id: this.id,
       title: this.title,
       createdAt: this.createdAt,
-    }
+      updatedAt: this.updatedAt,
+    };
+  }
+
+  static fromObject(data: Tag): TagPostEntity {
+    return new TagPostEntity(data);
   }
 }

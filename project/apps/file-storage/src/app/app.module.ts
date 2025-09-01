@@ -1,8 +1,17 @@
 import { Module } from '@nestjs/common';
-import {FileStorageModule} from "./file-storage/file-storage.module";
+import { FileStorageModule } from './file-storage/file-storage.module';
+import {
+  FileStorageConfigModule,
+  getMongooseOptions,
+} from '@project/file-storage-config';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [FileStorageModule],
+  imports: [
+    FileStorageModule,
+    FileStorageConfigModule,
+    MongooseModule.forRootAsync(getMongooseOptions()),
+  ],
   controllers: [],
   providers: [],
 })

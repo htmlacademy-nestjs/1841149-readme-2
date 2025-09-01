@@ -10,7 +10,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix(GLOBAL_PREFIX);
   await app.listen(port);
-  Logger.log(`🚀 Application is running on: http://localhost:${port}/${GLOBAL_PREFIX}`);
+  Logger.log(
+    `🚀 Application is running on: http://localhost:${port}/${GLOBAL_PREFIX}`
+  );
 }
 
 bootstrap();

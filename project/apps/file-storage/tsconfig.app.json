@@ -20,6 +20,9 @@
     },
     {
       "path": "../../libs/shared/helpers/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/shared/config/file-storage/file-storage-config/tsconfig.lib.json"
     }
   ]
 }

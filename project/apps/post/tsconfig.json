@@ -4,6 +4,9 @@
   "include": [],
   "references": [
     {
+      "path": "../../libs/shared/post/models"
+    },
+    {
       "path": "../../libs/shared/core"
     },
     {

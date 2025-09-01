@@ -1,34 +1,25 @@
-import {BasePostRdo} from "./base-post.rdo";
-import {PostType} from "@project/types";
-import {Expose} from "class-transformer";
-import {ApiProperty} from "@nestjs/swagger";
+import { Expose } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class TextPostRdo extends BasePostRdo {
-  @Expose()
-  @ApiProperty({
-    description: 'Post type',
-    example: 'text'
-  })
-  type!: PostType.Text;
-
+export class TextPostRdo {
   @Expose()
   @ApiProperty({
     description: 'Post title',
-    example: 'Title'
+    example: 'Title',
   })
   title!: string;
 
   @Expose()
   @ApiProperty({
     description: 'Post announcement',
-    example: 'Short description'
+    example: 'Short description',
   })
   announce!: string;
 
   @Expose()
   @ApiProperty({
     description: 'Post text',
-    example: 'I have a cat'
+    example: 'I have a cat',
   })
   text!: string;
 }

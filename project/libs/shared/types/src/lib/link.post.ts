@@ -1,8 +1,4 @@
-import {Post} from "./post.interface";
-import {PostType} from "./post-type.enum";
-
-export interface LinkPost extends Post {
-  type: PostType.Link;
+export interface LinkPost {
   link: string;
   description?: string;
 }

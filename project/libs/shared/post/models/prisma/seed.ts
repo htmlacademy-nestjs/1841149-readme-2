@@ -28,18 +28,15 @@ function getTextPosts() {
       type: 'TEXT' as const,
       status: 'PUBLISHED' as const,
       tags: {
-        connect: [
-          { id: FIRST_TAG_UUID },
-          { id: SECOND_TAG_UUID },
-        ]
+        connect: [{ id: FIRST_TAG_UUID }, { id: SECOND_TAG_UUID }],
       },
       textPost: {
         create: {
           title: `Руководство по современной веб-разработке`,
           announce: `Краткое введение в основы веб-разработки. В этой статье мы рассмотрим ключевые концепции и инструменты современного веб-программирования, которые должен знать каждый разработчик.`,
           text: `Подробное содержание статьи. В современном мире веб-разработки существует множество инструментов и технологий. JavaScript остается основным языком фронтенда, а фреймворки как React, Vue и Angular упрощают создание интерактивных пользовательских интерфейсов. Серверная часть может быть реализована на Node.js, Python, Java или других языках. Базы данных, как реляционные (PostgreSQL, MySQL), так и NoSQL (MongoDB, Redis), играют важную роль в хранении данных. DevOps практики с использованием Docker, Kubernetes и CI/CD пайплайнов помогают автоматизировать процесс разработки и деплоя приложений.`,
-        }
-      }
+        },
+      },
     },
     {
       id: SECOND_POST_UUID,
@@ -47,19 +44,17 @@ function getTextPosts() {
       type: 'TEXT' as const,
       status: 'PUBLISHED' as const,
       tags: {
-        connect: [
-          { id: SECOND_TAG_UUID },
-        ]
+        connect: [{ id: SECOND_TAG_UUID }],
       },
       textPost: {
         create: {
           title: `Руководство по современной веб-разработке`,
           announce: `Краткое введение в основы веб-разработки. В этой статье мы рассмотрим ключевые концепции и инструменты современного веб-программирования, которые должен знать каждый разработчик.`,
           text: `Подробное содержание статьи. В современном мире веб-разработки существует множество инструментов и технологий. JavaScript остается основным языком фронтенда, а фреймворки как React, Vue и Angular упрощают создание интерактивных пользовательских интерфейсов. Серверная часть может быть реализована на Node.js, Python, Java или других языках. Базы данных, как реляционные (PostgreSQL, MySQL), так и NoSQL (MongoDB, Redis), играют важную роль в хранении данных. DevOps практики с использованием Docker, Kubernetes и CI/CD пайплайнов помогают автоматизировать процесс разработки и деплоя приложений.`,
-        }
-      }
-    }
-  ]
+        },
+      },
+    },
+  ];
 }
 
 function getVideoPosts() {
@@ -70,18 +65,16 @@ function getVideoPosts() {
       type: 'VIDEO' as const,
       status: 'PUBLISHED' as const,
       tags: {
-        connect: [
-          { id: SECOND_TAG_UUID },
-        ]
+        connect: [{ id: SECOND_TAG_UUID }],
       },
       videoPost: {
         create: {
           title: 'Основы программирования для новичков',
           videoLink: 'https://youtube.com/watch?v=programming-basics-101',
-        }
-      }
+        },
+      },
     },
-  ]
+  ];
 }
 
 function getQuotePosts() {
@@ -92,19 +85,17 @@ function getQuotePosts() {
       type: 'QUOTE' as const,
       status: 'PUBLISHED' as const,
       tags: {
-        connect: [
-          { id: FIRST_TAG_UUID },
-          { id: SECOND_TAG_UUID },
-        ]
+        connect: [{ id: FIRST_TAG_UUID }, { id: SECOND_TAG_UUID }],
       },
       quotePost: {
         create: {
-          quote: 'Код - это поэзия в действии. Каждая строка должна быть продумана и элегантна.',
+          quote:
+            'Код - это поэзия в действии. Каждая строка должна быть продумана и элегантна.',
           quoteAuthor: 'Стив Джобс',
-        }
-      }
+        },
+      },
     },
-  ]
+  ];
 }
 
 function getPhotoPosts() {
@@ -115,18 +106,16 @@ function getPhotoPosts() {
       type: 'PHOTO' as const,
       status: 'PUBLISHED' as const,
       tags: {
-        connect: [
-          { id: FIRST_TAG_UUID },
-          { id: SECOND_TAG_UUID },
-        ]
+        connect: [{ id: FIRST_TAG_UUID }, { id: SECOND_TAG_UUID }],
       },
       photoPost: {
         create: {
-          photoLink: 'https://example.com/photos/modern-architecture-building.jpg',
-        }
-      }
+          photoLink:
+            'https://example.com/photos/modern-architecture-building.jpg',
+        },
+      },
     },
-  ]
+  ];
 }
 
 function getLinkPosts() {
@@ -137,19 +126,17 @@ function getLinkPosts() {
       type: 'LINK' as const,
       status: 'PUBLISHED' as const,
       tags: {
-        connect: [
-          { id: FIRST_TAG_UUID },
-          { id: SECOND_TAG_UUID },
-        ]
+        connect: [{ id: FIRST_TAG_UUID }, { id: SECOND_TAG_UUID }],
       },
       linkPost: {
         create: {
           link: 'https://github.com/microsoft/vscode',
-          description: 'Популярный редактор кода от Microsoft с огромным количеством расширений',
-        }
-      }
+          description:
+            'Популярный редактор кода от Microsoft с огромным количеством расширений',
+        },
+      },
     },
-  ]
+  ];
 }
 
 function getComments() {
@@ -163,8 +150,8 @@ function getComments() {
       text: 'Полностью согласен с автором.',
       authorId: SECOND_USER_ID,
       postId: THIRD_POST_UUID,
-    }
-  ]
+    },
+  ];
 }
 
 function getLikes() {
@@ -176,8 +163,8 @@ function getLikes() {
     {
       userId: SECOND_USER_ID,
       postId: FOURTH_POST_UUID,
-    }
-  ]
+    },
+  ];
 }
 
 async function seedDb(prismaClient: PrismaClient) {
@@ -188,8 +175,8 @@ async function seedDb(prismaClient: PrismaClient) {
       update: {},
       create: {
         id: tag.id,
-        title: tag.title
-      }
+        title: tag.title,
+      },
     });
   }
 
@@ -208,8 +195,8 @@ async function seedDb(prismaClient: PrismaClient) {
         status: post.status,
         tags: post.tags,
         textPost: post.textPost,
-      }
-    })
+      },
+    });
   }
 
   for (const post of mockVideoPosts) {
@@ -221,8 +208,8 @@ async function seedDb(prismaClient: PrismaClient) {
         status: post.status,
         tags: post.tags,
         videoPost: post.videoPost,
-      }
-    })
+      },
+    });
   }
 
   for (const post of mockQuotePosts) {
@@ -234,8 +221,8 @@ async function seedDb(prismaClient: PrismaClient) {
         status: post.status,
         tags: post.tags,
         quotePost: post.quotePost,
-      }
-    })
+      },
+    });
   }
 
   for (const post of mockPhotoPosts) {
@@ -246,9 +233,9 @@ async function seedDb(prismaClient: PrismaClient) {
         type: post.type,
         status: post.status,
         tags: post.tags,
-        photoPost: post.photoPost
-      }
-    })
+        photoPost: post.photoPost,
+      },
+    });
   }
 
   for (const post of mockLinkPosts) {
@@ -260,8 +247,8 @@ async function seedDb(prismaClient: PrismaClient) {
         status: post.status,
         tags: post.tags,
         linkPost: post.linkPost,
-      }
-    })
+      },
+    });
   }
 
   const mockComments = getComments();
@@ -272,8 +259,8 @@ async function seedDb(prismaClient: PrismaClient) {
         text: comment.text,
         authorId: comment.authorId,
         postId: comment.postId,
-      }
-    })
+      },
+    });
   }
 
   const mockLikes = getLikes();
@@ -283,8 +270,8 @@ async function seedDb(prismaClient: PrismaClient) {
       data: {
         authorId: like.userId,
         postId: like.postId,
-      }
-    })
+      },
+    });
   }
 
   console.info('🤘️ Database was filled');

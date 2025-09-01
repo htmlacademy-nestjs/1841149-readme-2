@@ -1,8 +1,4 @@
-import {Post} from "./post.interface";
-import {PostType} from "./post-type.enum";
-
-export interface VideoPost extends Post {
-  type: PostType.Video;
+export interface VideoPost {
   title: string;
   videoLink: string;
 }

@@ -1,7 +1,7 @@
-import {Expose} from "class-transformer";
-import {BasePostRdo} from "./base-post.rdo";
+import { Expose } from 'class-transformer';
+import { BasePostRdo } from './base-post.rdo';
 
 export class PostsRdo {
   @Expose()
-  entities!: BasePostRdo[]
+  entities!: BasePostRdo[];
 }
