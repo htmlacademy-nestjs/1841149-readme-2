@@ -1,20 +1,18 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import applicationConfig from './app/app.config';
 import mongoConfig from './mongo.config';
-import jwtConfig from './jwt.config';
 import rabbitConfig from './rabbit.config';
 
-const ENV_USERS_FILE_PATH = 'apps/user/user.env';
+const ENV_USERS_FILE_PATH = 'apps/notification/.env';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
-      load: [applicationConfig, mongoConfig, jwtConfig, rabbitConfig],
+      load: [mongoConfig, rabbitConfig],
       envFilePath: ENV_USERS_FILE_PATH,
     }),
   ],
 })
-export class ConfigUserModule {}
+export class NotificationConfigModule {}
