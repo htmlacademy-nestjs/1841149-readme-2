@@ -10,6 +10,7 @@ import { EmailSubscriberService } from './email-subscriber.service';
 import { EmailSubscriberRepository } from './email-subscriber.repository';
 import { getRabbitMQOptions } from '@project/helpers';
 import { EmailSubscriberController } from './email-subscriber.controller';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { EmailSubscriberController } from './email-subscriber.controller';
       { name: EmailSubscriberModel.name, schema: EmailSubscriberSchema },
     ]),
     RabbitMQModule.forRootAsync(getRabbitMQOptions('application.rabbit')),
+    MailModule,
   ],
   controllers: [EmailSubscriberController],
   providers: [EmailSubscriberService, EmailSubscriberRepository],
