@@ -13,9 +13,9 @@ export class EmailSubscriberController {
   ) {}
 
   @RabbitSubscribe({
-    exchange: 'readme.notification.income',
+    exchange: 'readme.notification',
     routingKey: RabbitRouting.AddSubscriber,
-    queue: 'readme.notification',
+    queue: 'readme.notification.income',
   })
   public async create(subscriber: CreateSubscriberDto) {
     await this.subscriberService.addSubscriber(subscriber);
@@ -37,6 +37,46 @@ export class EmailSubscriberController {
       return { message: 'Test email sent successfully!' };
     } catch (error) {
       return { error: 'Failed to send test email', details: error };
+    }
+  }
+
+  @Get('/rabbit')
+  public async sendTestMessage() {
+    try {
+      const amqp = require('amqplib');
+      const connection = await amqp.connect('amqp://admin:test@localhost:5672');
+      const channel = await connection.createChannel();
+
+      await channel.assertExchange('readme.notification', 'direct', {
+        durable: true,
+      });
+
+      const testMessage = {
+        id: 'test-' + Date.now(),
+        email: 'rabbitmq-test@example.com',
+        firstname: 'RabbitMQ',
+        lastname: 'Test',
+        userId: 'rabbitmq-test-user',
+      };
+
+      const sent = channel.publish(
+        'readme.notification',
+        RabbitRouting.AddSubscriber,
+        Buffer.from(JSON.stringify(testMessage)),
+        { persistent: true }
+      );
+
+      await channel.close();
+      await connection.close();
+
+      return {
+        success: true,
+        message: 'Test message sent to RabbitMQ',
+        data: testMessage,
+        sent: sent,
+      };
+    } catch (error) {
+      return { error: error };
     }
   }
 }
