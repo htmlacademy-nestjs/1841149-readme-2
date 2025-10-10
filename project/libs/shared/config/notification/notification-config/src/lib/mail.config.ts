@@ -5,7 +5,7 @@ import { DEFAULT_SMTP_PORT } from './mail/mail.const';
 
 async function getMailConfig(): Promise<MailConfiguration> {
   const config = plainToClass(MailConfiguration, {
-    host: process.env.MAIL_SMPT_HOST,
+    host: process.env.MAIL_SMTP_HOST,
     port: parseInt(
       process.env.MAIL_SMTP_PORT ?? DEFAULT_SMTP_PORT.toString(),
       10

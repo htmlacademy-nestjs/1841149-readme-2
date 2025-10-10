@@ -7,7 +7,7 @@ import {
   validateOrReject,
 } from 'class-validator';
 import { EnvValidationMessage } from './rabbit.messages';
-import { DEFAULT_MONGO_PORT, MAX_PORT, MIN_PORT } from './rabbit.const';
+import { DEFAULT_RABBIT_PORT, MAX_PORT, MIN_PORT } from './rabbit.const';
 
 export class RabbitConfiguration {
   @IsString({ message: EnvValidationMessage.RabbitHostRequired })
@@ -20,7 +20,7 @@ export class RabbitConfiguration {
   @Min(MIN_PORT)
   @Max(MAX_PORT)
   @IsOptional()
-  public port: number = DEFAULT_MONGO_PORT;
+  public port: number = DEFAULT_RABBIT_PORT;
 
   @IsString({ message: EnvValidationMessage.UserRequired })
   public user!: string;

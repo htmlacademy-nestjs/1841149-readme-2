@@ -6,7 +6,7 @@ services:
     hostname: "readme.notification.fakesmtp"
     ports:
       - "8025:8025"
-      - "1083:8080"
+      - "1025:8080"
 
   readme.notification.rabbitmq:
     image: rabbitmq:3.11-management

@@ -1,7 +1,7 @@
 import { registerAs } from '@nestjs/config';
 import { plainToClass } from 'class-transformer';
 import { RabbitConfiguration } from './rabbit/rabbit.env';
-import { DEFAULT_MONGO_PORT } from './rabbit/rabbit.const';
+import { DEFAULT_RABBIT_PORT } from './rabbit/rabbit.const';
 
 async function getRabbitConfig(): Promise<RabbitConfiguration> {
   const config = plainToClass(RabbitConfiguration, {
@@ -9,7 +9,7 @@ async function getRabbitConfig(): Promise<RabbitConfiguration> {
     password: process.env.RABBIT_PASSWORD,
     port: process.env.RABBIT_PORT
       ? parseInt(process.env.RABBIT_PORT, 10)
-      : DEFAULT_MONGO_PORT,
+      : DEFAULT_RABBIT_PORT,
     user: process.env.RABBIT_USER,
     queue: process.env.RABBIT_QUEUE,
     exchange: process.env.RABBIT_EXCHANGE,
