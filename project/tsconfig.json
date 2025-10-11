@@ -38,6 +38,9 @@
     },
     {
       "path": "./libs/shared/config/file-storage/file-storage-config"
+    },
+    {
+      "path": "./libs/shared/config/notification/notification-config"
     }
   ]
 }
