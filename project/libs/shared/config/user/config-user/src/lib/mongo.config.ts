@@ -2,7 +2,7 @@ import { plainToClass } from 'class-transformer';
 import { registerAs, ConfigType } from '@nestjs/config';
 
 import { MongoConfiguration } from './mongodb/mongo.env';
-import { DEFAULT_MONGO_PORT } from './mongodb/mongo.const';
+import { MONGO_CONFIG } from './mongodb/mongo.const';
 
 async function getDbConfig(): Promise<MongoConfiguration> {
   const config = plainToClass(MongoConfiguration, {
@@ -10,7 +10,7 @@ async function getDbConfig(): Promise<MongoConfiguration> {
     name: process.env.MONGO_DB,
     port: process.env.MONGO_PORT
       ? parseInt(process.env.MONGO_PORT, 10)
-      : DEFAULT_MONGO_PORT,
+      : MONGO_CONFIG,
     user: process.env.MONGO_USER,
     password: process.env.MONGO_PASSWORD,
     authBase: process.env.MONGO_AUTH_BASE,
