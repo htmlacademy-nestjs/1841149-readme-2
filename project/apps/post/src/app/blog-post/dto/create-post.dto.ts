@@ -136,4 +136,7 @@ export class CreatePostDto {
   @IsOptional()
   @IsUrl({}, { message: CreatePhotoPostMessages.photo.invalidFormat })
   photo?: string;
+
+  @ApiProperty({})
+  userId!: string;
 }

@@ -5,18 +5,20 @@ GET http://localhost:3000/api/posts/11b95821-6bd8-4c80-946f-b50e34659e75/comment
 
 
 # Create a new comment for post
-POST http://localhost:3000/api/posts/11b95821-6bd8-4c80-946f-b50e34659e75/comments HTTP/1.1
+POST http://localhost:3002/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/comments HTTP/1.1
 Content-Type: application/json
 
 {
   "text": "This is text",
-  "authorId": "65990102bb965b742900ba57"
+  "userId": "65990102bb965b742900ba57"
 }
 
 ###
 
 # Delete a comment
-DELETE http://localhost:3000/api/posts/11b95821-6bd8-4c80-946f-b50e34659e75/comments/7879d3bf-f5b8-435e-95af-cfbde0f6f51e HTTP/1.1
+DELETE http://localhost:3002/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/comments/d7b919f1-c86d-4d62-bd17-73bd4025c965 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjg5MzUzLCJleHAiOjE3NjA3NzU3NTN9.B8NyWu_zGyivykPFBZOk2As0189af8fUIJ0jJ8d3hzw
+X-UserId: '123123123'
 
 ###

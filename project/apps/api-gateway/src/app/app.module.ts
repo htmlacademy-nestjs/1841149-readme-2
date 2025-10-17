@@ -1,10 +1,25 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AuthentificationController } from './authentification.controller';
+import { FeedController } from './feed.controller';
+import { FilesController } from './files.controller';
+import { PostsController } from './post.controller';
+import { HttpModule } from '@nestjs/axios';
+import { HTTP_CLIENT_MAX_REDIRECTS, HTTP_CLIENT_TIMEOUT } from './app.config';
+import { CheckAuthGuard } from './guards/check-auth.guard';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    HttpModule.register({
+      timeout: HTTP_CLIENT_TIMEOUT,
+      maxRedirects: HTTP_CLIENT_MAX_REDIRECTS,
+    }),
+  ],
+  controllers: [
+    AuthentificationController,
+    FeedController,
+    FilesController,
+    PostsController,
+  ],
+  providers: [CheckAuthGuard],
 })
 export class AppModule {}

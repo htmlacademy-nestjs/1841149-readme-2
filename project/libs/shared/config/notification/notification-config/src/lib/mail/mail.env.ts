@@ -1,5 +1,5 @@
 import { EnvValidationMessage } from './mail.messages';
-import { MIN_PORT, MAX_PORT, DEFAULT_SMTP_PORT } from './mail.const';
+import { MAIL_CONFIG } from './mail.const';
 import {
   IsNumber,
   IsOptional,
@@ -14,10 +14,10 @@ export class MailConfiguration {
   public host!: string;
 
   @IsNumber({}, { message: EnvValidationMessage.MailPortRequired })
-  @Min(MIN_PORT)
-  @Max(MAX_PORT)
+  @Min(MAIL_CONFIG.MIN_PORT)
+  @Max(MAIL_CONFIG.MAX_PORT)
   @IsOptional()
-  public port: number = DEFAULT_SMTP_PORT;
+  public port: number = MAIL_CONFIG.DEFAULT_SMTP_PORT;
 
   @IsString({ message: EnvValidationMessage.MailUserRequired })
   public user!: string;

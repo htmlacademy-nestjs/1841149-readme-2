@@ -463,26 +463,32 @@ export class BlogPostRepository extends BasePostgresRepository<
     }
 
     let postTypeData: any = null;
-    if (existPost.type === 'video') {
-      postTypeData = await this.client.videoPost.findFirst({
-        where: { postId: existPost.id },
-      });
-    } else if (existPost.type === 'text') {
-      postTypeData = await this.client.textPost.findFirst({
-        where: { postId: existPost.id },
-      });
-    } else if (existPost.type === 'quote') {
-      postTypeData = await this.client.textPost.findFirst({
-        where: { postId: existPost.id },
-      });
-    } else if (existPost.type === 'photo') {
-      postTypeData = await this.client.textPost.findFirst({
-        where: { postId: existPost.id },
-      });
-    } else if (existPost.type === 'link') {
-      postTypeData = await this.client.textPost.findFirst({
-        where: { postId: existPost.id },
-      });
+    switch (existPost.type) {
+      case 'video':
+        postTypeData = await this.client.videoPost.findFirst({
+          where: { postId: existPost.id },
+        });
+        break;
+      case 'text':
+        postTypeData = await this.client.textPost.findFirst({
+          where: { postId: existPost.id },
+        });
+        break;
+      case 'quote':
+        postTypeData = await this.client.quotePost.findFirst({
+          where: { postId: existPost.id },
+        });
+        break;
+      case 'photo':
+        postTypeData = await this.client.photoPost.findFirst({
+          where: { postId: existPost.id },
+        });
+        break;
+      case 'link':
+        postTypeData = await this.client.linkPost.findFirst({
+          where: { postId: existPost.id },
+        });
+        break;
     }
 
     const newPost = await this.client.post.create({
@@ -500,51 +506,86 @@ export class BlogPostRepository extends BasePostgresRepository<
       },
       include: {
         tags: true,
+        videoPost: true,
+        textPost: true,
+        quotePost: true,
+        photoPost: true,
+        linkPost: true,
       },
     });
 
-    if (existPost.type === 'video' && postTypeData) {
-      await this.client.videoPost.create({
-        data: {
-          title: postTypeData.title,
-          videoLink: postTypeData.videoLink,
-          postId: newPost.id,
-        },
-      });
-    } else if (existPost.type === 'text' && postTypeData) {
-      await this.client.textPost.create({
-        data: {
-          title: postTypeData.title,
-          announce: postTypeData.announce,
-          text: postTypeData.text,
-          postId: newPost.id,
-        },
-      });
-    } else if (existPost.type === 'quote' && postTypeData) {
-      await this.client.quotePost.create({
-        data: {
-          quote: postTypeData.quote,
-          quoteAuthor: postTypeData.quoteAuthor,
-          postId: newPost.id,
-        },
-      });
-    } else if (existPost.type === 'photo' && postTypeData) {
-      await this.client.photoPost.create({
-        data: {
-          photoLink: postTypeData.photo,
-          postId: newPost.id,
-        },
-      });
-    } else if (existPost.type === 'link' && postTypeData) {
-      await this.client.linkPost.create({
-        data: {
-          description: postTypeData.description,
-          link: postTypeData.link,
-          postId: newPost.id,
-        },
-      });
+    switch (existPost.type) {
+      case 'video':
+        if (postTypeData) {
+          await this.client.videoPost.create({
+            data: {
+              title: postTypeData.title,
+              videoLink: postTypeData.videoLink,
+              postId: newPost.id,
+            },
+          });
+        }
+        break;
+      case 'text':
+        if (postTypeData) {
+          await this.client.textPost.create({
+            data: {
+              title: postTypeData.title,
+              announce: postTypeData.announce,
+              text: postTypeData.text,
+              postId: newPost.id,
+            },
+          });
+        }
+        break;
+      case 'quote':
+        if (postTypeData) {
+          await this.client.quotePost.create({
+            data: {
+              quote: postTypeData.quote,
+              quoteAuthor: postTypeData.quoteAuthor,
+              postId: newPost.id,
+            },
+          });
+        }
+        break;
+      case 'photo':
+        if (postTypeData) {
+          await this.client.photoPost.create({
+            data: {
+              photoLink: postTypeData.photoLink,
+              postId: newPost.id,
+            },
+          });
+        }
+        break;
+      case 'link':
+        if (postTypeData) {
+          await this.client.linkPost.create({
+            data: {
+              description: postTypeData.description,
+              link: postTypeData.link,
+              postId: newPost.id,
+            },
+          });
+        }
+        break;
     }
 
-    return this.createEntityFromDocument(newPost as unknown as BlogPostEntity);
+    const completePost = await this.client.post.findUnique({
+      where: { id: newPost.id },
+      include: {
+        tags: true,
+        videoPost: true,
+        textPost: true,
+        quotePost: true,
+        photoPost: true,
+        linkPost: true,
+      },
+    });
+
+    return this.createEntityFromDocument(
+      completePost as unknown as BlogPostEntity
+    );
   }
 }

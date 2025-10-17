@@ -31,7 +31,10 @@ export abstract class BasePostgresRepository<
     throw new Error('Not implemented');
   }
 
-  public async deleteById(id: EntityType['id']): Promise<void> {
+  public async deleteById(
+    id: EntityType['id'],
+    userId?: string
+  ): Promise<void> {
     throw new Error('Not implemented');
   }
 }

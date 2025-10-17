@@ -8,7 +8,7 @@ export class CreateCommentDto {
   })
   @IsString()
   @IsMongoId()
-  public authorId!: string;
+  public userId!: string;
 
   @ApiProperty({
     description: 'Comment text',

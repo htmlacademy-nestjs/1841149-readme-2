@@ -22,4 +22,11 @@ export class LoggedUserRdo {
     example: 'asdasd123.asdasd123.asdasd123',
   })
   public accessToken!: string;
+
+  @Expose()
+  @ApiProperty({
+    description: 'User refresh token',
+    example: 'asdasd123.asdasd123.asdasd123',
+  })
+  public refreshToken!: string;
 }

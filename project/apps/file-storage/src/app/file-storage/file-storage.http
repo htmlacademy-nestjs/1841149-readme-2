@@ -1,5 +1,5 @@
 # Upload some file
-POST http://localhost:3000/api/files/upload HTTP/1.1
+POST http://localhost:3003/api/files/upload HTTP/1.1
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
@@ -13,6 +13,6 @@ Content-Type: image/png
 ###
 
 # Get file by ID
-GET http://localhost:3000/api/files/68af21c9b7e2ffa28c2ae410 HTTP/1.1
+GET http://localhost:3003/api/files/68f210f4b3783bde62754e6f HTTP/1.1
 
 ###

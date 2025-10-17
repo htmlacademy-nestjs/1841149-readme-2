@@ -14,7 +14,7 @@ export class LikePostService {
     private readonly blogPostService: BlogPostService
   ) {}
 
-  public async create(postId: string) {
+  public async create(postId: string, userId: string): Promise<LikePostEntity> {
     const existPost = await this.blogPostService.getPost(postId);
 
     if (!existPost) {
@@ -31,11 +31,9 @@ export class LikePostService {
       );
     }
 
-    // TODO Брать id пользователя из токена
-
     const newLike = new LikePostEntity({
       postId,
-      userId: '1',
+      userId,
     });
 
     await this.likePostRepository.save(newLike);

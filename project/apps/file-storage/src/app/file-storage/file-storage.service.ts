@@ -64,7 +64,6 @@ export class FileStorageService {
 
   public async saveFile(file: Express.Multer.File): Promise<FileEntity> {
     const storedFile = await this.uploadFile(file);
-    console.log(file);
     const fileEntity = FileEntity.fromObject({
       hashName: storedFile.filename,
       mimetype: file.mimetype,

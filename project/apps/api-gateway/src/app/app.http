@@ -1,0 +1,165 @@
+# Login user by email and password
+POST http://localhost:3000/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "test3@test.com",
+  "password": "secret"
+}
+
+###
+
+# Create a new user
+POST http://localhost:3000/api/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "test4@test.com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "password": "secret"
+}
+
+###
+
+# Get user by ID
+GET http://localhost:3000/api/auth/689efd96f5034fd62e52f7dc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjA1Mjc4LCJleHAiOjE3NjA2OTE2Nzh9.R6vdDLGzEiol77qyL5EwI1CUzvSdW0PNFtRI6bR3mR0
+
+###
+
+# Get new JWT pair
+GET http://localhost:3000/api/auth/refresh HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwidG9rZW5JZCI6ImQxZTVlZmJhLTZhM2MtNDZlZC04ZTQ2LTI1MWRmNmRhNTMxZSIsImlhdCI6MTc2MDU0OTMwMCwiZXhwIjoxNzYzMTQxMzAwfQ.G6XixiGKAt3jvyBVZbRfYq0WrtOL_-h2BxwH7NOsBwY
+
+###
+
+# Get posts
+GET http://localhost:3000/api/posts HTTP/1.1
+
+###
+
+# Create photo post
+POST http://localhost:3000/api/posts HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjA1Mjc4LCJleHAiOjE3NjA2OTE2Nzh9.R6vdDLGzEiol77qyL5EwI1CUzvSdW0PNFtRI6bR3mR0
+
+{
+  "tags": [
+    "programming",
+    "tutorial2"
+  ],
+  "status": "published",
+  "repost": false,
+  "type": "photo",
+  "photo": "https://youtube222.com/watch?v=abc123"
+}
+
+###
+
+# Search posts by title
+GET http://localhost:3000/api/posts/search?title=test HTTP/1.1
+
+###
+
+# Get photo posts
+GET http://localhost:3000/api/posts/type/photo HTTP/1.1
+
+###
+
+# Get post
+GET http://localhost:3000/api/posts/9df03577-6b34-44fe-b021-17cfd42b0988 HTTP/1.1
+
+###
+
+# Update post
+PATCH http://localhost:3000/api/posts/9df03577-6b34-44fe-b021-17cfd42b0988 HTTP/1.1
+Content-Type: application/json
+
+{
+  "tags": [
+    "programming",
+    "tutorial"
+  ],
+  "status": "published",
+  "repost": false,
+  "type": "video",
+  "title": "How to Build NestJS App2",
+  "videoLink": "https://youtube.com/watch?v=abc123"
+}
+
+###
+
+# Delete post
+DELETE http://localhost:3000/api/posts/43a15fe4-2b59-4124-b5d6-71a8529aae84 HTTP/1.1
+
+###
+
+# Repost post
+POST http://localhost:3000/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/repost HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjA1Mjc4LCJleHAiOjE3NjA2OTE2Nzh9.R6vdDLGzEiol77qyL5EwI1CUzvSdW0PNFtRI6bR3mR0
+
+###
+
+# Like post
+GET http://localhost:3000/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/likes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjkxMjYwLCJleHAiOjE3NjA3Nzc2NjB9.wXSuiVXRPZOFNTlvYHVYV9Mu6sbWkTW8JAOKpYWbxEw
+
+###
+
+# Dislike post
+DELETE http://localhost:3000/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/likes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjg5NDU5LCJleHAiOjE3NjA3NzU4NTl9.0lvdQRnihZDMm1x--FjenyqvFjzTqutTXMVjZ8Wxizk
+
+###
+
+# Get post comments
+GET http://localhost:3000/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/comments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjgxMDAwLCJleHAiOjE3NjA3Njc0MDB9.B3mheHc26dYohdXPjopbnhAuYtE1k7SNHW2CXecSTbs
+
+{
+  "text": "This is text"
+}
+
+###
+
+# Create comment for post
+POST http://localhost:3000/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/comments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjkxMjYwLCJleHAiOjE3NjA3Nzc2NjB9.wXSuiVXRPZOFNTlvYHVYV9Mu6sbWkTW8JAOKpYWbxEw
+
+{
+  "text": "This is text"
+}
+
+###
+
+# Delete comment for post
+DELETE http://localhost:3000/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/comments/ed2c5563-2654-49e5-a2c0-05b8b602bdba
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjg5NzE3LCJleHAiOjE3NjA3NzYxMTd9.QBNs7B-6IydXTT1PLcCWd6bVNrEbxwYYg1nKvmMTd8s
+
+###
+
+# Upload some file
+POST http://localhost:3000/api/files/upload HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="file-storage.png"
+Content-Type: image/png
+
+< /home/fantastic_fox/avatar-test.png
+
+--boundary--
+
+###
+
+# Get file by ID
+GET http://localhost:3000/api/files/68f210f4b3783bde62754e6f HTTP/1.1
+
+###
