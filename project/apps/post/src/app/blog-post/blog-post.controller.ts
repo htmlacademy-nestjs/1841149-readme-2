@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Headers,
   HttpStatus,
   Param,
   Patch,
@@ -147,8 +148,11 @@ export class BlogPostController {
     description: 'Unauthorized.',
   })
   @Get(':id/repost')
-  public async repost(@Param('id') id: string) {
-    const post = await this.blogPostService.repost(id, '444');
+  public async repost(
+    @Param('id') id: string,
+    @Headers('X-UserId') userId: string
+  ) {
+    const post = await this.blogPostService.repost(id, userId);
     return fillDto(BasePostRdo, post.toObject());
   }
 

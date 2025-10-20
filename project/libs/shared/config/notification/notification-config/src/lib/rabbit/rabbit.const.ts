@@ -1,3 +1,5 @@
-export const MIN_PORT = 0;
-export const MAX_PORT = 65535;
-export const DEFAULT_RABBIT_PORT = 5672;
+export enum RABBIT_CONFIG {
+  MIN_PORT = 0,
+  MAX_PORT = 65535,
+  DEFAULT_RABBIT_PORT = 5672,
+}

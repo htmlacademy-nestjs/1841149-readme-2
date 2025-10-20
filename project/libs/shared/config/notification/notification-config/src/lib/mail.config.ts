@@ -1,13 +1,13 @@
 import { registerAs } from '@nestjs/config';
 import { plainToClass } from 'class-transformer';
 import { MailConfiguration } from './mail/mail.env';
-import { DEFAULT_SMTP_PORT } from './mail/mail.const';
+import { MAIL_CONFIG } from './mail/mail.const';
 
 async function getMailConfig(): Promise<MailConfiguration> {
   const config = plainToClass(MailConfiguration, {
     host: process.env.MAIL_SMTP_HOST,
     port: parseInt(
-      process.env.MAIL_SMTP_PORT ?? DEFAULT_SMTP_PORT.toString(),
+      process.env.MAIL_SMTP_PORT ?? MAIL_CONFIG.DEFAULT_SMTP_PORT.toString(),
       10
     ),
     user: process.env.MAIL_USER_NAME,

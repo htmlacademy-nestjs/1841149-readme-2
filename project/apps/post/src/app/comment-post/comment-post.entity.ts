@@ -40,6 +40,7 @@ export class CommentPostEntity
   static fromDto(dto: CreateCommentDto, postId: string): CommentPostEntity {
     return new CommentPostEntity().populate({
       ...dto,
+      authorId: dto.userId,
       postId,
       createdAt: new Date(),
       updatedAt: new Date(),

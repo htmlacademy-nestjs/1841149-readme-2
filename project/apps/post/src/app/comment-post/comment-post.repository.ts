@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -103,7 +104,7 @@ export class CommentPostRepository extends BasePostgresRepository<
     };
   }
 
-  public override async deleteById(id: string): Promise<void> {
+  public override async deleteById(id: string, userId: string): Promise<void> {
     const existComment = await this.client.comment.findFirst({
       where: {
         id,
@@ -112,6 +113,10 @@ export class CommentPostRepository extends BasePostgresRepository<
 
     if (!existComment) {
       throw new NotFoundException(`Comment with id ${id} not found.`);
+    }
+
+    if (existComment.authorId !== userId) {
+      throw new BadRequestException(`You can't delete not yours comment.`);
     }
 
     await this.client.comment.delete({

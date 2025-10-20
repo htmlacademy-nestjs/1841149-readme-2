@@ -1,0 +1,36 @@
+import { JwtToken } from '@project/types';
+import { Entity } from '@project/core';
+
+export class RefreshTokenEntity implements JwtToken, Entity<string> {
+  public createdAt!: Date;
+  public expiresIn!: Date;
+  public id!: string;
+  public tokenId!: string;
+  public userId!: string;
+  [key: string]: unknown;
+
+  constructor(refreshToken: JwtToken) {
+    this.populate(refreshToken);
+  }
+
+  public populate(data: JwtToken): void {
+    this.createdAt = data.createdAt;
+    this.expiresIn = data.expiresIn;
+    this.tokenId = data.tokenId;
+    this.userId = data.userId;
+  }
+
+  public toObject() {
+    return {
+      id: this.id,
+      userId: this.userId,
+      tokenId: this.tokenId,
+      createdAt: this.createdAt,
+      expiresIn: this.expiresIn,
+    };
+  }
+
+  static fromObject(data: JwtToken): RefreshTokenEntity {
+    return new RefreshTokenEntity(data);
+  }
+}

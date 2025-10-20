@@ -38,6 +38,6 @@ export class FileStorageController {
   @Get(':fileId')
   public async show(@Param('fileId', MongoIdValidationPipe) fileId: string) {
     const existFile = await this.fileStorageService.getFile(fileId);
-    return fillDto(UploadedFileRdo, existFile);
+    return fillDto(UploadedFileRdo, existFile.toObject());
   }
 }

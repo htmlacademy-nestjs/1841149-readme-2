@@ -26,3 +26,7 @@ export * from './lib/sort-type.enum';
 export * from './lib/flat-post.interface';
 export * from './lib/subscriber.interface';
 export * from './lib/rabbit-routing.enum';
+export * from './lib/jwt-token.interface';
+export * from './lib/refresh-token-payload.interface';
+export * from './lib/request-with-token-payload';
+export * from './lib/request-with-userId.interface';

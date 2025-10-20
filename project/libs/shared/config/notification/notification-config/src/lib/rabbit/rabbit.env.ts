@@ -7,7 +7,7 @@ import {
   validateOrReject,
 } from 'class-validator';
 import { EnvValidationMessage } from './rabbit.messages';
-import { DEFAULT_RABBIT_PORT, MAX_PORT, MIN_PORT } from './rabbit.const';
+import { RABBIT_CONFIG } from './rabbit.const';
 
 export class RabbitConfiguration {
   @IsString({ message: EnvValidationMessage.RabbitHostRequired })
@@ -17,10 +17,10 @@ export class RabbitConfiguration {
   public password!: string;
 
   @IsNumber({}, { message: EnvValidationMessage.PortRequired })
-  @Min(MIN_PORT)
-  @Max(MAX_PORT)
+  @Min(RABBIT_CONFIG.MIN_PORT)
+  @Max(RABBIT_CONFIG.MAX_PORT)
   @IsOptional()
-  public port: number = DEFAULT_RABBIT_PORT;
+  public port: number = RABBIT_CONFIG.DEFAULT_RABBIT_PORT;
 
   @IsString({ message: EnvValidationMessage.UserRequired })
   public user!: string;

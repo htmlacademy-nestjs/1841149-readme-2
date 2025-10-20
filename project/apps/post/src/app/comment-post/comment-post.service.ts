@@ -26,7 +26,7 @@ export class CommentPostService {
     return this.commentPostRepository.save(newComment);
   }
 
-  public async deleteComment(commentId: string) {
-    await this.commentPostRepository.deleteById(commentId);
+  public async deleteComment(commentId: string, userId: string) {
+    await this.commentPostRepository.deleteById(commentId, userId);
   }
 }

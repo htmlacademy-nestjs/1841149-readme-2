@@ -197,9 +197,7 @@ export class BlogPostEntity implements Post, Entity<string, FlatPost> {
 
   static fromDTO(dto: CreatePostDto, tags: TagPostEntity[]): BlogPostEntity {
     const entity = new BlogPostEntity();
-
-    // TODO Заменить на айди из токена
-    entity.authorId = '123';
+    entity.authorId = dto.userId;
     entity.tags = tags;
     entity.type = dto.type;
     entity.status = dto.status ?? PostState.Publised;

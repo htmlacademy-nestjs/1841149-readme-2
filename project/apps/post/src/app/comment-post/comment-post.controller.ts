@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Headers,
   HttpCode,
   HttpStatus,
   Param,
@@ -87,7 +88,10 @@ export class CommentPostController {
   })
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async deleteComment(@Param('id') id: string) {
-    await this.commentPostService.deleteComment(id);
+  public async deleteComment(
+    @Param('id') id: string,
+    @Headers('X-UserId') userId: string
+  ) {
+    await this.commentPostService.deleteComment(id, userId);
   }
 }

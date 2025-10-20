@@ -2,9 +2,11 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   HttpStatus,
   Param,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
@@ -18,6 +20,14 @@ import { MongoIdValidationPipe } from '@project/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
 import { NotifyService } from '../notification/notification.service';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { BlogUserEntity } from '../blog-user/blog-user.entity';
+import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
+import type { RequestWithTokenPayload } from '@project/types';
+
+interface RequestWithUser {
+  user?: BlogUserEntity;
+}
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -55,11 +65,28 @@ export class AuthenticationController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Password or Login is wrong.',
   })
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  public async login(@Body() dto: LoginUserDto) {
-    const verifiedUser = await this.authService.verifyUser(dto);
-    const userToken = await this.authService.createUserToken(verifiedUser);
-    return fillDto(LoggedUserRdo, { ...verifiedUser.toObject(), ...userToken });
+  public async login(@Req() { user }: RequestWithUser) {
+    const userToken = await this.authService.createUserToken(user);
+    return fillDto(LoggedUserRdo, { ...user.toObject(), ...userToken });
+  }
+
+  @UseGuards(JwtRefreshGuard)
+  @Get('refresh')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Get a new access/refresh tokens',
+  })
+  public async refresh(@Req() { user }: RequestWithUser) {
+    return this.authService.createUserToken(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('check')
+  public async checkToken(@Req() { user: payload }: RequestWithTokenPayload) {
+    return payload;
   }
 
   @ApiResponse({
