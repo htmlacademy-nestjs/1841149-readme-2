@@ -1,7 +1,7 @@
 ###
 
 # Get posts
-GET http://localhost:3002/api/posts?sortBy=commentCount
+GET http://localhost:3002/api/posts?authorId[]=123
 
 ###
 

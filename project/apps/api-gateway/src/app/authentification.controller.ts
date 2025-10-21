@@ -7,6 +7,7 @@ import {
   Req,
   UseFilters,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -15,6 +16,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
 import type { Request } from 'express';
 import { CheckAuthGuard } from './guards/check-auth.guard';
+import { HeaderUserIdInterceptor } from './interceptors/header-user-id.interceptor';
+import type { RequestWithUserId } from '@project/types';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Controller('auth')
 @UseFilters(AxiosExceptionFilter)
@@ -62,6 +66,26 @@ export class AuthentificationController {
       {
         headers: {
           Authorization: req.headers['authorization'],
+        },
+      }
+    );
+
+    return data;
+  }
+
+  @UseGuards(CheckAuthGuard)
+  @UseInterceptors(HeaderUserIdInterceptor)
+  @Post('change-password')
+  public async changePassword(
+    @Req() req: RequestWithUserId,
+    @Body() dto: ChangePasswordDto
+  ) {
+    const { data } = await this.httpService.axiosRef.post(
+      `${ApplicationServiceURL.Users}/password`,
+      dto,
+      {
+        headers: {
+          'X-UserId': req.userId,
         },
       }
     );

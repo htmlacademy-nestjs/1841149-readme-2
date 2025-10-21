@@ -354,8 +354,16 @@ export class BlogPostRepository extends BasePostgresRepository<
       orderBy.createdAt = getSortOrder(query.sortDirection);
     }
 
-    if (query?.authorId) {
-      where.authorId = query.authorId;
+    if (query['authorId[]'] !== undefined) {
+      const authorIds = Array.isArray(query['authorId[]'])
+        ? query['authorId[]']
+        : [query['authorId[]']];
+
+      if (authorIds.length > 0) {
+        where.authorId = {
+          in: authorIds,
+        };
+      }
     }
 
     where.status = query.status;

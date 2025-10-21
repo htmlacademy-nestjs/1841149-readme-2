@@ -76,6 +76,11 @@
     "libs/shared/config/user/config-user",
     "libs/shared/post/models",
     "libs/shared/config/file-storage/file-storage-config",
-    "libs/shared/config/notification/notification-config"
+    "libs/shared/config/notification/notification-config",
+    "libs/post/*",
+    "libs/share/post/*",
+    "libs/shared/post/*",
+    "libs/shared/config/*",
+    "libs/shared/config/post/*"
   ]
 }

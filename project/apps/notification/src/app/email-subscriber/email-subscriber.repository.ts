@@ -7,19 +7,21 @@ import { EmailSubscriberEntity } from './email-subscriber.entity';
 import { EmailSubscriberModel } from './email-subscriber.model';
 
 @Injectable()
-export class EmailSubscriberRepository extends BaseMongoRepository<EmailSubscriberEntity, EmailSubscriberModel> {
+export class EmailSubscriberRepository extends BaseMongoRepository<
+  EmailSubscriberEntity,
+  EmailSubscriberModel
+> {
   constructor(
-    @InjectModel(EmailSubscriberModel.name) emailSubscriberModel: Model<EmailSubscriberModel>
+    @InjectModel(EmailSubscriberModel.name)
+    emailSubscriberModel: Model<EmailSubscriberModel>
   ) {
     super(emailSubscriberModel, EmailSubscriberEntity.fromObject);
   }
 
-  public async findByEmail(email: string): Promise<EmailSubscriberEntity | null> {
+  public async findByEmail(
+    email: string
+  ): Promise<EmailSubscriberEntity | null> {
     const document = await this.model.findOne({ email }).exec();
-
-    if(!document) {
-      throw new NotFoundException('Not Found');
-    }
 
     return this.createEntityFromDocument(document);
   }

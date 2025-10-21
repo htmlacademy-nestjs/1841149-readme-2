@@ -6,7 +6,6 @@ import {
   Req,
   Res,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import { ApplicationServiceURL } from './app.config';
 import { HttpService } from '@nestjs/axios';

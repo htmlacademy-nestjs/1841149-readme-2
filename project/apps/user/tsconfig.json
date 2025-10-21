@@ -4,10 +4,10 @@
   "include": [],
   "references": [
     {
-      "path": "../../libs/shared/core"
+      "path": "../../libs/shared/types"
     },
     {
-      "path": "../../libs/shared/types"
+      "path": "../../libs/shared/core"
     },
     {
       "path": "../../libs/shared/helpers"

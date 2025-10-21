@@ -3,7 +3,6 @@ import { Expose, Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { PostType } from '@prisma/client';
 import { TagPostEntity } from '../../tag-post/tag-post.entity';
-import { IsOptional } from 'class-validator';
 
 export class BasePostRdo {
   @Expose()

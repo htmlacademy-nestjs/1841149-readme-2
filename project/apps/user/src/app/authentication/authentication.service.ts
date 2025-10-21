@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   HttpException,
   HttpStatus,
@@ -20,6 +21,7 @@ import type { ConfigType } from '@nestjs/config';
 import { RefreshTokenService } from '../refresh-token/refresh-token.service';
 import { createJWTPayload } from '@project/helpers';
 import { randomUUID } from 'node:crypto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Injectable()
 export class AuthenticationService {
@@ -118,6 +120,25 @@ export class AuthenticationService {
     if (!existUser) {
       throw new NotFoundException(`User with email ${email} not found`);
     }
+
+    return existUser;
+  }
+
+  public async updatePassword(userId: string, dto: ChangePasswordDto) {
+    const { password, newPassword } = dto;
+    const existUser = await this.blogUserRepository.findById(userId);
+
+    if (!existUser) {
+      throw new UnauthorizedException(AUTH_MESSAGES.AUTH_USER_NOT_FOUND);
+    }
+
+    if (!(await existUser.comparePassword(password))) {
+      throw new BadRequestException(AUTH_MESSAGES.AUTH_USER_PASSWORD_WRONG);
+    }
+
+    await existUser.setPassword(newPassword);
+
+    await this.blogUserRepository.update(userId, existUser);
 
     return existUser;
   }

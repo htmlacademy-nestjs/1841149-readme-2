@@ -4,16 +4,22 @@
   "include": [],
   "references": [
     {
+      "path": "../../libs/shared/config/user/config-user"
+    },
+    {
       "path": "../../libs/shared/post/models"
     },
     {
       "path": "../../libs/shared/core"
     },
     {
+      "path": "../../libs/shared/helpers"
+    },
+    {
       "path": "../../libs/shared/types"
     },
     {
-      "path": "../../libs/shared/helpers"
+      "path": "../../libs/shared/config/post/post-config"
     },
     {
       "path": "./tsconfig.app.json"

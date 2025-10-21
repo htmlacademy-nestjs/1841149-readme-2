@@ -8,6 +8,7 @@ import {
   Post,
   Req,
   UseGuards,
+  Headers,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -24,6 +25,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { BlogUserEntity } from '../blog-user/blog-user.entity';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import type { RequestWithTokenPayload } from '@project/types';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 interface RequestWithUser {
   user?: BlogUserEntity;
@@ -87,6 +89,15 @@ export class AuthenticationController {
   @Post('check')
   public async checkToken(@Req() { user: payload }: RequestWithTokenPayload) {
     return payload;
+  }
+
+  @Post('password')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async changePassword(
+    @Body() dto: ChangePasswordDto,
+    @Headers('X-UserId') userId: string
+  ) {
+    await this.authService.updatePassword(userId, dto);
   }
 
   @ApiResponse({

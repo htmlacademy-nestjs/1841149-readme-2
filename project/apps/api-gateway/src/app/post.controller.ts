@@ -21,7 +21,11 @@ import { AxiosExceptionFilter } from './filters/axios-exception.filter';
 import { BlogPostQuery } from './query/blog-post.query';
 import { BlogPostSearchQuery } from './query/blog-post-search.query';
 import { BlogPostTypeQuery } from './query/blog-post-type.query';
-import { PostType, type RequestWithUserId } from '@project/types';
+import {
+  PostType,
+  type RequestWithTokenPayload,
+  type RequestWithUserId,
+} from '@project/types';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { HeaderUserIdInterceptor } from './interceptors/header-user-id.interceptor';
 
@@ -72,10 +76,18 @@ export class PostsController {
   @UseGuards(CheckAuthGuard)
   @UseInterceptors(UserIdInterceptor)
   @Post('')
-  public async create(@Body() dto: CreatePostDto) {
+  public async create(
+    @Body() dto: CreatePostDto,
+    @Req() request: RequestWithTokenPayload
+  ) {
     const { data } = await this.httpService.axiosRef.post(
       `${ApplicationServiceURL.Posts}/`,
-      dto
+      dto,
+      {
+        headers: {
+          'X-User': JSON.stringify(request.user),
+        },
+      }
     );
 
     return data;

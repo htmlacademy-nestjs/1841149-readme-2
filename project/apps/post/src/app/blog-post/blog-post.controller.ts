@@ -9,6 +9,7 @@ import {
   Patch,
   Post,
   Query,
+  Req,
 } from '@nestjs/common';
 import { BlogPostService } from './blog-post.service';
 import { fillDto } from '@project/helpers';
@@ -18,13 +19,21 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { BlogPostQuery } from './query/blog-post.query';
 import { BlogPostWithPaginationRdo } from './rdo/blog-post-with-pagination.rdo';
 import { BlogPostTypeQuery } from './query/blog-post-type.query';
-import { PostType } from '@project/types';
+import {
+  PostType,
+  type RequestWithTokenPayload,
+  TokenPayload,
+} from '@project/types';
 import { BlogPostSearchQuery } from './query/blog-post-search.query';
 import { CreatePostDto } from './dto/create-post.dto';
+import { NotifyService } from '../notification/notification.service';
 
 @Controller('posts')
 export class BlogPostController {
-  constructor(private readonly blogPostService: BlogPostService) {}
+  constructor(
+    private readonly blogPostService: BlogPostService,
+    private readonly notificationService: NotifyService
+  ) {}
 
   @ApiResponse({
     status: HttpStatus.OK,
@@ -33,6 +42,21 @@ export class BlogPostController {
   })
   @Get('/')
   public async index(@Query() query: BlogPostQuery) {
+    const postsWithPagination = await this.blogPostService.getAllPosts(query);
+    const result = {
+      ...postsWithPagination,
+      entities: postsWithPagination.entities.map((post) => post.toObject()),
+    };
+    return fillDto(BlogPostWithPaginationRdo, result);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'List of user feed',
+    type: BlogPostWithPaginationRdo,
+  })
+  @Get('/feed')
+  public async feed(@Query() query: BlogPostQuery) {
     const postsWithPagination = await this.blogPostService.getAllPosts(query);
     const result = {
       ...postsWithPagination,
@@ -90,10 +114,22 @@ export class BlogPostController {
   @Post('')
   public async create(
     @Body()
-    dto: CreatePostDto
+    dto: CreatePostDto,
+    @Headers('X-User') user: string
   ) {
-    const newPost = await this.blogPostService.create(dto);
-    return fillDto(BasePostRdo, newPost.toObject());
+    const userInfo: TokenPayload = JSON.parse(user);
+
+    console.log(dto);
+
+    await this.notificationService.notifyNewPost({
+      authorId: dto.userId,
+      authorName: `${userInfo.lastname} ${userInfo.lastname}`,
+    });
+
+    // const newPost = await this.blogPostService.create(dto);
+    //
+    //
+    // return fillDto(BasePostRdo, newPost.toObject());
   }
 
   @ApiResponse({
