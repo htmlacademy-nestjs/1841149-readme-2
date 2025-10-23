@@ -66,7 +66,7 @@ export class AuthenticationService {
     const existUser = await this.blogUserRepository.findByEmail(email);
 
     if (!existUser) {
-      throw new NotFoundException(AUTH_MESSAGES.AUTH_USER_NOT_FOUND);
+      throw new UnauthorizedException(AUTH_MESSAGES.AUTH_USER_PASSWORD_WRONG);
     }
 
     if (!(await existUser.comparePassword(password))) {

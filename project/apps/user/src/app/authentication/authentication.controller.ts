@@ -26,6 +26,7 @@ import { BlogUserEntity } from '../blog-user/blog-user.entity';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import type { RequestWithTokenPayload } from '@project/types';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { PostAuthorRdo } from './rdo/post-author.rdo';
 
 interface RequestWithUser {
   user?: BlogUserEntity;
@@ -54,8 +55,6 @@ export class AuthenticationController {
       firstname: firstName,
       lastname: lastName,
     });
-
-    return fillDto(UserRdo, newUser.toObject());
   }
 
   @ApiResponse({
@@ -98,6 +97,21 @@ export class AuthenticationController {
     @Headers('X-UserId') userId: string
   ) {
     await this.authService.updatePassword(userId, dto);
+  }
+
+  @ApiResponse({
+    type: PostAuthorRdo,
+    status: HttpStatus.OK,
+    description: 'Detail user information',
+  })
+  @UseGuards(JwtAuthGuard)
+  @Get(':id/post')
+  public async getPostAuthorInfo(
+    @Param('id', MongoIdValidationPipe) id: string
+  ) {
+    const existUser = await this.authService.getUser(id);
+
+    return fillDto(PostAuthorRdo, existUser.toObject());
   }
 
   @ApiResponse({

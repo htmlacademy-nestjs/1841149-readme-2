@@ -12,8 +12,6 @@ export class HeaderUserIdInterceptor implements NestInterceptor {
 
     request.userId = request.user?.sub;
 
-    console.log('req', request.user);
-
     return next.handle();
   }
 }

@@ -1,5 +1,6 @@
 import { TokenPayload } from './token-payload.interface';
+import { Request } from 'express';
 
-export interface RequestWithTokenPayload {
+export interface RequestWithTokenPayload extends Request {
   user?: TokenPayload;
 }
