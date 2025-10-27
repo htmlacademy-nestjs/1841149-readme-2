@@ -78,10 +78,7 @@ export class FeedController {
     const processedEntities = await Promise.all(
       feed.data.entities.map(async (el: BasePostRdo) => {
         const { data: userData } = await this.httpService.axiosRef.get(
-          `${ApplicationServiceURL.Users}/${el.authorId}/post`,
-          {
-            headers,
-          }
+          `${ApplicationServiceURL.Users}/${el.authorId}/post`
         );
 
         return {

@@ -3,7 +3,7 @@ POST http://localhost:3000/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "test@test.com",
+  "email": "test2@test.com",
   "password": "secret"
 }
 
@@ -53,7 +53,7 @@ GET http://localhost:3000/api/posts HTTP/1.1
 # Create photo post
 POST http://localhost:3000/api/posts HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODllZmQ5NmY1MDM0ZmQ2MmU1MmY3ZGMiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJsYXN0bmFtZSI6IkRvZSIsImZpcnN0bmFtZSI6IkpvaG4iLCJpYXQiOjE3NjEyMDU5NDUsImV4cCI6MTc2MTI5MjM0NX0.JtyEPPsVytRyHzERoxMBcedeYzNYHY68zYL8TUyZEDU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODllZmQ5NmY1MDM0ZmQ2MmU1MmY3ZGMiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJsYXN0bmFtZSI6IkRvZSIsImZpcnN0bmFtZSI6IkpvaG4iLCJpYXQiOjE3NjE1Nzc3NzUsImV4cCI6MTc2MTY2NDE3NX0.iTeFrqr6S-zsDWabG6GsNWx2CxalEt94u8nWdIguKOg
 
 {
   "tags": [
@@ -79,13 +79,19 @@ GET http://localhost:3000/api/posts/type/photo HTTP/1.1
 ###
 
 # Get post
-GET http://localhost:3000/api/posts/9df03577-6b34-44fe-b021-17cfd42b0988 HTTP/1.1
+GET http://localhost:3000/api/posts/2423b905-8c68-4c03-bd41-c6c26108501a HTTP/1.1
+
+###
+
+# Get posts by type
+GET http://localhost:3002/api/posts/type/photo
 
 ###
 
 # Update post
-PATCH http://localhost:3000/api/posts/9df03577-6b34-44fe-b021-17cfd42b0988 HTTP/1.1
+PATCH http://localhost:3000/api/posts/90ffb168-2eee-4208-8c4f-51dd14b8a853 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODllZmQ5NmY1MDM0ZmQ2MmU1MmY3ZGMiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJsYXN0bmFtZSI6IkRvZSIsImZpcnN0bmFtZSI6IkpvaG4iLCJpYXQiOjE3NjE1Nzc3NzUsImV4cCI6MTc2MTY2NDE3NX0.iTeFrqr6S-zsDWabG6GsNWx2CxalEt94u8nWdIguKOg
 
 {
   "tags": [
@@ -94,54 +100,49 @@ Content-Type: application/json
   ],
   "status": "published",
   "repost": false,
-  "type": "video",
-  "title": "How to Build NestJS App2",
-  "videoLink": "https://youtube.com/watch?v=abc123"
+  "type": "photo",
+  "photo": "https://youtube222.com/watch?v=abc123"
 }
 
 ###
 
 # Delete post
-DELETE http://localhost:3000/api/posts/43a15fe4-2b59-4124-b5d6-71a8529aae84 HTTP/1.1
+DELETE http://localhost:3000/api/posts/694a0c6a-1de5-4861-80d1-cdb5d1a1c559 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODllZmQ5NmY1MDM0ZmQ2MmU1MmY3ZGMiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJsYXN0bmFtZSI6IkRvZSIsImZpcnN0bmFtZSI6IkpvaG4iLCJpYXQiOjE3NjE1Nzc3NzUsImV4cCI6MTc2MTY2NDE3NX0.iTeFrqr6S-zsDWabG6GsNWx2CxalEt94u8nWdIguKOg
 
 ###
 
 # Repost post
-POST http://localhost:3000/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/repost HTTP/1.1
+POST http://localhost:3000/api/posts/9e927d12-6ae2-4b4a-9520-e9ea2c727cf5/repost HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjA1Mjc4LCJleHAiOjE3NjA2OTE2Nzh9.R6vdDLGzEiol77qyL5EwI1CUzvSdW0PNFtRI6bR3mR0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVlYTVhNmNiM2E1NDhhNGFkMTc3MDkiLCJlbWFpbCI6InRlc3QyQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYxNTc4NDkzLCJleHAiOjE3NjE2NjQ4OTN9.hTRfIllcwlW6wcdU7qWfE9A7EZ-xiwTBRj9D48kQ-n0
 
 ###
 
 # Like post
-GET http://localhost:3000/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/likes
+POST http://localhost:3000/api/posts/2423b905-8c68-4c03-bd41-c6c26108501a/likes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjkxMjYwLCJleHAiOjE3NjA3Nzc2NjB9.wXSuiVXRPZOFNTlvYHVYV9Mu6sbWkTW8JAOKpYWbxEw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVlYTVhNmNiM2E1NDhhNGFkMTc3MDkiLCJlbWFpbCI6InRlc3QyQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYxNTc4NDkzLCJleHAiOjE3NjE2NjQ4OTN9.hTRfIllcwlW6wcdU7qWfE9A7EZ-xiwTBRj9D48kQ-n0
 
 ###
 
 # Dislike post
-DELETE http://localhost:3000/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/likes
+DELETE http://localhost:3000/api/posts/2423b905-8c68-4c03-bd41-c6c26108501a/likes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjg5NDU5LCJleHAiOjE3NjA3NzU4NTl9.0lvdQRnihZDMm1x--FjenyqvFjzTqutTXMVjZ8Wxizk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVlYTVhNmNiM2E1NDhhNGFkMTc3MDkiLCJlbWFpbCI6InRlc3QyQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYxNTc4NDkzLCJleHAiOjE3NjE2NjQ4OTN9.hTRfIllcwlW6wcdU7qWfE9A7EZ-xiwTBRj9D48kQ-n0
 
 ###
 
 # Get post comments
-GET http://localhost:3000/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/comments
+GET http://localhost:3000/api/posts/2423b905-8c68-4c03-bd41-c6c26108501a/comments
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjgxMDAwLCJleHAiOjE3NjA3Njc0MDB9.B3mheHc26dYohdXPjopbnhAuYtE1k7SNHW2CXecSTbs
-
-{
-  "text": "This is text"
-}
 
 ###
 
 # Create comment for post
-POST http://localhost:3000/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/comments
+POST http://localhost:3000/api/posts/2423b905-8c68-4c03-bd41-c6c26108501a/comments
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjkxMjYwLCJleHAiOjE3NjA3Nzc2NjB9.wXSuiVXRPZOFNTlvYHVYV9Mu6sbWkTW8JAOKpYWbxEw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVlYTVhNmNiM2E1NDhhNGFkMTc3MDkiLCJlbWFpbCI6InRlc3QyQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYxNTc4NDkzLCJleHAiOjE3NjE2NjQ4OTN9.hTRfIllcwlW6wcdU7qWfE9A7EZ-xiwTBRj9D48kQ-n0
 
 {
   "text": "This is text"
@@ -150,9 +151,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY
 ###
 
 # Delete comment for post
-DELETE http://localhost:3000/api/posts/f10786cf-5db4-4fb3-9071-4265859eb15f/comments/ed2c5563-2654-49e5-a2c0-05b8b602bdba
+DELETE http://localhost:3000/api/posts/2423b905-8c68-4c03-bd41-c6c26108501a/comments/87d9624d-739f-449e-8679-57f925d72164
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVmYmFhY2YxMWM3ZTQ5ZWE4Yzg3YWIiLCJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYwNjg5NzE3LCJleHAiOjE3NjA3NzYxMTd9.QBNs7B-6IydXTT1PLcCWd6bVNrEbxwYYg1nKvmMTd8s
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVlYTVhNmNiM2E1NDhhNGFkMTc3MDkiLCJlbWFpbCI6InRlc3QyQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYxNTc4NDkzLCJleHAiOjE3NjE2NjQ4OTN9.hTRfIllcwlW6wcdU7qWfE9A7EZ-xiwTBRj9D48kQ-n0
 
 ###
 
@@ -177,22 +178,22 @@ GET http://localhost:3000/api/files/68f210f4b3783bde62754e6f HTTP/1.1
 ###
 
 # Create a new subscription
-POST http://localhost:3000/api/subscribe/689efd96f5034fd62e52f7dc HTTP/1.1
+POST http://localhost:3000/api/subscribe/68eea5a6cb3a548a4ad17709 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODllZmQ5NmY1MDM0ZmQ2MmU1MmY3ZGMiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJsYXN0bmFtZSI6IkRvZSIsImZpcnN0bmFtZSI6IkpvaG4iLCJpYXQiOjE3NjEwODU4MjEsImV4cCI6MTc2MTE3MjIyMX0.AwdOQ19P5zdxhzJ8x0OZi51GVRNpfb1bTf-JXidvjzk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODllZmQ5NmY1MDM0ZmQ2MmU1MmY3ZGMiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJsYXN0bmFtZSI6IkRvZSIsImZpcnN0bmFtZSI6IkpvaG4iLCJpYXQiOjE3NjE1NzU4NzUsImV4cCI6MTc2MTY2MjI3NX0.rRUrNYWUoLmsD2kbvlddZacHF_KoXDflad_NkHvnWKY
 
 ###
 
 # Unsubscribe
-DELETE http://localhost:3000/api/subscribe/68efbaacf11c7e49ea8c87ab HTTP/1.1
+DELETE http://localhost:3000/api/subscribe/68eea5a6cb3a548a4ad17709 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODllZmQ5NmY1MDM0ZmQ2MmU1MmY3ZGMiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJsYXN0bmFtZSI6IkRvZSIsImZpcnN0bmFtZSI6IkpvaG4iLCJpYXQiOjE3NjA4NzgyNDgsImV4cCI6MTc2MDk2NDY0OH0.ynJ0EVLO4Gxv4zooa2L8nOOLfnUj44J7qJhPMoaMpxc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODllZmQ5NmY1MDM0ZmQ2MmU1MmY3ZGMiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJsYXN0bmFtZSI6IkRvZSIsImZpcnN0bmFtZSI6IkpvaG4iLCJpYXQiOjE3NjE1NzU4NzUsImV4cCI6MTc2MTY2MjI3NX0.rRUrNYWUoLmsD2kbvlddZacHF_KoXDflad_NkHvnWKY
 
 ###
 
 # Get user feed
 GET http://localhost:3000/api/feed HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODllZmQ5NmY1MDM0ZmQ2MmU1MmY3ZGMiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJsYXN0bmFtZSI6IkRvZSIsImZpcnN0bmFtZSI6IkpvaG4iLCJpYXQiOjE3NjEyMDU5NDUsImV4cCI6MTc2MTI5MjM0NX0.JtyEPPsVytRyHzERoxMBcedeYzNYHY68zYL8TUyZEDU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVlYTVhNmNiM2E1NDhhNGFkMTc3MDkiLCJlbWFpbCI6InRlc3QyQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYxNTc4NDkzLCJleHAiOjE3NjE2NjQ4OTN9.hTRfIllcwlW6wcdU7qWfE9A7EZ-xiwTBRj9D48kQ-n0
 
 ###

@@ -22,6 +22,7 @@ import { PostType, TokenPayload } from '@project/types';
 import { BlogPostSearchQuery } from './query/blog-post-search.query';
 import { CreatePostDto } from './dto/create-post.dto';
 import { NotifyService } from '../notification/notification.service';
+import { DetailPostRdo } from './rdo/detail-post.rdo';
 
 @Controller('posts')
 export class BlogPostController {
@@ -175,7 +176,7 @@ export class BlogPostController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Unauthorized.',
   })
-  @Get(':id/repost')
+  @Post(':id/repost')
   public async repost(
     @Param('id') id: string,
     @Headers('X-UserId') userId: string
@@ -196,6 +197,6 @@ export class BlogPostController {
   @Get(':id')
   public async show(@Param('id') id: string) {
     const post = await this.blogPostService.show(id);
-    return fillDto(BasePostRdo, post.toObject());
+    return fillDto(DetailPostRdo, post.toObject());
   }
 }

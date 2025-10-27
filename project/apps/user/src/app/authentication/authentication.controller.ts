@@ -104,7 +104,6 @@ export class AuthenticationController {
     status: HttpStatus.OK,
     description: 'Detail user information',
   })
-  @UseGuards(JwtAuthGuard)
   @Get(':id/post')
   public async getPostAuthorInfo(
     @Param('id', MongoIdValidationPipe) id: string

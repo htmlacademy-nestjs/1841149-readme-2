@@ -16,7 +16,13 @@ import { HttpService } from '@nestjs/axios';
 import { ApiResponse } from '@nestjs/swagger';
 import { CreateSubscriptionDto } from './dto/create-subsctiption.dto';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
-import type { RequestWithUserId } from '@project/types';
+import type {
+  RequestWithTokenPayload,
+  RequestWithUserId,
+} from '@project/types';
+import { BadRequestErrorRdo } from './rdo/bad-request-error.rdo';
+import { UnauthorizedErrorRdo } from './rdo/unathorized-error.rdo';
+import { InternalErrorRdo } from './rdo/internal-error.rdo';
 
 @Controller('subscribe')
 @UseFilters(AxiosExceptionFilter)
@@ -28,18 +34,37 @@ export class SubscribeController {
     status: HttpStatus.CREATED,
     description: 'The new subscription has been successfully created.',
   })
+  @ApiResponse({
+    type: BadRequestErrorRdo,
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Not correct data',
+  })
+  @ApiResponse({
+    type: UnauthorizedErrorRdo,
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Password or Login is wrong.',
+  })
+  @ApiResponse({
+    type: InternalErrorRdo,
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'Internal error',
+  })
   @UseGuards(CheckAuthGuard)
   @UseInterceptors(HeaderUserIdInterceptor)
   @Post(':id')
-  public async create(@Req() req: RequestWithUserId, @Param('id') id: string) {
+  public async create(
+    @Req() req: RequestWithTokenPayload,
+    @Param('id') id: string
+  ) {
+    const headers = {
+      'X-UserId': req.user?.sub,
+      Authorization: req.headers['authorization'],
+    };
+
     const { data } = await this.httpService.axiosRef.post(
       `${ApplicationServiceURL.Subscribe}/${id}`,
       null,
-      {
-        headers: {
-          'X-UserId': req.userId,
-        },
-      }
+      { headers }
     );
 
     return data;
@@ -48,6 +73,21 @@ export class SubscribeController {
   @ApiResponse({
     status: HttpStatus.NO_CONTENT,
     description: 'Successfully unsubscribe',
+  })
+  @ApiResponse({
+    type: BadRequestErrorRdo,
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Not correct data',
+  })
+  @ApiResponse({
+    type: UnauthorizedErrorRdo,
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Password or Login is wrong.',
+  })
+  @ApiResponse({
+    type: InternalErrorRdo,
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'Internal error',
   })
   @UseGuards(CheckAuthGuard)
   @UseInterceptors(HeaderUserIdInterceptor)
