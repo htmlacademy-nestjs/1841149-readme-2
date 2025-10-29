@@ -10,9 +10,6 @@
       "path": "./apps/api-gateway"
     },
     {
-      "path": "./apps/feed"
-    },
-    {
       "path": "./apps/file-storage"
     },
     {
@@ -41,6 +38,9 @@
     },
     {
       "path": "./libs/shared/config/notification/notification-config"
+    },
+    {
+      "path": "./libs/shared/config/post/post-config"
     }
   ]
 }

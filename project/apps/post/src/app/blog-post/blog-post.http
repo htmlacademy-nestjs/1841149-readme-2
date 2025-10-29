@@ -1,7 +1,7 @@
 ###
 
 # Get posts
-GET http://localhost:3002/api/posts?sortBy=commentCount
+GET http://localhost:3002/api/posts?authorId[]=123
 
 ###
 
@@ -33,17 +33,14 @@ Content-Type: application/json
 ###
 
 # Create repost of post
-POST http://localhost:3002/api/posts/9df03577-6b34-44fe-b021-17cfd42b0988/repost HTTP/1.1
+POST http://localhost:3000/api/posts/9e927d12-6ae2-4b4a-9520-e9ea2c727cf5/repost HTTP/1.1
 Content-Type: application/json
-
-{
-  "userId": "123"
-}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGVlYTVhNmNiM2E1NDhhNGFkMTc3MDkiLCJlbWFpbCI6InRlc3QyQHRlc3QuY29tIiwibGFzdG5hbWUiOiJEb2UiLCJmaXJzdG5hbWUiOiJKb2huIiwiaWF0IjoxNzYxNTc4NDkzLCJleHAiOjE3NjE2NjQ4OTN9.hTRfIllcwlW6wcdU7qWfE9A7EZ-xiwTBRj9D48kQ-n0
 
 ###
 
 # Detail post info
-GET http://localhost:3000/api/posts/c90b0147-553c-471b-baeb-1f8b808a6b6e HTTP/1.1
+GET http://localhost:3000/api/posts/9e927d12-6ae2-4b4a-9520-e9ea2c727cf5 HTTP/1.1
 Content-Type: application/json
 
 ###

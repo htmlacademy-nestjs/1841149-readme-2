@@ -25,8 +25,8 @@ function getTextPosts() {
     {
       id: FIRST_POST_UUID,
       authorId: FIRST_USER_ID,
-      type: 'TEXT' as const,
-      status: 'PUBLISHED' as const,
+      type: 'text' as const, // ✅ ИСПРАВЛЕНО: 'text' вместо 'TEXT'
+      status: 'published' as const, // ✅ ИСПРАВЛЕНО: 'published' вместо 'PUBLISHED'
       tags: {
         connect: [{ id: FIRST_TAG_UUID }, { id: SECOND_TAG_UUID }],
       },
@@ -41,16 +41,16 @@ function getTextPosts() {
     {
       id: SECOND_POST_UUID,
       authorId: SECOND_USER_ID,
-      type: 'TEXT' as const,
-      status: 'PUBLISHED' as const,
+      type: 'text' as const, // ✅ ИСПРАВЛЕНО
+      status: 'published' as const, // ✅ ИСПРАВЛЕНО
       tags: {
         connect: [{ id: SECOND_TAG_UUID }],
       },
       textPost: {
         create: {
-          title: `Руководство по современной веб-разработке`,
-          announce: `Краткое введение в основы веб-разработки. В этой статье мы рассмотрим ключевые концепции и инструменты современного веб-программирования, которые должен знать каждый разработчик.`,
-          text: `Подробное содержание статьи. В современном мире веб-разработки существует множество инструментов и технологий. JavaScript остается основным языком фронтенда, а фреймворки как React, Vue и Angular упрощают создание интерактивных пользовательских интерфейсов. Серверная часть может быть реализована на Node.js, Python, Java или других языках. Базы данных, как реляционные (PostgreSQL, MySQL), так и NoSQL (MongoDB, Redis), играют важную роль в хранении данных. DevOps практики с использованием Docker, Kubernetes и CI/CD пайплайнов помогают автоматизировать процесс разработки и деплоя приложений.`,
+          title: `Путь к профессиональному росту в IT`,
+          announce: `Практические советы для карьерного развития в сфере информационных технологий.`,
+          text: `Детальное руководство по построению карьеры в IT. Начните с изучения основ программирования, затем специализируйтесь в выбранной области. Непрерывное обучение, участие в open-source проектах и нетворкинг помогут вам расти профессионально.`,
         },
       },
     },
@@ -62,8 +62,8 @@ function getVideoPosts() {
     {
       id: THIRD_POST_UUID,
       authorId: FIRST_USER_ID,
-      type: 'VIDEO' as const,
-      status: 'PUBLISHED' as const,
+      type: 'video' as const, // ✅ ИСПРАВЛЕНО: 'video' вместо 'VIDEO'
+      status: 'published' as const, // ✅ ИСПРАВЛЕНО
       tags: {
         connect: [{ id: SECOND_TAG_UUID }],
       },
@@ -82,8 +82,8 @@ function getQuotePosts() {
     {
       id: FOURTH_POST_UUID,
       authorId: FIRST_USER_ID,
-      type: 'QUOTE' as const,
-      status: 'PUBLISHED' as const,
+      type: 'quote' as const, // ✅ ИСПРАВЛЕНО: 'quote' вместо 'QUOTE'
+      status: 'published' as const, // ✅ ИСПРАВЛЕНО
       tags: {
         connect: [{ id: FIRST_TAG_UUID }, { id: SECOND_TAG_UUID }],
       },
@@ -103,8 +103,8 @@ function getPhotoPosts() {
     {
       id: FIFTH_POST_UUID,
       authorId: FIRST_USER_ID,
-      type: 'PHOTO' as const,
-      status: 'PUBLISHED' as const,
+      type: 'photo' as const, // ✅ ИСПРАВЛЕНО: 'photo' вместо 'PHOTO'
+      status: 'published' as const, // ✅ ИСПРАВЛЕНО
       tags: {
         connect: [{ id: FIRST_TAG_UUID }, { id: SECOND_TAG_UUID }],
       },
@@ -123,8 +123,8 @@ function getLinkPosts() {
     {
       id: SIXTH_POST_UUID,
       authorId: SECOND_USER_ID,
-      type: 'LINK' as const,
-      status: 'PUBLISHED' as const,
+      type: 'link' as const, // ✅ ИСПРАВЛЕНО: 'link' вместо 'LINK'
+      status: 'published' as const, // ✅ ИСПРАВЛЕНО
       tags: {
         connect: [{ id: FIRST_TAG_UUID }, { id: SECOND_TAG_UUID }],
       },
@@ -157,11 +157,11 @@ function getComments() {
 function getLikes() {
   return [
     {
-      userId: FIRST_USER_ID,
+      userId: FIRST_USER_ID, // ✅ ИСПРАВЛЕНО: userId вместо authorId
       postId: SIXTH_POST_UUID,
     },
     {
-      userId: SECOND_USER_ID,
+      userId: SECOND_USER_ID, // ✅ ИСПРАВЛЕНО: userId вместо authorId
       postId: FOURTH_POST_UUID,
     },
   ];
@@ -268,7 +268,7 @@ async function seedDb(prismaClient: PrismaClient) {
   for (const like of mockLikes) {
     await prismaClient.like.create({
       data: {
-        authorId: like.userId,
+        userId: like.userId, // ✅ ИСПРАВЛЕНО: userId вместо authorId
         postId: like.postId,
       },
     });

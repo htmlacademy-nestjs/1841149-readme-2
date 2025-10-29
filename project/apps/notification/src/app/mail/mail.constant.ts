@@ -1,1 +1,4 @@
-export const EMAIL_ADD_SUBSCRIBER_SUBJECT = 'Подписка на рассылку оформлена';
+export enum EMAIL_SUBSCRIBER_SUBJECT {
+  ADD_SUBSCRIBER = 'Подписка на рассылку оформлена',
+  NEW_POST = 'Новый пост от автора',
+}

@@ -8,7 +8,7 @@ export class BlogPostQuery {
   )
   public limit = BlogPostConstants.DEFAULT_POST_COUNT_LIMIT;
   public 'tags[]'?: string[];
-  public authorId?: string;
+  public authorId?: string | string[];
   public status = PostState.Publised;
   public sortBy: string = BlogPostConstants.DEFAULT_SORT_TYPE;
   public sortDirection: string = BlogPostConstants.DEFAULT_SORT_DIRECTION;

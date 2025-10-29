@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  Post,
 } from '@nestjs/common';
 import { LikePostService } from './like-post.service';
 import { fillDto } from '@project/helpers';
@@ -33,7 +34,7 @@ export class LikePostController {
     status: HttpStatus.CONFLICT,
     description: 'Like already exists.',
   })
-  @Get('/')
+  @Post('/')
   public async setLike(
     @Param('postId') postId: string,
     @Headers('X-UserId') userId: string

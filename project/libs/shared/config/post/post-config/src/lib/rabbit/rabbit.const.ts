@@ -1,0 +1,5 @@
+export enum RABBIT_CONFIG {
+  MIN_PORT = 0,
+  MAX_PORT = 65535,
+  DEFAULT_RABBIT_PORT = 5672,
+}

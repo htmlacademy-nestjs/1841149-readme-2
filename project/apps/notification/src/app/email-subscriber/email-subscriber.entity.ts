@@ -1,8 +1,8 @@
-import { Subscriber } from '@project/types';
+import { EmailSubscriber } from '@project/types';
 import { Entity } from '@project/core';
 
 export class EmailSubscriberEntity
-  implements Subscriber, Entity<string, Subscriber>
+  implements EmailSubscriber, Entity<string, EmailSubscriber>
 {
   public id?: string;
   public email!: string;
@@ -18,7 +18,7 @@ export class EmailSubscriberEntity
     };
   }
 
-  public populate(data: Subscriber): EmailSubscriberEntity {
+  public populate(data: EmailSubscriber): EmailSubscriberEntity {
     this.id = data.id ?? undefined;
     this.email = data.email;
     this.firstname = data.firstname;
@@ -27,7 +27,7 @@ export class EmailSubscriberEntity
     return this;
   }
 
-  static fromObject(data: Subscriber): EmailSubscriberEntity {
+  static fromObject(data: EmailSubscriber): EmailSubscriberEntity {
     return new EmailSubscriberEntity().populate(data);
   }
 }

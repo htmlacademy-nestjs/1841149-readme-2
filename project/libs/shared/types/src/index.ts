@@ -30,3 +30,5 @@ export * from './lib/jwt-token.interface';
 export * from './lib/refresh-token-payload.interface';
 export * from './lib/request-with-token-payload';
 export * from './lib/request-with-userId.interface';
+export * from './lib/email-subscriber.interface';
+export * from './lib/author-subscriber.interface';

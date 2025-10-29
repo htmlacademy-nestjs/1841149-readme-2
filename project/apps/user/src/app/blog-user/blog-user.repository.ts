@@ -21,4 +21,17 @@ export class BlogUserRepository extends BaseMongoRepository<
 
     return this.createEntityFromDocument(document);
   }
+
+  public async updateSubscriberCount(
+    userId: string,
+    increment: number
+  ): Promise<void> {
+    await this.model
+      .findByIdAndUpdate(
+        userId,
+        { $inc: { subscriberCount: increment } },
+        { new: true }
+      )
+      .exec();
+  }
 }

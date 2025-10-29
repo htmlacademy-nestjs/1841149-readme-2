@@ -25,7 +25,7 @@ export class BlogPostQuery {
     description: 'Author id',
     example: '123',
   })
-  public authorId?: string;
+  public 'authorId[]'?: string[];
 
   @IsString()
   @IsOptional()

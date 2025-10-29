@@ -3,7 +3,6 @@ import { Expose, Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { PostType } from '@prisma/client';
 import { TagPostEntity } from '../../tag-post/tag-post.entity';
-import { IsOptional } from 'class-validator';
 
 export class BasePostRdo {
   @Expose()
@@ -52,9 +51,9 @@ export class BasePostRdo {
   @Expose()
   @ApiProperty({
     description: 'Post author',
-    example: '{ id: "123"}',
+    example: '123',
   })
-  public author!: string;
+  public authorId!: string;
 
   @Expose()
   @ApiProperty({

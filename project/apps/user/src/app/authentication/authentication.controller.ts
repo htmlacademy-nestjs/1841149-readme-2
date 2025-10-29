@@ -8,6 +8,7 @@ import {
   Post,
   Req,
   UseGuards,
+  Headers,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -24,6 +25,8 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { BlogUserEntity } from '../blog-user/blog-user.entity';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import type { RequestWithTokenPayload } from '@project/types';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { PostAuthorRdo } from './rdo/post-author.rdo';
 
 interface RequestWithUser {
   user?: BlogUserEntity;
@@ -52,8 +55,6 @@ export class AuthenticationController {
       firstname: firstName,
       lastname: lastName,
     });
-
-    return fillDto(UserRdo, newUser.toObject());
   }
 
   @ApiResponse({
@@ -87,6 +88,29 @@ export class AuthenticationController {
   @Post('check')
   public async checkToken(@Req() { user: payload }: RequestWithTokenPayload) {
     return payload;
+  }
+
+  @Post('password')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async changePassword(
+    @Body() dto: ChangePasswordDto,
+    @Headers('X-UserId') userId: string
+  ) {
+    await this.authService.updatePassword(userId, dto);
+  }
+
+  @ApiResponse({
+    type: PostAuthorRdo,
+    status: HttpStatus.OK,
+    description: 'Detail user information',
+  })
+  @Get(':id/post')
+  public async getPostAuthorInfo(
+    @Param('id', MongoIdValidationPipe) id: string
+  ) {
+    const existUser = await this.authService.getUser(id);
+
+    return fillDto(PostAuthorRdo, existUser.toObject());
   }
 
   @ApiResponse({
