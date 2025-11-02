@@ -33,7 +33,7 @@ export function getMongoConnectionString({
   port,
   databaseName,
   authDatabase,
-}: Record<string, any>): string {
+}: Record<string, string>): string {
   return `mongodb://${username}:${password}@${host}:${port}/${databaseName}?authSource=${authDatabase}`;
 }
 

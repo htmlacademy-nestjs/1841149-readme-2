@@ -1,4 +1,4 @@
-import {SortDirection} from "./sort-direction.enum";
+import { SortDirection } from './sort-direction.enum';
 
 export interface FeedOptions {
   page: number;
